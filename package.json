@@ -1,0 +1,22 @@
+{
+  "name": "cloud-text-editor",
+  "version": "0.0.1",
+  "description": "A cloud based text editor",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daily-Engineers/CloudTextEditor.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Daily-Engineers/CloudTextEditor/issues"
+  },
+  "homepage": "https://github.com/Daily-Engineers/CloudTextEditor#readme"
+}
