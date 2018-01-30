@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/Daily-Engineers/CloudTextEditor/issues"
   },
-  "homepage": "https://github.com/Daily-Engineers/CloudTextEditor#readme"
+  "homepage": "https://github.com/Daily-Engineers/CloudTextEditor#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.2"
+  }
 }
