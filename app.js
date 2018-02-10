@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const fs = require('fs');
+const hbs = require('express-handlebars');
 const config = require('./config/config');
 const uri = config.getDatabaseURI();
 
@@ -17,12 +18,16 @@ fs.readdirSync(__dirname + '/models').forEach((filename)=>{
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
+//setup handlbars view engine
+app.engine('handlebars', hbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 //Define routes
 app.use(require('./routes/pages'));
 app.use(require('./routes/users'));
 
 
-app.get('/',(req,res)=>res.send('okay!'));
+app.get('/',(req,res)=>res.render('home'));
 
 
 //listen on port 3000
