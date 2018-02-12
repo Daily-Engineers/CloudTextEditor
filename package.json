@@ -23,6 +23,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "highlight.js": "^9.12.0",
     "mongoose": "^5.0.2",
     "nodemon": "^1.14.12"
   }
