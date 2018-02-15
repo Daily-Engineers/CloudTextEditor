@@ -32,7 +32,12 @@ app.use(require('./routes/download'));
 // Serve static files
 app.use('/public', express.static('public'));
 
+
+app.get('/ping',(req, res)=>res.send('pong'));
+
 //listen on port 3000
 app.listen(3000, () => {
   console.log("Listening on port 3000!");
 })
+
+module.exports = app; //for testing
