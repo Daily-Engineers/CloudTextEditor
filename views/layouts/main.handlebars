@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Example App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--Bootstrap CSS depedancy-->
+  <link rel="stylesheet" type="text/css" href="public/libs/bootstrap/css/bootstrap.min.css">
+  <!--template CSS-->
+  <link rel="stylesheet" type="text/css" href="public/css/template.css">
+  <!--editor CSS-->
+  <link rel="stylesheet" type="text/css" href="public/css/editor.css">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="javascript:void(0);">CloudText</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0);">Save</a>
+        </li>
+        {{! Only display share if doc has been saved}}
+        {{#if docSaved}}
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">Share</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+
+  {{{body}}}
+</body>
+<!--jQuery-->
+<script src="public/libs/jquery/jquery-3.3.1.min.js"></script>
+<!--Bootstrap-->
+<script src="public/libs/bootstrap/js/bootstrap.min.js"></script>
+<!--Controller-->
+<script src="public/js/controller.js"></script>
+
+</html>
