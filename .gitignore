@@ -1,3 +1,4 @@
 /node_modules
 .DS_Store
 /config/config.js
+.app.js.swp
