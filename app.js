@@ -27,6 +27,7 @@ app.set('view engine', 'handlebars');
 app.use(require('./routes/index'));
 app.use(require('./routes/pages'));
 app.use(require('./routes/users'));
+app.use(require('./routes/download'));
 
 // Serve static files
 app.use('/public', express.static('public'));
