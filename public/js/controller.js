@@ -43,7 +43,7 @@ $('#SaveBtn').on('click', function() {
       datatype: 'json',
       success: function(page) {
         console.log('posted! :)');
-        window.location.href = '/' + page.page_id;
+        window.location.href = '/doc/' + page.page_id;
       },
       error: function(err) {
         console.log('error :(');
