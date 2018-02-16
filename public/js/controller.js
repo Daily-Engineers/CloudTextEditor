@@ -1,3 +1,4 @@
+'use strict';
 //Clears editor's textarea
 $('#NewBtn').on('click', function() {
   var editor = $('#EditorArea').val();
@@ -14,9 +15,7 @@ $(document).on('keydown', '#EditorArea', function(e) {
   var keyCode = e.keyCode;
   var start = this.selectionStart;
   var end = this.selectionEnd;
-  console.log(e.keyCode);
   if (e.keyCode === 9) {
-    console.log(this);
     e.preventDefault();
     $(this).val(
       $(this).val().substring(0, start) +
@@ -24,5 +23,31 @@ $(document).on('keydown', '#EditorArea', function(e) {
       $(this).val().substring(end)
     );
     this.selectionStart = this.selectionEnd = start + 1;
+  }
+});
+
+//Saves file
+$('#SaveBtn').on('click', function() {
+  var docExists = false; //TODO verify if doc exists
+  var editorText = $('#EditorArea').val();
+  if (docExists) {
+    //update page in db
+  } else {
+    var page = {
+      content: editorText
+    };
+    $.ajax({
+      method: 'post',
+      url: '/save',
+      data: page,
+      datatype: 'json',
+      success: function(page) {
+        console.log('posted! :)');
+        window.location.href = '/doc/' + page.page_id;
+      },
+      error: function(err) {
+        console.log('error :(');
+      }
+    });
   }
 });
