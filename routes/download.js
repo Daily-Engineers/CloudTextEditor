@@ -10,20 +10,20 @@ router.get('/page/download/:pageId', function (req, res, next) {
     var pageId = req.params.pageId;
 
     //create blank file in dir temp, with pageId as name.
-    var fws = fs.createWriteStream('./temp/' + pageId + ".txt");
+    var fws = fs.createWriteStream('./temp/' + pageId + '.txt');
 
     //find page
-    mongoose.model('pages').find({'pageId':pageId}, function (err, rst) {
+    mongoose.model('pages').find({'page_id':pageId}, function (err, rst) {
 
         //if not page with pageId is found
         if(rst.length < 1) {    //this is in a separate if statement to allow for better handling latter
             fs.unlink('./temp/' + pageId + '.txt');
-            res.redirect("/page/download")
+            res.redirect('/page/download/error')
 
         }else if (rst.length > 1) {     //if more that one page with said pageId is returned. This should not happen.
-            console.log("Error: 0xME"+rst.length);   //Error: 0xME = multiple entries.
+            console.log('Error: Mltiple entries '+rst.length);   //Error: 0xME = multiple entries.
             fs.unlink('./temp/' + pageId + '.txt');
-            res.redirect("/page/download")
+            res.redirect('/page/download/error')
 
         } else {
 
@@ -38,9 +38,8 @@ router.get('/page/download/:pageId', function (req, res, next) {
                 try {
                     //try to delete file.
                     fs.unlinkSync('./temp/' + pageId + '.txt');
-                    console.log("Page " + pageId + " downloaded successfully");
                 } catch (err) {
-                    console.log("Error: 0xFDF");  //Error: 0xFDF = file delete failed
+                    console.log('Error: File delete failed');
                 }
             });
         }
@@ -50,7 +49,7 @@ router.get('/page/download/:pageId', function (req, res, next) {
 
 
 //Needs to be worked on.
-router.get('/page/download', function (req, res, next) {
+router.get('/page/download/error', function (req, res, next) {
     res.send('File not found');
 });
 
