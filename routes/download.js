@@ -1,7 +1,8 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const fs = require('fs');
+const Page = require('../models/page');
 
 
 
@@ -13,7 +14,7 @@ router.get('/page/download/:pageId', function (req, res, next) {
     var fws = fs.createWriteStream('./temp/' + pageId + '.txt');
 
     //find page
-    mongoose.model('pages').find({'page_id':pageId}, function (err, rst) {
+    Page.find({'page_id':pageId}, function (err, rst) {
 
         //if not page with pageId is found
         if(rst.length < 1) {    //this is in a separate if statement to allow for better handling latter
