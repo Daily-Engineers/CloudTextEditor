@@ -3,6 +3,19 @@
   <div class="row editor">
       <div class="col-12 editor">
         <textarea class="form-control editor" id="EditorArea"></textarea>
+<script>
+
+    $(function() {
+        // Target all classed with ".lined"
+        $(".lined").linedtextarea(
+                {selectedLine: 1}
+        );
+        // Target a single one
+        $("#form-control editor").linedtextarea();
+    });
+
+</script>
+
       </div>
   </div>
-</div>
+
