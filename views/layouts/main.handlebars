@@ -12,7 +12,10 @@
   <!--editor CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
 </head>
-
+<script>
+  //true if document is already in the database
+  var docSaved = {{docSaved}};
+</script>
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,17 +28,18 @@
         <li class="nav-item">
           <a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a>
         </li>
-        {{#unless docSaved}}
           <li class="nav-item">
             <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
           </li>
-        {{/unless}}
         {{! Only display share if doc has been saved}}
         {{#if docSaved}}
           <li class="nav-item">
             <a class="nav-link" href="javascript:void(0);">Share</a>
           </li>
         {{/if}}
+        <li class="nav-item">
+          <a class="nav-link text-success font-weight-bold invisible" id="SuccessIcon" href="javascript:void(0);">Saved!</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -43,10 +47,9 @@
   {{{body}}}
 </body>
 <!--jQuery-->
-<script src="public/libs/jquery/jquery-3.3.1.min.js"></script>
+<script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
 <!--Bootstrap-->
-<script src="public/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
 <!--Controller-->
-<script src="public/js/controller.js"></script>
-
+<script src="/public/js/controller.js"></script>
 </html>

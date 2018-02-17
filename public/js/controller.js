@@ -34,16 +34,20 @@ $('#SaveBtn').on('click', function() {
     //update page in db
   } else {
     var page = {
-      content: editorText
+      content: editorText,
+      isInDB: docSaved
     };
     $.ajax({
       method: 'post',
       url: '/save',
       data: page,
       datatype: 'json',
-      success: function(page) {
+      success: function(page,textStatus, xhr) {
         console.log('posted! :)');
-        window.location.href = '/doc/' + page.page_id;
+        if(xhr.status == 201)
+          window.location.href = '/doc/' + page.page_id;
+        else
+          showSuccessMessage();
       },
       error: function(err) {
         console.log('error :(');
@@ -51,3 +55,8 @@ $('#SaveBtn').on('click', function() {
     });
   }
 });
+
+function showSuccessMessage(){
+  $('#SuccessIcon').removeClass('invisible').hide().fadeIn(300);
+  setTimeout(()=>$('#SuccessIcon').fadeOut(300),3000);
+}
