@@ -26,6 +26,24 @@ $(document).on('keydown', '#EditorArea', function(e) {
   }
 });
 
+//Sets link to clipboard
+$('#ShareBtn').on('click', function(){
+    //get full url of page
+    var url      = window.location.href;
+    //creates dummy element
+    var copyFrom = document.createElement("textarea");
+    //adds text to dummy element
+    copyFrom.textContent = url;
+    var body = document.getElementsByTagName('body')[0];
+    body.appendChild(copyFrom);
+    //select dummy
+    copyFrom.select();
+    //pushes test from dummy to clipboard
+    document.execCommand('copy');
+    //removes dummy
+    body.removeChild(copyFrom);
+});
+
 //Saves file
 $('#SaveBtn').on('click', function() {
   var docExists = false; //TODO verify if doc exists
