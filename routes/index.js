@@ -10,10 +10,14 @@ router.get('/doc/:page_id', (req, res) => {
   Page.findOne({
     'page_id': req.params.page_id
   }).exec((err, page) => {
-    res.render('editor', {
-      page: page,
-      docSaved: true
-    });
+    if (page) {
+      res.render('editor', {
+        page: page,
+        docSaved: true
+      });
+    } else {
+      res.status(404).send('<h1>Wow there, Cowboy Neil. It looks like you are lost! 🤠</h1>');
+    }
   });
 });
 
