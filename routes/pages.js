@@ -12,8 +12,10 @@ router.get('/pages', (req, res) => {
 
 router.post('/save', async function(req, res) {
   let pageContent = req.body.content;
-  //If in db update
-  if (req.body.isInDB) {
+  let isInDB = (req.body.isInDB == 'true')
+    //If in db update
+  if (isInDB) {
+    console.log('updatingPage');
     let pageID = req.headers.referer.slice(-5);
     let query = {'page_id':pageID}
     Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
@@ -23,6 +25,7 @@ router.post('/save', async function(req, res) {
         res.sendStatus(202);
     });
   } else {
+    console.log('creating new page');
     //else create new page
     let newPage = new Page();
     newPage.content = req.body.content;
@@ -48,7 +51,7 @@ async function generateUniqueID() {
   //Invalid if there is a collision
   let invalid = await Page.find({
     'page_id': pageID
-  }) < 0;
+  }).length > 0;
   //If there is a collision a new one is generated
   if (invalid)
     return generateUniqueID();
