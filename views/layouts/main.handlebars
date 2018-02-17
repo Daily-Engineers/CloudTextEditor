@@ -14,7 +14,11 @@
 </head>
 <script>
   //true if document is already in the database
-  var docSaved = {{docSaved}};
+  {{#if docSaved}}
+    var docSaved = true;
+  {{else}}
+    var docSaved = false;
+  {{/if}}
 </script>
 <body>
 
