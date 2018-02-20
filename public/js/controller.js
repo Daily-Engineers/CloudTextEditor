@@ -10,6 +10,7 @@ $('#NewBtn').on('click', function() {
   }
 });
 
+
 //Allows tabs to indent in textarea
 $(document).on('keydown', '#EditorArea', function(e) {
   var keyCode = e.keyCode;
@@ -72,6 +73,21 @@ $('#SaveBtn').on('click', function() {
       }
     });
   }
+});
+
+//Deleting a file
+$('#DelBtn').on('click', function () {
+    $.ajax({
+       method: 'post',
+       url: '/page/deleteFile',
+       success: function(page, textStatus, xhr) {
+           window.location = "/";
+       },
+        error: function(err) {
+           console.log(err);
+        }
+
+    });
 });
 
 

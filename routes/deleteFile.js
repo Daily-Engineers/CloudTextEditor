@@ -7,17 +7,16 @@ const router = express.Router();
 const fs = require('fs');
 const Page = require('../models/page');
 
-router.get('/page/doc/:pageId', function (req, res) {
+router.post('/page/deleteFile/', function (req, res) {
     // saving pageId in the variable pageID
-    var pageID = req.params.pageId;
+    var pageID = req.headers.referer.slice(-5);
 
     //Search for the page
-    Page.deleteOne({'page_id':pageId}, function (err, rst) {
+
+    Page.deleteOne({'page_id':pageID}, function (err, rst) {
 
         //if result found
         if(rst) {
-
-            console.log("deleted");
             res.sendStatus(200);
 
         } else {
@@ -29,3 +28,5 @@ router.get('/page/doc/:pageId', function (req, res) {
 
 
 });
+
+module.exports = router;

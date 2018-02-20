@@ -12,7 +12,11 @@
   <!--editor CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
   <!--Syntax hilighting-->
-  <link rel="stylesheet" type="text/css" href="/public/libs/highlightjs/styles/rainbow.css">
+  <link rel="stylesheet" type="text/css" href="/public/libs/highlightjs/styles/default.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
 </head>
 <script>
   //true if document is already in the database
@@ -42,6 +46,9 @@
           <li class="nav-item">
             <a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a>
           </li>
+            <li class="nav-item">
+                <a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a>
+            </li>
         {{/if}}
 
         <li class="nav-item">
@@ -51,8 +58,7 @@
       </ul>
     </div>
   </nav>
-
-  {{{body}}}
+{{{body}}}
 </body>
 <!--jQuery-->
 <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
@@ -60,5 +66,8 @@
 <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
 <!--Controller-->
 <script src="/public/js/controller.js"></script>
+<!-- Highlight jS -->
+
+<script>hljs.initHighlightingOnLoad();</script>
 
 </html>

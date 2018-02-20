@@ -8,10 +8,11 @@
   border-top: 2px solid #3B8686;
 }
 
-textarea.editor {
+code.editor {
   outline: none;
   border: none !important;
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
+  white-space: pre;
 }
