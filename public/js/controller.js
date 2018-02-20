@@ -26,6 +26,7 @@ $(document).on('keydown', '#EditorArea', function(e) {
   }
 });
 
+
 //Sets link to clipboard
 $('#ShareBtn').on('click', function(){
     //get full url of page
