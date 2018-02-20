@@ -44,6 +44,33 @@ $('#ShareBtn').on('click', function(){
     body.removeChild(copyFrom);
 });
 
+//Download button
+$('#DownloadBtn').on('click', function () {
+    console.log("DownloadBtn")
+
+    //TODO docSaved is alway true
+    var editorText = $('#EditorArea').val();
+    var page = {
+        content: editorText,
+        isInDB: docSaved
+    };
+    $.ajax({
+        method: 'post',
+        url: '/page/download',
+        data: page,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+            console.log('posted! :)');
+            if(xhr.status == 201)
+                window.location.href = '/page/download/' + page.page_id;
+            },
+        error: function (err) {
+            console.log(err);
+            }
+   })
+})
+
+
 //Saves file
 $('#SaveBtn').on('click', function() {
   var docExists = false; //TODO verify if doc exists
