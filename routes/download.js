@@ -6,7 +6,7 @@ const Page = require('../models/page');
 
 
 
-var saveFile = function (res, content, fileName) {
+function saveFile(res, content, fileName) {
 
     var fws = fs.createWriteStream('./temp/' + fileName + '.txt');
 
