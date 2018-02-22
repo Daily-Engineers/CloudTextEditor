@@ -22,5 +22,9 @@ router.get('/doc/:page_id', (req, res) => {
   });
 });
 
+router.post('/ping',function (req, res){
+  res.send('pong');
+})
+
 
 module.exports = router;
