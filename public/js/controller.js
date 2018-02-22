@@ -25,7 +25,22 @@ $(document).on('keydown', '#EditorArea', function(e) {
     this.selectionStart = this.selectionEnd = start + 1;
   }
 });
+var stylecount = 0;
+//Toggles between light and dark css files
+$('#StlyeBtn').on('click', function(){
+  console.log(stylecount);
+  //click count
+  stylecount = stylecount + 1;
+  if (stylecount%2 === 0) {
+    $("#EditorArea").css({"background-color": "black", "font-colour": "white"});
+    $("#EditorArea").css({"color": "white"});
+  }
+  else {
+    $("#EditorArea").css({"background-color": "white", "font-colour": "black"});
+    $("#EditorArea").css({"color": "black"});
+  }
 
+})
 //Sets link to clipboard
 $('#ShareBtn').on('click', function(){
     //get full url of page
