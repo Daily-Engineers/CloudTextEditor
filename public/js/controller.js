@@ -26,6 +26,24 @@ $(document).on('keydown', '#EditorArea', function(e) {
   }
 });
 
+//Sets link to clipboard
+$('#ShareBtn').on('click', function(){
+    //get full url of page
+    var url      = window.location.href;
+    //creates dummy element
+    var copyFrom = document.createElement("textarea");
+    //adds text to dummy element
+    copyFrom.textContent = url;
+    var body = document.getElementsByTagName('body')[0];
+    body.appendChild(copyFrom);
+    //select dummy
+    copyFrom.select();
+    //pushes test from dummy to clipboard
+    document.execCommand('copy');
+    //removes dummy
+    body.removeChild(copyFrom);
+});
+
 //Saves file
 $('#SaveBtn').on('click', function() {
   var docExists = false; //TODO verify if doc exists
@@ -34,16 +52,20 @@ $('#SaveBtn').on('click', function() {
     //update page in db
   } else {
     var page = {
-      content: editorText
+      content: editorText,
+      isInDB: docSaved
     };
     $.ajax({
       method: 'post',
       url: '/save',
       data: page,
       datatype: 'json',
-      success: function(page) {
+      success: function(page,textStatus, xhr) {
         console.log('posted! :)');
-        window.location.href = '/doc/' + page.page_id;
+        if(xhr.status == 201)
+          window.location.href = '/doc/' + page.page_id;
+        else
+          showSuccessMessage();
       },
       error: function(err) {
         console.log('error :(');
@@ -51,3 +73,54 @@ $('#SaveBtn').on('click', function() {
     });
   }
 });
+
+function showSuccessMessage(){
+  $('#SuccessIcon').removeClass('invisible').hide().fadeIn(300);
+  setTimeout(()=>$('#SuccessIcon').fadeOut(300),3000);
+}
+
+
+// save on browser closing
+
+window.onunload=function saveOnClose(){
+    console.log("closed the page and saved")
+    var docExists = false; //TODO verify if doc exists
+    var editorText = $('#EditorArea').val();
+    if (docExists){
+        //update page in db
+    } else {
+        var page = {
+            content: editorText,
+            isInDB: docSaved
+        };
+        $.ajax({
+            method: 'post',
+            url: '/save',
+            data: page,
+            datatype: 'json',
+            success: function(page,textStatus, xhr) {
+                console.log('posted! :)');
+                if(xhr.status == 201)
+                    window.location.href = '/doc/' + page.page_id;
+                else
+                    showSuccessMessage();
+            },
+            error: function(err) {
+                console.log('error :(');
+            }
+        });
+    }
+};
+
+
+
+
+
+
+$(function (){
+
+    // Target all classed with ".lined"
+    $("#EditorArea").linedtextarea(
+        {selectedLine: 1}
+    )
+})

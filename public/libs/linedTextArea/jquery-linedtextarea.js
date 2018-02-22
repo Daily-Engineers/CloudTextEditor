@@ -61,37 +61,35 @@
 			
 			/* Turn off the wrapping of as we don't want to screw up the line numbers */
 			textarea.attr("wrap", "off");
-			textarea.css({resize:'none'});
+			//textarea.css({resize:'none'});
 			var originalTextAreaWidth	= textarea.outerWidth();
 
 			/* Wrap the text area in the elements we need */
 			textarea.wrap("<div class='linedtextarea'></div>");
-			var linedTextAreaDiv	= textarea.parent().wrap("<div class='linedwrap' style='width:" + originalTextAreaWidth + "px'></div>");
-			var linedWrapDiv 			= linedTextAreaDiv.parent();
-			
+			var linedTextAreaDiv	= textarea.parent().wrap("");
+			var linedWrapDiv 	= linedTextAreaDiv.parent();
+
 			linedWrapDiv.prepend("<div class='lines' style='width:50px'></div>");
-			
+
 			var linesDiv	= linedWrapDiv.find(".lines");
-			linesDiv.height( textarea.height() + 6 );
-			
-			
+			linesDiv.height( textarea.height()  );
+
 			/* Draw the number bar; filling it out where necessary */
 			linesDiv.append( "<div class='codelines'></div>" );
 			var codeLinesDiv	= linesDiv.find(".codelines");
 			lineNo = fillOutLines( codeLinesDiv, linesDiv.height(), 1 );
 
-			/* Move the textarea to the selected line */ 
-			if ( opts.selectedLine != -1 && !isNaN(opts.selectedLine) ){
+			 //Move the textarea to the selected line
+			/*if ( opts.selectedLine != -1 && !isNaN(opts.selectedLine) ){
 				var fontSize = parseInt( textarea.height() / (lineNo-2) );
 				var position = parseInt( fontSize * opts.selectedLine ) - (textarea.height()/2);
 				textarea[0].scrollTop = position;
-			}
+			}*/
 
-			
 			/* Set the width */
 			var sidebarWidth					= linesDiv.outerWidth();
 			var paddingHorizontal 		= parseInt( linedWrapDiv.css("border-left-width") ) + parseInt( linedWrapDiv.css("border-right-width") ) + parseInt( linedWrapDiv.css("padding-left") ) + parseInt( linedWrapDiv.css("padding-right") );
-			var linedWrapDivNewWidth 	= originalTextAreaWidth - paddingHorizontal;
+			var linedWrapDivNewWidth 	= originalTextAreaWidth /*- paddingHorizontal*/;
 			var textareaNewWidth			= originalTextAreaWidth - sidebarWidth - paddingHorizontal - 20;
 
 			textarea.width( textareaNewWidth );
@@ -108,13 +106,12 @@
 				lineNo = fillOutLines( codeLinesDiv, scrollTop + clientHeight, lineNo );
 			});
 
-
 			/* Should the textarea get resized outside of our control */
-			textarea.resize( function(tn){
+			/*textarea.resize( function(tn){
 				var domTextArea	= $(this)[0];
 				linesDiv.height( domTextArea.clientHeight + 6 );
 			});
-
+*/
 		});
 	};
 
