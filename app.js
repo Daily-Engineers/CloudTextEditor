@@ -11,10 +11,6 @@ const uri = config.getDatabaseURI();
 //connect to database
 mongoose.connect(uri);
 
-//line numbers
-
-
-
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
