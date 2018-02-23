@@ -188,5 +188,5 @@ $(function (){
     $("#EditorArea").linedtextarea(
         {selectedLine: 1}
     )
-})
+});
 
