@@ -59,6 +59,7 @@ $('#ShareBtn').on('click', function(){
     body.removeChild(copyFrom);
 });
 
+
 //Download button
 $('#DownloadBtn').on('click', function () {
     console.log("DownloadBtn")
@@ -85,36 +86,41 @@ $('#DownloadBtn').on('click', function () {
    })
 })
 
-
+//Auto-save every 8 seconds if the doc is in the database already
+if(docSaved){
+  setInterval(function(){savePage();},8000);
+}
 //Saves file
-$('#SaveBtn').on('click', function() {
-  var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
-  if (docExists) {
-    //update page in db
-  } else {
-    var page = {
-      content: editorText,
-      isInDB: docSaved
-    };
-    $.ajax({
-      method: 'post',
-      url: '/save',
-      data: page,
-      datatype: 'json',
-      success: function(page,textStatus, xhr) {
-        console.log('posted! :)');
-        if(xhr.status == 201)
-          window.location.href = '/doc/' + page.page_id;
-        else
-          showSuccessMessage();
-      },
-      error: function(err) {
-        console.log('error :(');
-      }
-    });
-  }
-});
+$('#SaveBtn').on('click', function(){savePage()});
+
+function savePage() {
+    var docExists = false; //TODO verify if doc exists
+    var editorText = $('#EditorArea').val();
+    if (docExists) {
+        //update page in db
+    } else {
+        var page = {
+            content: editorText,
+            isInDB: docSaved
+        };
+        $.ajax({
+            method: 'post',
+            url: '/save',
+            data: page,
+            datatype: 'json',
+            success: function(page,textStatus, xhr) {
+                console.log('posted! :)');
+                if(xhr.status == 201)
+                    window.location.href = '/doc/' + page.page_id;
+                else
+                    showSuccessMessage();
+            },
+            error: function(err) {
+                console.log('error :(');
+            }
+        });
+    }
+}
 
 function showSuccessMessage(){
   $('#SuccessIcon').removeClass('invisible').hide().fadeIn(300);
