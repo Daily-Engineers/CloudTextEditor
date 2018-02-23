@@ -6,7 +6,9 @@ const Page = require('../models/page');
 //Finds all pages
 router.get('/pages', (req, res) => {
   Page.find({}).exec(function(err, pages) {
-    res.sendStatus(pages);
+      //TODO do something with pages, since this crashes the site
+      //res.sendStatus(pages);
+      res.sendStatus(200);
   });
 });
 

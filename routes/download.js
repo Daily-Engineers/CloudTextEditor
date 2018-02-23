@@ -53,7 +53,9 @@ router.get('/page/download/:pageId', function (req, res, next) {
 
 
 router.post('/page/download', function (req, res, next) {
-
+    if(req.body.isTest == true){
+        res.send('you are testing')
+    }
 
     var pageId = "untitled";
     var content = req.body.content;
@@ -70,7 +72,7 @@ router.post('/page/download', function (req, res, next) {
         res.status(201).json(page);
     }else {
 
-        //saveFile(res, content, pageId);
+        res.status(200)
     }
 })
 
