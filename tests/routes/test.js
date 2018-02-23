@@ -2,20 +2,16 @@ const chai = require('chai')
 const chaiHttp = require('chai-http');
 const app = require('../../app.js');
 const http = require('http');
+const saveFile = require('../modules/saveFile');
+const deleteFile = require('../modules/deleteFile');
 
 const assert = chai.assert;
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('run route tests', function(){
-
-    after(function() {
-        process.exit(1);
-    });
-
-    describe('Should display the editor page.', function() {
-        it('/index', function(done) {
+    describe('/index', function() {
+        it('Should display the editor page.', function(done) {
             http.get('http://localhost:3000/doc/teste', function(res) {
                 assert.equal(res.statusCode, 200);
 
@@ -32,8 +28,8 @@ describe('run route tests', function(){
         });
     });
 
-    describe('Should display a loaded document.', function() {
-        it('/doc/teste', function(done) {
+    describe('/doc/teste', function() {
+        it('Should display a loaded document.', function(done) {
             http.get('http://localhost:3000/doc/teste', function(res) {
                 assert.equal(res.statusCode, 200);
 
@@ -50,8 +46,8 @@ describe('run route tests', function(){
         });
     });
 
-    describe('Download route.', function() {
-        it('/page/download', function(done) {
+    describe('/page/download', function() {
+        it('Should test to see if the routing to download works', function(done) {
             chai.request(app).post('/page/download').send({isTest: true}).end(function(err, res){
                 expect(res).to.have.status(200);
                 done();
@@ -59,8 +55,8 @@ describe('run route tests', function(){
         })
     });
 
-    describe('Download page route.', function() {
-        it('/page/download/teste', function(done) {
+    describe('/page/download/teste', function() {
+        it('Should test to see if the routing to download a page works', function(done) {
             chai.request(app).get('/page/download/teste').send({isTest: true}).end(function(err, res){
                 expect(res).to.have.status(200);
                 done();
@@ -69,12 +65,11 @@ describe('run route tests', function(){
     });
 
 
-    describe('runt route to save route', function() {
-        it('/save', function(done) {
+    describe('/save', function() {
+        it('Should test to see if the routing to save works', function(done) {
             chai.request(app).post('/ping').end(function(err, res){
                 expect(res).to.have.status(200);
                 done();
             })
         });
     });
-})
