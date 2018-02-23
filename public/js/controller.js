@@ -126,3 +126,49 @@ function showSuccessMessage(){
   $('#SuccessIcon').removeClass('invisible').hide().fadeIn(300);
   setTimeout(()=>$('#SuccessIcon').fadeOut(300),3000);
 }
+
+
+// save on browser closing
+
+window.onunload=function saveOnClose(){
+    console.log("closed the page and saved")
+    var docExists = false; //TODO verify if doc exists
+    var editorText = $('#EditorArea').val();
+    if (docExists){
+        //update page in db
+    } else {
+        var page = {
+            content: editorText,
+            isInDB: docSaved
+        };
+        $.ajax({
+            method: 'post',
+            url: '/save',
+            data: page,
+            datatype: 'json',
+            success: function(page,textStatus, xhr) {
+                console.log('posted! :)');
+                if(xhr.status == 201)
+                    window.location.href = '/doc/' + page.page_id;
+                else
+                    showSuccessMessage();
+            },
+            error: function(err) {
+                console.log('error :(');
+            }
+        });
+    }
+};
+
+
+
+
+
+
+$(function (){
+
+    // Target all classed with ".lined"
+    $("#EditorArea").linedtextarea(
+        {selectedLine: 1}
+    )
+})
