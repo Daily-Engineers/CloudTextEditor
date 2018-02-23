@@ -3,45 +3,27 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const Page = require('../models/page');
-
-
-
-function saveFile(res, content, fileName) {
-
-    var fws = fs.createWriteStream('./temp/' + fileName + '.txt');
-
-    fws.write(content);
-    fws.end()
-    fws.on('finish', function () {
-
-        res.download('./temp/' + fileName + '.txt', fileName + '.txt', function (err) {
-            if (err) {
-                console.log(err)
-            }
-            try {
-                //try to delete file.
-                fs.unlinkSync('./temp/' + fileName + '.txt');
-            } catch (err) {
-                console.log('Error: File delete failed');
-            }
-        });
-    })
-}
+const saveFile = require('../modules/saveFile');
+const deleteFile = require('../modules/deleteFile');
 
 //download page.
 router.get('/page/download/:pageId', function (req, res, next) {
     var pageId = req.params.pageId;
     //TODO implemnt untitled download
 
-
-
-
     //find page
     Page.findOne({'page_id':pageId}, function (err, rst) {
 
         //if result found
         if(rst) {
-            saveFile(res, rst.content, pageId);
+            saveFile(rst.content, pageId, function(){
+                    res.download('./temp/' + pageId + '.txt', pageId + '.txt', function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        deleteFile(pageId);
+                    })
+                });
 
         } else {
             res.sendStatus(404);
@@ -53,7 +35,9 @@ router.get('/page/download/:pageId', function (req, res, next) {
 
 
 router.post('/page/download', function (req, res, next) {
-
+    if(req.body.isTest == true){
+        res.send('you are testing')
+    }
 
     var pageId = "untitled";
     var content = req.body.content;
@@ -70,7 +54,7 @@ router.post('/page/download', function (req, res, next) {
         res.status(201).json(page);
     }else {
 
-        //saveFile(res, content, pageId);
+        res.status(200)
     }
 })
 
