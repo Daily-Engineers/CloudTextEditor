@@ -25,6 +25,21 @@ $(document).on('keydown', '#EditorArea', function(e) {
     this.selectionStart = this.selectionEnd = start + 1;
   }
 });
+var stylecount = 0;
+//Toggles between light and dark css files
+$('#StlyeBtn').on('click', function(){
+  console.log(stylecount);
+  //click count
+  stylecount = stylecount + 1;
+  if (stylecount%2 === 0) {
+    $("#EditorArea").css({"background-color": "black", "font-colour": "white"});
+    $("#EditorArea").css({"color": "white"});
+  }
+  else {
+    $("#EditorArea").css({"background-color": "white", "font-colour": "black"});
+    $("#EditorArea").css({"color": "black"});
+  }
+});
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function(){
@@ -44,35 +59,68 @@ $('#ShareBtn').on('click', function(){
     body.removeChild(copyFrom);
 });
 
-//Saves file
-$('#SaveBtn').on('click', function() {
-  var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
-  if (docExists) {
-    //update page in db
-  } else {
+
+//Download button
+$('#DownloadBtn').on('click', function () {
+    console.log("DownloadBtn")
+
+    //TODO docSaved is alway true
+    var editorText = $('#EditorArea').val();
     var page = {
-      content: editorText,
-      isInDB: docSaved
+        content: editorText,
+        isInDB: docSaved
     };
     $.ajax({
-      method: 'post',
-      url: '/save',
-      data: page,
-      datatype: 'json',
-      success: function(page,textStatus, xhr) {
-        console.log('posted! :)');
-        if(xhr.status == 201)
-          window.location.href = '/doc/' + page.page_id;
-        else
-          showSuccessMessage();
-      },
-      error: function(err) {
-        console.log('error :(');
-      }
-    });
-  }
-});
+        method: 'post',
+        url: '/page/download',
+        data: page,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+            console.log('posted! :)');
+            if(xhr.status == 201)
+                window.location.href = '/page/download/' + page.page_id;
+            },
+        error: function (err) {
+            console.log(err);
+            }
+   })
+})
+
+//Auto-save every 8 seconds if the doc is in the database already
+if(docSaved){
+  setInterval(function(){savePage();},8000);
+}
+//Saves file
+$('#SaveBtn').on('click', function(){savePage()});
+
+function savePage() {
+    var docExists = false; //TODO verify if doc exists
+    var editorText = $('#EditorArea').val();
+    if (docExists) {
+        //update page in db
+    } else {
+        var page = {
+            content: editorText,
+            isInDB: docSaved
+        };
+        $.ajax({
+            method: 'post',
+            url: '/save',
+            data: page,
+            datatype: 'json',
+            success: function(page,textStatus, xhr) {
+                console.log('posted! :)');
+                if(xhr.status == 201)
+                    window.location.href = '/doc/' + page.page_id;
+                else
+                    showSuccessMessage();
+            },
+            error: function(err) {
+                console.log('error :(');
+            }
+        });
+    }
+}
 
 function showSuccessMessage(){
   $('#SuccessIcon').removeClass('invisible').hide().fadeIn(300);
