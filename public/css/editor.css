@@ -8,7 +8,8 @@
   border-top: 2px solid #3B8686;
 }
 
-code.editor {
+
+textarea.editor {
   outline: none;
   border: none !important;
   -webkit-box-shadow: none !important;
@@ -16,3 +17,4 @@ code.editor {
   box-shadow: none !important;
   white-space: pre;
 }
+

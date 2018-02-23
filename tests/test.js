@@ -1,6 +1,35 @@
-const assert = require('chai').assert;
+const chai = require('chai')
+const chaiHttp = require('chai-http');
 const app = require('../app.js');
 const http = require('http');
+
+const assert = chai.assert;
+const expect = chai.expect;
+
+chai.use(chaiHttp);
+//for more on how to use chai-http https://github.com/chaijs/chai-http
+
+describe('Example request for chai get, It Should return pong.', function() {
+    it('/ping', function(done) {
+        chai.request(app).get('/ping').end(function(err, res){
+            assert.equal(res.statusCode, 200);
+            //or
+            expect(res).to.have.status(200);
+            done();
+        })
+    })
+});
+
+describe('Example request for chai post, It Should return pong.', function() {
+    it('/ping', function(done) {
+        chai.request(app).post('/ping').end(function(err, res){
+            assert.equal(res.statusCode, 200);
+            //or
+            expect(res).to.have.status(200);
+            done();
+        })
+    })
+});
 
 describe('HTTP Server test', function() {
   describe('/ping', function() {

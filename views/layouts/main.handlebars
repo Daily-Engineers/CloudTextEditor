@@ -5,12 +5,15 @@
   <meta charset="utf-8" />
   <title>Example App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/public/libs/linedTextArea/jquery-linedtextarea.css">
   <!--Bootstrap CSS depedancy-->
   <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.css">
   <!--template CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/template.css">
   <!--editor CSS-->
+
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
+
   <!--Syntax hilighting-->
   <link rel="stylesheet" type="text/css" href="/public/libs/highlightjs/styles/default.css">
     <link rel="stylesheet"
@@ -41,6 +44,9 @@
           <li class="nav-item">
             <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Style Toggle</a>
+          </li>
         {{! Only display share if doc has been saved}}
         {{#if docSaved}}
           <li class="nav-item">
@@ -48,6 +54,8 @@
           </li>
             <li class="nav-item">
                 <a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a>
+            <li class="nav-item">
+                <a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a>
             </li>
         {{/if}}
 
@@ -58,13 +66,15 @@
       </ul>
     </div>
   </nav>
-{{{body}}}
+  {{{body}}}
 </body>
 <!--jQuery-->
 <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
+<script src="/public/libs/linedTextArea/jquery-linedtextarea.js"></script>
 <!--Bootstrap-->
 <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
 <!--Controller-->
+
 <script src="/public/js/controller.js"></script>
 <!-- Highlight jS -->
 
