@@ -20,7 +20,6 @@ router.post('/page/deleteFile/', function (req, res) {
             res.sendStatus(200);
 
         } else {
-            fs.unlink('./doc/' + pageId + '.txt');
             res.sendStatus(404);
 
         }
