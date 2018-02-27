@@ -1,7 +1,6 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const Page = require('../models/page');
 const saveFile = require('../modules/saveFile');
 const deleteFile = require('../modules/deleteFile');
