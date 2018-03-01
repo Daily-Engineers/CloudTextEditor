@@ -19,7 +19,7 @@ router.get('/page/download/:pageId', function (req, res, next) {
             saveFile(rst.content, pageId, function(){
                     res.download('./temp/' + pageId + '.txt', pageId + '.txt', function (err) {
                         if (err) {
-                            console.log(err);
+                            console.error(err);
                         }
                         deleteFile(pageId);
                     })
