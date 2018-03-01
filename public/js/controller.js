@@ -59,11 +59,86 @@ $('#ShareBtn').on('click', function(){
     body.removeChild(copyFrom);
 });
 
+//login
+$('#LoginBtn').on('click',function(){
+
+    var username = $('#username').val().trim()
+    var password = $('#password').val().trim()
+    var user = {
+        username: username,
+        password: password
+    }
+    $.ajax({
+        method: 'post',
+        url: '/login',
+        data: user,
+        datatype: 'json',
+        success: function(user, Status, xhr){
+            //If login secsefull
+            if(xhr.status == 201){
+                console.log("s")
+            }
+            //login failed
+            else{
+                console.log("f")
+            }
+        },
+        error: function(err){
+            console.log(err)
+        }
+    })
+
+});
+
+$('#LogoutBtn').on('click', function(){
+    console.log("out")
+    var user = {
+        username: "temp"
+    }
+
+    $.ajax({
+        method: 'get',
+        url: '/logout',
+        data: user,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+})
+
+
+$('#RegisterBtn').on('click', function () {
+    var username = $('#username').val().trim()
+    var password = $('#password').val().trim()
+
+    var user = {
+        username: username,
+        password: password
+    }
+
+    $.ajax({
+        method: 'post',
+        url: '/register',
+        data: user,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+});
+
+
 //Download button
 $('#DownloadBtn').on('click', function () {
-    console.log("DownloadBtn")
 
-    //TODO docSaved is alway true
     var editorText = $('#EditorArea').val();
     var page = {
         content: editorText,
