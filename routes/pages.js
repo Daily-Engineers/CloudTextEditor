@@ -12,7 +12,7 @@ router.get('/pages', (req, res) => {
   });
 });
 
-router.post('/save', require('../modules/addPage'));
+router.post('/save', require('../modules/savePage'));
 
 
 module.exports = router;
