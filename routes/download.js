@@ -3,41 +3,29 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const Page = require('../models/page');
-
-
+const saveFile = require('../modules/saveFile');
+const deleteFile = require('../modules/deleteFile');
 
 //download page.
 router.get('/page/download/:pageId', function (req, res, next) {
     var pageId = req.params.pageId;
-
-    //create blank file in dir temp, with pageId as name.
-    var fws = fs.createWriteStream('./temp/' + pageId + '.txt');
+    //TODO implemnt untitled download
 
     //find page
     Page.findOne({'page_id':pageId}, function (err, rst) {
 
         //if result found
         if(rst) {
-
-            fws.write(rst.content);  //write content to file
-            fws.end();  //write file.
-
-            //send file to client.
-            res.download('./temp/' + pageId + '.txt', pageId + '.txt', function (err) {
-                if (err) {
-                    console.log(err)
-                }
-                try {
-                    //try to delete file.
-                    fs.unlinkSync('./temp/' + pageId + '.txt');
-                } catch (err) {
-                    console.log('Error: File delete failed');
-                }
-            });
+            saveFile(rst.content, pageId, function(){
+                    res.download('./temp/' + pageId + '.txt', pageId + '.txt', function (err) {
+                        if (err) {
+                            console.error(err);
+                        }
+                        deleteFile(pageId);
+                    })
+                });
 
         } else {
-            fws.end();
-            fs.unlink('./temp/' + pageId + '.txt');
             res.sendStatus(404);
 
         }
@@ -46,9 +34,28 @@ router.get('/page/download/:pageId', function (req, res, next) {
 });
 
 
-//Needs to be worked on.
-router.get('/page/download', function (req, res, next) {
-    res.send('File not found');
-});
+router.post('/page/download', function (req, res, next) {
+    if(req.body.isTest == true){
+        res.send('you are testing')
+    }
+
+    var pageId = "untitled";
+    var content = req.body.content;
+    var docSaved = req.body.isInDB
+    if(docSaved == "true"){
+        pageId = req.headers.referer.slice(-5);
+        var page = {
+            page_id: pageId,
+            content: content,
+            docSaved: docSaved
+        }
+
+        //TODO Make this work for untitled files
+        res.status(201).json(page);
+    }else {
+
+        res.status(200)
+    }
+})
 
 module.exports = router;

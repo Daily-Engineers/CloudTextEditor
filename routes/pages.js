@@ -1,3 +1,4 @@
+
 'use strict';
 const express = require('express');
 const router = express.Router();
@@ -6,7 +7,9 @@ const Page = require('../models/page');
 //Finds all pages
 router.get('/pages', (req, res) => {
   Page.find({}).exec(function(err, pages) {
-    res.sendStatus(pages);
+      //TODO do something with pages, since this crashes the site
+      //res.sendStatus(pages);
+      res.sendStatus(200);
   });
 });
 
@@ -15,7 +18,6 @@ router.post('/save', async function(req, res) {
   let isInDB = (req.body.isInDB == 'true')
     //If in db update
   if (isInDB) {
-    console.log('updatingPage');
     let pageID = req.headers.referer.slice(-5);
     let query = {'page_id':pageID}
     Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
@@ -25,7 +27,6 @@ router.post('/save', async function(req, res) {
         res.sendStatus(202);
     });
   } else {
-    console.log('creating new page');
     //else create new page
     let newPage = new Page();
     newPage.content = req.body.content;
