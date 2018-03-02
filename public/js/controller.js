@@ -181,7 +181,6 @@ window.onunload=function saveOnClose(){
 
 
 
-
 $(function (){
 
     // Target all classed with ".lined"
