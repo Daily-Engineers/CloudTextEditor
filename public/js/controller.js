@@ -128,7 +128,6 @@ $('#RegisterBtn').on('click', function () {
 
 //Download button
 $('#DownloadBtn').on('click', function () {
-
     var editorText = $('#EditorArea').val();
     var page = {
         content: editorText,
@@ -172,4 +171,3 @@ $('#SaveBtn').on('click', function() {
     }
   })
 });
-
