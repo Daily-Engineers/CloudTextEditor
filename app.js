@@ -42,6 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 app.engine('handlebars', hbs({
   defaultLayout: 'main'
 }));
+
 app.set('view engine', 'handlebars');
 
 //Define routes

@@ -12,10 +12,6 @@ if (docSaved) {
     savePage();
   }, 8000);
 }
-//Saves file
-$('#SaveBtn').on('click', function() {
-  savePage()
-});
 
 // save on browser closing
 window.onunload = function() {

@@ -49,6 +49,12 @@ $('#ShareBtn').on('click', function() {
   showSuccessMessage('Link copied!');
 });
 
+//Saves file
+$('#SaveBtn').on('click', function() {
+  savePage()
+});
+
+
 //login
 $('#LoginBtn').on('click',function(){
 
@@ -172,4 +178,3 @@ $('#SaveBtn').on('click', function() {
     }
   })
 });
-
