@@ -6,7 +6,7 @@ let deleteFile = function (fileName){
         fs.unlinkSync('./temp/' + fileName + '.txt');
         return
     } catch (err) {
-        console.log('Error: File delete failed');
+        console.error('Error: File delete failed');
         return
     }
 }
