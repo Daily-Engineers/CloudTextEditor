@@ -1,7 +1,6 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const Page = require('../models/page');
 const saveFile = require('../modules/saveFile');
 const deleteFile = require('../modules/deleteFile');
@@ -19,7 +18,7 @@ router.get('/page/download/:pageId', function (req, res, next) {
             saveFile(rst.content, pageId, function(){
                     res.download('./temp/' + pageId + '.txt', pageId + '.txt', function (err) {
                         if (err) {
-                            console.log(err);
+                            console.error(err);
                         }
                         deleteFile(pageId);
                     })
