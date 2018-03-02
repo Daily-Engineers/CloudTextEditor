@@ -41,7 +41,12 @@ function savePage() {
     }
   });
 }
-
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+        console.log('h');
+    });
+});
 function showSuccessMessage(msg) {
   $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
   setTimeout(() => $('#MessageItem').fadeOut(300), 3000);
