@@ -64,7 +64,7 @@ $('#ShareBtn').on('click', function(){
 $('#DownloadBtn').on('click', function () {
     console.log("DownloadBtn")
 
-    //TODO docSaved is alway true
+    //TODO docSaved is always true
     var editorText = $('#EditorArea').val();
     var page = {
         content: editorText,
