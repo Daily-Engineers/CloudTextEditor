@@ -12,21 +12,7 @@ $('#NewBtn').on('click', function() {
   }
 });
 
-//Allows tabs to indent in textarea
-$(document).on('keydown', '#EditorArea', function(e) {
-  var keyCode = e.keyCode;
-  var start = this.selectionStart;
-  var end = this.selectionEnd;
-  if (e.keyCode === 9) {
-    e.preventDefault();
-    $(this).val(
-      $(this).val().substring(0, start) +
-      '\t' +
-      $(this).val().substring(end)
-    );
-    this.selectionStart = this.selectionEnd = start + 1;
-  }
-});
+
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
@@ -35,8 +21,6 @@ $('#StlyeBtn').on('click', function() {
       "background-color": "white",
       "color": "#23272a"
     });
-    //23272a
-
   } else {
     $("#EditorArea").css({
       "background-color": "#333",
@@ -65,10 +49,8 @@ $('#ShareBtn').on('click', function() {
   showSuccessMessage('Link copied!');
 });
 
-
 //Download button
 $('#DownloadBtn').on('click', function() {
-
   var editorText = $('#EditorArea').val();
   var page = {
     content: editorText,
@@ -87,60 +69,4 @@ $('#DownloadBtn').on('click', function() {
       console.error(err);
     }
   })
-})
-
-//Auto-save every 8 seconds if the doc is in the database already
-if (docSaved) {
-  setInterval(function() {
-    savePage();
-  }, 8000);
-}
-//Saves file
-$('#SaveBtn').on('click', function() {
-  savePage()
 });
-
-// save on browser closing
-window.onunload = function() {
-  savePage();
-}
-
-function savePage() {
-  var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
-  if (docExists) {
-    //update page in db
-  } else {
-    var page = {
-      content: editorText,
-      isInDB: docSaved
-    };
-    $.ajax({
-      method: 'post',
-      url: '/save',
-      data: page,
-      datatype: 'json',
-      success: function(page, textStatus, xhr) {
-        if (xhr.status == 201)
-          window.location.href = '/doc/' + page.page_id;
-        else
-          showSuccessMessage();
-      },
-      error: function(err) {
-        console.error(err);
-      }
-    });
-  }
-}
-
-function showSuccessMessage(msg) {
-  $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
-  setTimeout(() => $('#MessageItem').fadeOut(300), 3000);
-}
-
-$(function() {
-  // Target all classed with ".lined"
-  $("#EditorArea").linedtextarea({
-    selectedLine: 1
-  })
-})
