@@ -21,6 +21,7 @@ describe('/register', function() {
 });
 
 
+
 //TODO fix this. 'it' assert is called before the data base returns resalts
 describe('dB.user',function(){
     it('Should see to see if the user exists in the database',async function(){

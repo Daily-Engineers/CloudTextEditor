@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = require("../models/users");
 
 
+
 //register user
 exports.register = function (req, res) {
     console.log("registering: ");
