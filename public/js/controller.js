@@ -16,16 +16,19 @@ $('#NewBtn').on('click', function() {
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
+  var editor = $("#EditorArea");
   if (lightTheme) {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "white",
       "color": "#23272a"
     });
+    this.innerHTML= 'Dark';
   } else {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "#333",
       "color": "white"
     });
+    this.innerHTML = 'Light';
   }
 });
 
