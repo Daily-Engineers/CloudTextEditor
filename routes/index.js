@@ -26,8 +26,7 @@ router.get('/doc/:page_id', (req, res) => {
 
 
 //TODO dev statments for logging in users before we had login page
-router.get('/log',function(req,res){res.render('login', {user:req.user})});
-router.get('/reg', function(req, res){res.render('auth')});
+router.get('/reg', function(req, res){res.render('auth', {user: req.user})});
 
 
 // route for register action
@@ -39,9 +38,8 @@ router.post('/login', auth.login);
 router.get('/login', auth.getLogin);
 
 // route for logout action
-router.get('/logout', auth.logout, function(){
-
-});
+router.get('/logout', auth.logout);
 
 
 module.exports = router;
+

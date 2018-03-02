@@ -14,6 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/Daily-Engineers/CloudTextEditor.git"
   },
+
+
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -34,6 +36,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.5.0",
+    "passport-local-mongoose-email": "^0.1.3",
     "npm": "^5.6.0",
     "terminal": "^0.1.4"
   }

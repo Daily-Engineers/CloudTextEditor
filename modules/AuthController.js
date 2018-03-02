@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = require("../models/users");
 
 
+
 //register user
 exports.register = function (req, res) {
     console.log("registering: ");
@@ -9,10 +10,13 @@ exports.register = function (req, res) {
     //User object, if you want the user to have more 'things' in it you must add it do here and the model users.js file
     User.register(new User({
 
-        username: req.body.username
+        username: req.body.username.trim(),
+
+        //TODO get date for when account is created.
+        //dateCreated:
 
 
-    }), req.body.password, function (err, user) {
+    }), req.body.password.trim(), function (err, user) {
         if (err) {
             //TODO When failed register
 
@@ -22,10 +26,7 @@ exports.register = function (req, res) {
         } else {
 
             //TODO When successful register
-            res.send({
-                success: true,
-                user: user
-            });
+            res.status(200);
         }
     });
 };
@@ -33,30 +34,35 @@ exports.register = function (req, res) {
 //login
 exports.login = function (req, res, next) {
 
-    User.authenticate()(req.body.username, req.body.password, function (err, user, options) {
-        if (err)
-            //TODO When error
-            return next(err);
-        if (user === false) {
-            //TODO When Failed login
+    if(req.user) {
 
-            res.send({
-                message: options.message,
-                success: false
-            });
+        //if user is already logged in
+        res.status(201).json(req.user);
+    } else{
 
-        } else {
-            req.login(user, function (err) {
-                req.user.hash = null;
-                //TODO When after logged in
-                res.send({
-                    success: true,
-                    user: user,
+        User.authenticate()(req.body.username.trim(), req.body.password.trim(), function (err, user, options) {
+            if (err)
+            //When error
+                return next(err);
+            if (user === false) {
+                //When Failed login
+                res.status(403).json({message: options.message})
+
+            } else {
+                req.login(user, function (err) {
+
+                    //TODO fix this gross as shit.
+                    req.user.hash = null;
+                    req.user.salt = null;
+                    req.user.authToken = null;
+                    req.user.isAuthenticated = null;
+
+                    //When after logged in
+                    res.status(201).json(user)
                 });
-
-            });
-        }
-    });
+            }
+        });
+    }
 
 };
 
@@ -82,9 +88,10 @@ exports.getLogin = function (req, res) {
 };
 
 //logs the user out
+//TODO save on logout
 exports.logout = function (req, res, next){
     req.logout();
-    return next();
+    res.status(201).json({message: 'logged out'})
 };
 
 

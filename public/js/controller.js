@@ -49,8 +49,110 @@ $('#ShareBtn').on('click', function() {
   showSuccessMessage('Link copied!');
 });
 
+//login
+$('#LoginBtn').on('click',function(){
+
+    var username = $('#username').val().trim()
+    var password = $('#password').val().trim()
+    var user = {
+        username: username,
+        password: password
+    }
+    $.ajax({
+        method: 'post',
+        url: '/login',
+        data: user,
+        datatype: 'json',
+        success: function(user, Status, xhr){
+            //If login secsefull
+            if(xhr.status == 201){
+                console.log("s")
+            }
+            //login failed
+            else{
+                console.log("f")
+            }
+        },
+        error: function(err){
+            console.log(err)
+        }
+    })
+
+});
+
+$('#LogoutBtn').on('click', function(){
+    console.log("out")
+    var user = {
+        username: "temp"
+    }
+
+    $.ajax({
+        method: 'get',
+        url: '/logout',
+        data: user,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+})
+
+
+$('#RegisterBtn').on('click', function () {
+    var username = $('#username').val().trim()
+    var password = $('#password').val().trim()
+
+    var user = {
+        username: username,
+        password: password
+    }
+
+    $.ajax({
+        method: 'post',
+        url: '/register',
+        data: user,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+});
+
+
 //Download button
-$('#DownloadBtn').on('click', function() {
+$('#DownloadBtn').on('click', function () {
+
+    var editorText = $('#EditorArea').val();
+    var page = {
+        content: editorText,
+        isInDB: docSaved
+    };
+    $.ajax({
+        method: 'post',
+        url: '/page/download',
+        data: page,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+            console.log('posted! :)');
+            if(xhr.status == 201)
+                window.location.href = '/page/download/' + page.page_id;
+            },
+        error: function (err) {
+            console.log(err);
+            }
+   })
+})
+
+//Saves file
+$('#SaveBtn').on('click', function() {
+  var docExists = false; //TODO verify if doc exists
   var editorText = $('#EditorArea').val();
   var page = {
     content: editorText,
@@ -70,3 +172,4 @@ $('#DownloadBtn').on('click', function() {
     }
   })
 });
+
