@@ -14,6 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/Daily-Engineers/CloudTextEditor.git"
   },
+
+
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -26,10 +28,16 @@
     "chai-http": "^3.0.0",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "handlebars": "^4.0.11",
     "mocha": "^5.0.1",
     "mongoose": "^5.0.2",
+    "mongoose": "^5.0.7",
     "nodemon": "^1.14.12",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.5.0",
+    "passport-local-mongoose-email": "^0.1.3",
     "npm": "^5.6.0",
     "terminal": "^0.1.4"
   }

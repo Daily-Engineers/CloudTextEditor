@@ -7,3 +7,4 @@
 /public/libs/highlightjs/.gitattributes
 /public/libs/highlightjs/.gitignore
 /public/libs/highlightjs/.travis.yml
+*.swp

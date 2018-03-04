@@ -11,7 +11,6 @@
   <!--template CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/template.css">
   <!--editor CSS-->
-
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
 
   <!--Syntax hilighting-->
@@ -19,6 +18,8 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <link rel="faq" href="faq.css">
 
 </head>
 <script>
@@ -60,24 +61,71 @@
         {{/if}}
 
         <li class="nav-item">
-          <a class="nav-link text-success font-weight-bold invisible" id="SuccessIcon" href="javascript:void(0);">Saved!</a>
+          <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
         </li>
 
       </ul>
+        <!-- Button trigger modal -->
+        <div class="ml-auto">
+            <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
+                ?
+            </button>
+
+        </div>
     </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content modal-lg">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div id="includedContent"></div>
+                      <!--Greeting-->
+
+                      <!--Style Toggle-->
+
+                      <!--Saving-->
+
+                      <!--New-->
+
+                      <!--Downloading-->
+
+                      <!--Sharing-->
+
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
   </nav>
   {{{body}}}
 </body>
 <!--jQuery-->
 <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
+<!--Linedtextareas-->
 <script src="/public/libs/linedTextArea/jquery-linedtextarea.js"></script>
 <!--Bootstrap-->
 <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
 <!--Controller-->
-
 <script src="/public/js/controller.js"></script>
 <!-- Highlight jS -->
 
 <script>hljs.initHighlightingOnLoad();</script>
-
+<!--main-->
+<script src="/public/js/main.js"></script>
+<!--keyboard input-->
+<script src="/public/js/keyboard.js"></script>
+<!--Front end unit test library-->
+<!--<script src="chai.js"></script>-->
+<!--<script src="chai-http.js"></script>-->
+<!--<script> chai.use(chaiHttp); </script>-->
 </html>
