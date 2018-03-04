@@ -11,8 +11,6 @@ $('#NewBtn').on('click', function() {
     }
   }
 });
-
-
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
@@ -169,5 +167,19 @@ $('#SaveBtn').on('click', function() {
     error: function(err) {
       console.error(err);
     }
-  })
+}
+
+//Deleting a file
+$('#DelBtn').on('click', function () {
+    $.ajax({
+       method: 'post',
+       url: '/page/deleteFile',
+       success: function(page, textStatus, xhr) {
+           window.location = "/";
+       },
+        error: function(err) {
+           console.log(err);
+        }
+
+    });
 });
