@@ -42,7 +42,7 @@ function savePage() {
   });
 }
 $(document).ready(function () {
-    $('#sidebarCollapse').on('click', function () {
+    $('#brand').on('click', function () {
         $('#sidebar').toggleClass('active');
         console.log('h');
     });

@@ -11,8 +11,6 @@ $('#NewBtn').on('click', function() {
     }
   }
 });
-
-
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
@@ -61,8 +59,8 @@ $('#SaveBtn').on('click', function() {
 //login
 $('#LoginBtn').on('click',function(){
 
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
     var user = {
         username: username,
         password: password
@@ -74,13 +72,8 @@ $('#LoginBtn').on('click',function(){
         datatype: 'json',
         success: function(user, Status, xhr){
             //If login secsefull
-            if(xhr.status == 201){
-                console.log("s")
-            }
-            //login failed
-            else{
-                console.log("f")
-            }
+            if(xhr.status == 201)
+                window.location = "";
         },
         error: function(err){
             console.log(err)
@@ -101,7 +94,7 @@ $('#LogoutBtn').on('click', function(){
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+            window.location = "";
         },
         error: function (err) {
             console.log(err);
@@ -111,8 +104,8 @@ $('#LogoutBtn').on('click', function(){
 
 
 $('#RegisterBtn').on('click', function () {
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
 
     var user = {
         username: username,
@@ -125,7 +118,7 @@ $('#RegisterBtn').on('click', function () {
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+          window.location = "";
         },
         error: function (err) {
             console.log(err);
@@ -160,23 +153,38 @@ $('#DownloadBtn').on('click', function () {
 
 //Saves file
 $('#SaveBtn').on('click', function() {
-  var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
-  var page = {
-    content: editorText,
-    isInDB: docSaved
-  };
-  $.ajax({
-    method: 'post',
-    url: '/page/download',
-    data: page,
-    datatype: 'json',
-    success: function(page, textStatus, xhr) {
-      if (xhr.status == 201)
-        window.location.href = '/page/download/' + page.page_id;
-    },
-    error: function(err) {
-      console.error(err);
-    }
-  })
+    var docExists = false; //TODO verify if doc exists
+    var editorText = $('#EditorArea').val();
+    var page = {
+        content: editorText,
+        isInDB: docSaved
+    };
+    $.ajax({
+        method: 'post',
+        url: '/page/download',
+        data: page,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+            if (xhr.status == 201)
+                window.location.href = '/page/download/' + page.page_id;
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+});
+
+//Deleting a file
+$('#DelBtn').on('click', function () {
+    $.ajax({
+       method: 'post',
+       url: '/page/deleteFile',
+       success: function(page, textStatus, xhr) {
+           window.location = "/";
+       },
+        error: function(err) {
+           console.log(err);
+        }
+
+    });
 });

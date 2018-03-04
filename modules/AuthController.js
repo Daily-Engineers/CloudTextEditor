@@ -40,7 +40,7 @@ exports.login = function(req, res, next) {
     res.status(201).json(req.user);
   } else {
 
-    User.authenticate()(req.body.username.trim(), req.body.password.trim(), function(err, user, options) {
+    User.authenticate()(req.body.username.trim(), req.body.password, function(err, user, options) {
       if (err)
         //When error
         return next(err);
