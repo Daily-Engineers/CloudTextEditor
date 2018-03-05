@@ -7,7 +7,7 @@ $('#NewBtn').on('click', function() {
   var editor = $('#EditorArea').val();
   if (editor.trim().length > 0) {
     if (confirm('Are you sure? You will lose any unsaved progress.')) {
-      $('#EditorArea').val('');
+      window.location = "/";
     }
   }
 });
@@ -32,6 +32,7 @@ $('#StlyeBtn').on('click', function() {
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
+  console.log('done');
   //get full url of page
   var url = window.locahttp;
   //creates dummy element

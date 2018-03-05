@@ -2,8 +2,11 @@
 <html>
 
 <head>
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/img/favicon-16x16.png">
   <meta charset="utf-8" />
-  <title>Curlyboi</title>
+  <title>Curlybois</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/public/libs/linedTextArea/jquery-linedtextarea.css">
   <!--Bootstrap CSS depedancy-->
@@ -36,37 +39,27 @@
 
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" id="brand" href="javascript:void(0);">Curlyboi</a>
+    <a class="navbar-brand" id="brand" href="javascript:void(0);">Curlybois</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="dropdown nav-item">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File<span class="sr-only caret">(current)</span></a>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
                   <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
-                  <li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>
+                  {{#if docSaved}}<li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>{{/if}}
                 </ul>
         </li>
           <li class="nav-item">
             <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
           </li>
+          {{#if docSaved}}<li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>{{/if}}
           <li class="nav-item">
             <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
           </li>
-        {{! Only display share if doc has been saved}}
-        {{#if docSaved}}
-          <li class="nav-item">
-            <a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a>
-          </li>
-            <li class="nav-item">
-                <a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a>
-            <li class="nav-item">
-                <a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a>
-            </li>
-        {{/if}}
 
         <li class="nav-item">
           <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
@@ -78,7 +71,6 @@
             <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
                 ?
             </button>
-
         </div>
     </div>
 
@@ -121,7 +113,7 @@
   <!-- Sidebar -->
   <nav id="sidebar" class="active">
       <div class="sidebar-header">
-          <h3>Curlyboi</h3>
+          <h3>Curlybois</h3>
       </div>
 
       <ul class="list-unstyled components">
@@ -133,19 +125,19 @@
           <li class="active">
             {{#if user}}
             <li>
-                <a href="#pageSubmenu" data-toggle="collapse" class="font-weight-bold" aria-expanded="false">{{user.username}}'s documents<span class="glyphicon glyphicon-chevron-down glyphicon-align-left" aria-hidden="true"></span></a>
+                <a href="#pageSubmenu" class="sidenav-item" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents<span class="glyphicon glyphicon-chevron-down glyphicon-align-left" aria-hidden="true"></span></a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li><a href="/doc/1d5q1w">Page 1</a></li>
                     <li><a href="/doc/1k6gep">Page 2</a></li>
-                    <li><a href="/doc/R5pyb">Page 3</a></li>
+                    <li><a href="/doc/VQ5n6">Page 3</a></li>
                 </ul>
             </li>
             </li>
             {{else}}
-              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Login</a>
+              <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
               <ul class="collapse list-unstyled" id="homeSubmenu">
-                  <li><input type="text" class="login form-control" id="UsernameField"></li>
-                  <li><input type="password" class="login form-control" id="PasswordField"></li>
+                  <li><input type="text" placeholder="username" class="login form-control" id="UsernameField"></li>
+                  <li><input type="password" placeholder="password" class="login form-control" id="PasswordField"></li>
                   <li><button class="login form-control" id="LoginBtn">Login</button></li>
                   <li><button class="login form-control" id="RegisterBtn">Signup</button></li>
               </ul>
