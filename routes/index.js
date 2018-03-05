@@ -13,7 +13,8 @@ router.get('/doc/:page_id', (req, res) => {
     if (page) {
       res.render('editor', {
         page: page,
-        docSaved: true
+        docSaved: true,
+        user:req.user
       });
     } else {
       res.status(404).send('<h1>Wow there, Cowboy Neil. It looks like you are lost! 🤠</h1>');

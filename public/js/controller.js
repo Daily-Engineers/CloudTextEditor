@@ -61,8 +61,8 @@ $('#SaveBtn').on('click', function() {
 //login
 $('#LoginBtn').on('click',function(){
 
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
     var user = {
         username: username,
         password: password
@@ -74,13 +74,8 @@ $('#LoginBtn').on('click',function(){
         datatype: 'json',
         success: function(user, Status, xhr){
             //If login secsefull
-            if(xhr.status == 201){
-                console.log("s")
-            }
-            //login failed
-            else{
-                console.log("f")
-            }
+            if(xhr.status == 201)
+                window.location = "";
         },
         error: function(err){
             console.log(err)
@@ -101,7 +96,7 @@ $('#LogoutBtn').on('click', function(){
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+            window.location = "";
         },
         error: function (err) {
             console.log(err);
@@ -111,8 +106,8 @@ $('#LogoutBtn').on('click', function(){
 
 
 $('#RegisterBtn').on('click', function () {
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
 
     var user = {
         username: username,
@@ -125,7 +120,7 @@ $('#RegisterBtn').on('click', function () {
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+          window.location = "";
         },
         error: function (err) {
             console.log(err);
