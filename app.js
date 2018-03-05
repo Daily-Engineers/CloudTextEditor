@@ -42,6 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 app.engine('handlebars', hbs({
   defaultLayout: 'main'
 }));
+
 app.set('view engine', 'handlebars');
 
 //Define routes
@@ -49,6 +50,7 @@ app.use(require('./routes/index'));
 app.use(require('./routes/pages'));
 app.use(require('./routes/users'));
 app.use(require('./routes/download'));
+app.use(require('./routes/deleteFile'));
 
 // Serve static files
 app.use('/public', express.static('public'));
@@ -60,6 +62,7 @@ app.post('/ping',(req, res)=>res.send('pong'));
 //listen on port 3000
 app.listen(3000, () => {
   console.log("Listening on port 3000!");
-})
+});
 
 module.exports = app; //for testing
+

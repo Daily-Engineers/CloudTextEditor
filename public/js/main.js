@@ -12,10 +12,6 @@ if (docSaved) {
     savePage();
   }, 8000);
 }
-//Saves file
-$('#SaveBtn').on('click', function() {
-  savePage()
-});
 
 // save on browser closing
 window.onunload = function() {
@@ -45,7 +41,12 @@ function savePage() {
     }
   });
 }
-
+$(document).ready(function () {
+    $('#brand').on('click', function () {
+        $('#sidebar').toggleClass('active');
+        console.log('h');
+    });
+});
 function showSuccessMessage(msg) {
   $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
   setTimeout(() => $('#MessageItem').fadeOut(300), 3000);

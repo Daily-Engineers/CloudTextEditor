@@ -7,30 +7,32 @@ $('#NewBtn').on('click', function() {
   var editor = $('#EditorArea').val();
   if (editor.trim().length > 0) {
     if (confirm('Are you sure? You will lose any unsaved progress.')) {
-      $('#EditorArea').val('');
+      window.location = "/";
     }
   }
 });
-
-
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
+  var editor = $("#EditorArea");
   if (lightTheme) {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "white",
       "color": "#23272a"
     });
+    this.innerHTML= 'Dark';
   } else {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "#333",
       "color": "white"
     });
+    this.innerHTML = 'Light';
   }
 });
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
+  console.log('done');
   //get full url of page
   var url = window.locahttp;
   //creates dummy element
@@ -49,11 +51,17 @@ $('#ShareBtn').on('click', function() {
   showSuccessMessage('Link copied!');
 });
 
+//Saves file
+$('#SaveBtn').on('click', function() {
+  savePage()
+});
+
+
 //login
 $('#LoginBtn').on('click',function(){
 
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
     var user = {
         username: username,
         password: password
@@ -65,13 +73,8 @@ $('#LoginBtn').on('click',function(){
         datatype: 'json',
         success: function(user, Status, xhr){
             //If login secsefull
-            if(xhr.status == 201){
-                console.log("s")
-            }
-            //login failed
-            else{
-                console.log("f")
-            }
+            if(xhr.status == 201)
+                window.location = "";
         },
         error: function(err){
             console.log(err)
@@ -93,7 +96,7 @@ $('#LogoutBtn').on('click', function(){
         data: page,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+            window.location = "";
         },
         error: function (err) {
             console.log(err);
@@ -103,8 +106,8 @@ $('#LogoutBtn').on('click', function(){
 
 
 $('#RegisterBtn').on('click', function () {
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
 
     var user = {
         username: username,
@@ -117,7 +120,7 @@ $('#RegisterBtn').on('click', function () {
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+          window.location = "";
         },
         error: function (err) {
             console.log(err);
@@ -152,23 +155,38 @@ $('#DownloadBtn').on('click', function () {
 
 //Saves file
 $('#SaveBtn').on('click', function() {
-  var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
-  var page = {
-    content: editorText,
-    isInDB: docSaved
-  };
-  $.ajax({
-    method: 'post',
-    url: '/page/download',
-    data: page,
-    datatype: 'json',
-    success: function(page, textStatus, xhr) {
-      if (xhr.status == 201)
-        window.location.href = '/page/download/' + page.page_id;
-    },
-    error: function(err) {
-      console.error(err);
-    }
-  })
+    var docExists = false; //TODO verify if doc exists
+    var editorText = $('#EditorArea').val();
+    var page = {
+        content: editorText,
+        isInDB: docSaved
+    };
+    $.ajax({
+        method: 'post',
+        url: '/page/download',
+        data: page,
+        datatype: 'json',
+        success: function (page, textStatus, xhr) {
+            if (xhr.status == 201)
+                window.location.href = '/page/download/' + page.page_id;
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+});
+
+//Deleting a file
+$('#DelBtn').on('click', function () {
+    $.ajax({
+       method: 'post',
+       url: '/page/deleteFile',
+       success: function(page, textStatus, xhr) {
+           window.location = "/";
+       },
+        error: function(err) {
+           console.log(err);
+        }
+
+    });
 });

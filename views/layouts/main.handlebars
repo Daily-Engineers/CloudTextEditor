@@ -2,20 +2,29 @@
 <html>
 
 <head>
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/img/favicon-16x16.png">
   <meta charset="utf-8" />
-  <title>Example App</title>
+  <title>Curlybois</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/public/libs/linedTextArea/jquery-linedtextarea.css">
   <!--Bootstrap CSS depedancy-->
   <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.min.css">
+  <!--sidebar CSS-->
+  <link rel="stylesheet" type="text/css" href="/public/css/sidebar.css">
   <!--template CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/template.css">
   <!--editor CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
 
+  <!--Syntax hilighting-->
+  <link rel="stylesheet" type="text/css" href="/public/libs/highlightjs/styles/default.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
     <link rel="faq" href="faq.css">
-
 
 </head>
 <script>
@@ -28,83 +37,125 @@
 </script>
 <body>
 
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="\">CloudText</a>
+    <a class="navbar-brand" id="brand" href="javascript:void(0);">Curlybois</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a>
+        <li class="dropdown nav-item">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
+                  <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
+                  {{#if docSaved}}<li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>{{/if}}
+                </ul>
         </li>
           <li class="nav-item">
             <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
           </li>
+          {{#if docSaved}}<li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>{{/if}}
           <li class="nav-item">
-            <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Style Toggle</a>
-          </li>
-          <li class="nav-item">
-              <a id="LogoutBtn" href="javascript:void(0);">Logout</a>
+            <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
           </li>
 
-        {{! Only display share if doc has been saved}}
-        {{#if docSaved}}
-          <li class="nav-item">
-            <a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a>
-          </li>
-
-            <li class="nav-item">
-                <a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a>
-            </li>
-        {{/if}}
         <li class="nav-item">
           <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
         </li>
+
+
       </ul>
         <!-- Button trigger modal -->
-        <div class="ml-auto">
-            <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
-                ?
-            </button>
-
-        </div>
-    </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content modal-lg">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <div id="includedContent"></div>
-                      <!--Greeting-->
-
-                      <!--Style Toggle-->
-
-                      <!--Saving-->
-
-                      <!--New-->
-
-                      <!--Downloading-->
-
-                      <!--Sharing-->
+       <div class="ml-auto">
+          <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
+              ?
+          </button>
+      </div>
+      </div>
 
 
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
+
+  </nav>
+  <!-- Modal -->
+  <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content modal-lg">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div id="includedContent"></div>
+                  <!--Greeting-->
+
+                  <!--Style Toggle-->
+
+                  <!--Saving-->
+
+                  <!--New-->
+
+                  <!--Downloading-->
+
+                  <!--Sharing-->
+
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
           </div>
       </div>
+  </div>
+  <div class = "wrapper">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="active">
+      <div class="sidebar-header">
+          <h3>Curlybois</h3>
+      </div>
+
+      <ul class="list-unstyled components">
+        {{#if user}}
+        <p><b>Account:</b> {{user.username}}</p>
+        {{/if}}
+      <div class="container-editor container">
+
+          <li class="active">
+            {{#if user}}
+            <li>
+                <a href="#pageSubmenu" class="sidenav-item" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents<span class="glyphicon glyphicon-chevron-down glyphicon-align-left" aria-hidden="true"></span></a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li><a href="/doc/1d5q1w">Page 1</a></li>
+                    <li><a href="/doc/1k6gep">Page 2</a></li>
+                    <li><a href="/doc/VQ5n6">Page 3</a></li>
+                </ul>
+            </li>
+            </li>
+            {{else}}
+              <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
+              <ul class="collapse list-unstyled" id="homeSubmenu">
+                  <li><input type="text" placeholder="username" class="login form-control" id="UsernameField"></li>
+                  <li><input type="password" placeholder="password" class="login form-control" id="PasswordField"></li>
+                  <li><button class="login form-control" id="LoginBtn">Login</button></li>
+                  <li><button class="login form-control" id="RegisterBtn">Signup</button></li>
+              </ul>
+            {{/if}}
+          </li>
+        </div>
+      </ul>
+        <div class="container">
+          {{#if user}}
+          <button class="login form-control" id="LogoutBtn">Logout</button>
+          {{/if}}
+      </div>
   </nav>
+
   {{{body}}}
+</div>
 </body>
 <!--jQuery-->
 <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
@@ -114,6 +165,9 @@
 <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
 <!--Controller-->
 <script src="/public/js/controller.js"></script>
+<!-- Highlight jS -->
+
+<script>hljs.initHighlightingOnLoad();</script>
 <!--main-->
 <script src="/public/js/main.js"></script>
 <!--keyboard input-->
