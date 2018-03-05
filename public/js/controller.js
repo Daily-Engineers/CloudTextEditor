@@ -32,9 +32,9 @@ $('#StlyeBtn').on('click', function() {
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
-  console.log('done');
+  console.log('ShareBtn');
   //get full url of page
-  var url = window.locahttp;
+  var url = window.location.href;
   //creates dummy element
   var copyFrom = document.createElement("textarea");
   //adds text to dummy element
@@ -95,7 +95,7 @@ $('#LogoutBtn').on('click', function(){
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-            window.location = "";
+            window.location = "/";
         },
         error: function (err) {
             console.log(err);
@@ -105,8 +105,8 @@ $('#LogoutBtn').on('click', function(){
 
 
 $('#RegisterBtn').on('click', function () {
-    var username = $('#UsernameField').val().trim()
-    var password = $('#PasswordField').val().trim()
+    var username = $('#UsernameField').val().trim();
+    var password = $('#PasswordField').val();
 
     var user = {
         username: username,
