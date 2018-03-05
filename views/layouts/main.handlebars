@@ -15,6 +15,14 @@
   <!--editor CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
 
+  <!--Syntax hilighting-->
+  <link rel="stylesheet" type="text/css" href="/public/libs/highlightjs/styles/default.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <link rel="faq" href="faq.css">
+
 </head>
 <script>
   //true if document is already in the database
@@ -53,16 +61,59 @@
           <li class="nav-item">
             <a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a>
           </li>
-
+            <li class="nav-item">
+                <a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a>
             <li class="nav-item">
                 <a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a>
             </li>
         {{/if}}
+
         <li class="nav-item">
           <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
         </li>
+
       </ul>
+        <!-- Button trigger modal -->
+        <div class="ml-auto">
+            <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
+                ?
+            </button>
+
+        </div>
     </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content modal-lg">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div id="includedContent"></div>
+                      <!--Greeting-->
+
+                      <!--Style Toggle-->
+
+                      <!--Saving-->
+
+                      <!--New-->
+
+                      <!--Downloading-->
+
+                      <!--Sharing-->
+
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
   </nav>
 
   <div class = "wrapper">
@@ -120,6 +171,9 @@
 <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
 <!--Controller-->
 <script src="/public/js/controller.js"></script>
+<!-- Highlight jS -->
+
+<script>hljs.initHighlightingOnLoad();</script>
 <!--main-->
 <script src="/public/js/main.js"></script>
 <!--keyboard input-->
