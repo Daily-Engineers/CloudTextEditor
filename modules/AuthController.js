@@ -91,6 +91,13 @@ exports.getLogin = function(req, res) {
 
 //logs the user out
 //TODO save on logout
+
+//Save logic
+exports.saveLogout = function(req,res,next){
+    savePage(req, res, next);
+    return next();
+}
+
 exports.logout = function(req, res, next) {
   req.logout();
   res.status(201).json({

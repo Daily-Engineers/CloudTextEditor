@@ -16,6 +16,6 @@ router.post('/login', auth.login);
 router.get('/login', auth.getLogin);
 
 // route for logout action
-router.get('/logout', auth.logout);
+router.get('/logout', auth.saveLogout,auth.logout);
 
 module.exports = router;
