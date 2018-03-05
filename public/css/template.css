@@ -41,7 +41,16 @@ input.login:focus, button:active, button.login:focus{
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
   outline: 0 none;
 }
+a.sidenav-item:hover{
+  text-decoration: none;
+}
 
+::placeholder{
+  color:white;
+  opacity: 1;
+}
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    display: none;
 a{
   outline:0;
 }
