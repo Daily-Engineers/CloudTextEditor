@@ -81,15 +81,16 @@ $('#LoginBtn').on('click',function(){
 });
 
 $('#LogoutBtn').on('click', function(){
-    console.log("out")
-    var user = {
-        username: "temp"
-    }
+    var editorText = $('#EditorArea').val();
+    var page = {
+        content: editorText,
+        isInDB: docSaved
+    };
 
     $.ajax({
-        method: 'get',
+        method: 'post',
         url: '/logout',
-        data: user,
+        data: page,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require("../models/users");
+const savePage = require('../modules/savePage');
 
 
 
@@ -91,7 +92,11 @@ exports.getLogin = function (req, res) {
 //TODO save on logout
 exports.logout = function (req, res, next){
     req.logout();
-    res.status(201).json({message: 'logged out'})
+    //res.status(201).json({message: 'logged out'})
+    console.log("logged out");
 };
-
-
+//Save logic
+exports.saveLogout = function(req,res,next){
+    savePage(req, res, next);
+    return next();
+}
