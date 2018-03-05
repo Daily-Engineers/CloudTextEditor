@@ -14,16 +14,19 @@ $('#NewBtn').on('click', function() {
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
+  var editor = $("#EditorArea");
   if (lightTheme) {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "white",
       "color": "#23272a"
     });
+    this.innerHTML= 'Dark';
   } else {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "#333",
       "color": "white"
     });
+    this.innerHTML = 'Light';
   }
 });
 
@@ -47,11 +50,17 @@ $('#ShareBtn').on('click', function() {
   showSuccessMessage('Link copied!');
 });
 
+//Saves file
+$('#SaveBtn').on('click', function() {
+  savePage()
+});
+
+
 //login
 $('#LoginBtn').on('click',function(){
 
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
     var user = {
         username: username,
         password: password
@@ -63,13 +72,8 @@ $('#LoginBtn').on('click',function(){
         datatype: 'json',
         success: function(user, Status, xhr){
             //If login secsefull
-            if(xhr.status == 201){
-                console.log("s")
-            }
-            //login failed
-            else{
-                console.log("f")
-            }
+            if(xhr.status == 201)
+                window.location = "";
         },
         error: function(err){
             console.log(err)
@@ -90,7 +94,7 @@ $('#LogoutBtn').on('click', function(){
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+            window.location = "";
         },
         error: function (err) {
             console.log(err);
@@ -100,8 +104,8 @@ $('#LogoutBtn').on('click', function(){
 
 
 $('#RegisterBtn').on('click', function () {
-    var username = $('#username').val().trim()
-    var password = $('#password').val().trim()
+    var username = $('#UsernameField').val().trim()
+    var password = $('#PasswordField').val().trim()
 
     var user = {
         username: username,
@@ -114,7 +118,7 @@ $('#RegisterBtn').on('click', function () {
         data: user,
         datatype: 'json',
         success: function (page, textStatus, xhr) {
-
+          window.location = "";
         },
         error: function (err) {
             console.log(err);

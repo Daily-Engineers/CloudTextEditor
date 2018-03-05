@@ -3,11 +3,13 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Example App</title>
+  <title>Curlyboi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/public/libs/linedTextArea/jquery-linedtextarea.css">
   <!--Bootstrap CSS depedancy-->
-  <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.min.css">
+  <!--sidebar CSS-->
+  <link rel="stylesheet" type="text/css" href="/public/css/sidebar.css">
   <!--template CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/template.css">
   <!--editor CSS-->
@@ -32,21 +34,27 @@
 </script>
 <body>
 
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="\">CloudText</a>
+    <a class="navbar-brand" id="brand" href="javascript:void(0);">Curlyboi</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a>
+        <li class="dropdown nav-item">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File<span class="sr-only caret">(current)</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
+                  <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
+                  <li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>
+                </ul>
         </li>
           <li class="nav-item">
             <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Style Toggle</a>
+            <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
           </li>
         {{! Only display share if doc has been saved}}
         {{#if docSaved}}
@@ -107,7 +115,53 @@
           </div>
       </div>
   </nav>
+
+  <div class = "wrapper">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="active">
+      <div class="sidebar-header">
+          <h3>Curlyboi</h3>
+      </div>
+
+      <ul class="list-unstyled components">
+        {{#if user}}
+        <p><b>Account:</b> {{user.username}}</p>
+        {{/if}}
+      <div class="container-editor container">
+
+          <li class="active">
+            {{#if user}}
+            <li>
+                <a href="#pageSubmenu" data-toggle="collapse" class="font-weight-bold" aria-expanded="false">{{user.username}}'s documents<span class="glyphicon glyphicon-chevron-down glyphicon-align-left" aria-hidden="true"></span></a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li><a href="/doc/1d5q1w">Page 1</a></li>
+                    <li><a href="/doc/1k6gep">Page 2</a></li>
+                    <li><a href="/doc/R5pyb">Page 3</a></li>
+                </ul>
+            </li>
+            </li>
+            {{else}}
+              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Login</a>
+              <ul class="collapse list-unstyled" id="homeSubmenu">
+                  <li><input type="text" class="login form-control" id="UsernameField"></li>
+                  <li><input type="password" class="login form-control" id="PasswordField"></li>
+                  <li><button class="login form-control" id="LoginBtn">Login</button></li>
+                  <li><button class="login form-control" id="RegisterBtn">Signup</button></li>
+              </ul>
+            {{/if}}
+          </li>
+        </div>
+      </ul>
+        <div class="container">
+          {{#if user}}
+          <button class="login form-control" id="LogoutBtn">Logout</button>
+          {{/if}}
+      </div>
+  </nav>
+
   {{{body}}}
+</div>
 </body>
 <!--jQuery-->
 <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>

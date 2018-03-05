@@ -1,5 +1,5 @@
 .editor {
-  height: 100%;
+  height: 100em;
   width: 100%;
   float: right;
 }
@@ -8,7 +8,6 @@
   border-top: 2px solid #3B8686;
 }
 
-
 textarea.editor {
   outline: none;
   border: none !important;
@@ -16,4 +15,3 @@ textarea.editor {
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
-

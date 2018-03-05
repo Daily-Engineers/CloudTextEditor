@@ -2,10 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const Page = require('../models/page');
-const auth = require("../modules/AuthController.js");
-
 //Serve landing page
-router.get('/', (req, res) => res.render('editor', {docSaved : false}));
+router.get('/', (req, res) => res.render('editor', {docSaved : false, user:req.user}));
 
 
 router.get('/doc/:page_id', (req, res) => {
@@ -15,7 +13,8 @@ router.get('/doc/:page_id', (req, res) => {
     if (page) {
       res.render('editor', {
         page: page,
-        docSaved: true
+        docSaved: true,
+        user:req.user
       });
     } else {
       res.status(404).send('<h1>Wow there, Cowboy Neil. It looks like you are lost! 🤠</h1>');
@@ -24,22 +23,4 @@ router.get('/doc/:page_id', (req, res) => {
 });
 
 
-
-//TODO dev statments for logging in users before we had login page
-router.get('/reg', function(req, res){res.render('auth', {user: req.user})});
-
-
-// route for register action
-router.post('/register', auth.register);
-
-// route for login action
-router.post('/login', auth.login);
-
-router.get('/login', auth.getLogin);
-
-// route for logout action
-router.get('/logout', auth.logout);
-
-
 module.exports = router;
-
