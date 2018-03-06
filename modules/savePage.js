@@ -17,7 +17,7 @@ let save = async function(req, res) {
     let newPage = new Page();
     newPage.content = req.body.content;
     newPage.page_id = await generateUniqueID();
-    newPage.published_by = 'adam';
+    newPage.published_by = req.user;
     newPage.save((err, page) => {
       if (err)
         res.sendStatus(500);
