@@ -7,10 +7,12 @@ const User = require("../models/users");
 exports.register = function(req, res) {
   console.log("registering: ");
 
+  var username = req.body.username.trim();
+
   //User object, if you want the user to have more 'things' in it you must add it do here and the model users.js file
   User.register(new User({
 
-    username: req.body.username.trim(),
+      username: username
 
     //TODO get date for when account is created.
     //dateCreated:
@@ -23,10 +25,14 @@ exports.register = function(req, res) {
       console.log(err);
       return res.send(err);
     } else {
-
-
       //TODO When successful register
-      res.status(200);
+
+        User.findOneAndUpdate({username: username}, {$set:{isAuthenticated: true}},function (err, doc) {
+            if(err) console.log(err);
+            res.status(200);
+        })
+
+
     }
   });
 };
@@ -85,6 +91,13 @@ exports.getLogin = function(req, res) {
 
 //logs the user out
 //TODO save on logout
+
+//Save logic
+exports.saveLogout = function(req,res,next){
+    savePage(req, res, next);
+    return next();
+}
+
 exports.logout = function(req, res, next) {
   req.logout();
   res.status(201).json({

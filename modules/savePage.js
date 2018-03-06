@@ -1,6 +1,6 @@
 const Page = require('../models/page');
-let save = async function(req, res) {
-  let pageContent = req.body.content;
+let save = async function(req, res, next) {
+    let pageContent = req.body.content;
   let isInDB = (req.body.isInDB == 'true')
     //If in db update
   if (isInDB) {
