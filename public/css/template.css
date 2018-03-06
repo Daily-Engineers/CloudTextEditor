@@ -11,6 +11,11 @@ ul.dropdown-menu{
   z-index: 100;
 }
 
+.btn-primary{
+  background: #3B8586;
+  boarder:#3B8586;
+}
+
 .navbar{
   border-bottom: 2px solid #3b8586;
   position: fixed;
@@ -51,6 +56,7 @@ a.sidenav-item:hover{
 }
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     display: none;
+}
 a{
   outline:0;
 }
