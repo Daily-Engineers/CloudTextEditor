@@ -3,8 +3,8 @@
 /config/config.js
 /.idea
 .app.js.swp
-/public/libs/highlightjs/.editorconfig
-/public/libs/highlightjs/.gitattributes
-/public/libs/highlightjs/.gitignore
-/public/libs/highlightjs/.travis.yml
+/public/libs/codemirror/.editorconfig
+/public/libs/codemirror/.gitattributes
+/public/libs/codemirror/.npmignor
+/public/libs/codemirror/.travis.yml
 *.swp

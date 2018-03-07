@@ -51,3 +51,4 @@ function showSuccessMessage(msg) {
   $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
   setTimeout(() => $('#MessageItem').fadeOut(300), 3000);
 }
+
