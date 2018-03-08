@@ -21,6 +21,8 @@ let save = async function(req, res, next) {
     if(req.user){
     newPage.published_by = req.user.username;
     newPage.owners.push(req.user.username);
+    newPage.editors.push(req.user.username);
+    newPage.viewers.push(req.user.username);
   }
     newPage.save((err, page) => {
       if (err)

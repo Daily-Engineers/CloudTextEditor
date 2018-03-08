@@ -18,6 +18,7 @@ window.onunload = function() {
   savePage();
 }
 
+// Save/re-saves page
 function savePage() {
   var docExists = false; //TODO verify if doc exists
   var editorText = $('#EditorArea').val();
@@ -44,9 +45,13 @@ function savePage() {
 $(document).ready(function () {
     $('#brand').on('click', function () {
         $('#sidebar').toggleClass('active');
-        console.log('h');
     });
 });
+function loginAlertFailed(){
+    $('#PasswordField').addClass('invalid');
+    $('#UsernameField').addClass('invalid');
+}
+
 function showSuccessMessage(msg) {
   $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
   setTimeout(() => $('#MessageItem').fadeOut(300), 3000);

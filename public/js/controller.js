@@ -76,7 +76,7 @@ $('#LoginBtn').on('click',function(){
                 window.location = "";
         },
         error: function(err){
-            console.log(err)
+            loginAlertFailed();
         }
     })
 
@@ -90,7 +90,7 @@ $('#LogoutBtn').on('click', function(){
     };
 
     $.ajax({
-        method: 'post',
+        method: 'get',
         url: '/logout',
         data: page,
         datatype: 'json',
@@ -98,7 +98,7 @@ $('#LogoutBtn').on('click', function(){
             window.location = "/";
         },
         error: function (err) {
-            console.err(err);
+            console.error(err);
         }
     })
 })
