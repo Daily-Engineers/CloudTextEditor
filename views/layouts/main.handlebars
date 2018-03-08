@@ -40,7 +40,7 @@
 
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" id="brand" href="javascript:void(0);">Curlybois</a>
+    <a class="navbar-brand" id="brand" href="javascript:void(0);"><i class="fas fa-chevron-circle-right"></i> Curlybois</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -139,9 +139,11 @@
               {{#if docSaved}}
                 <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
                 <ul class="collapse list-unstyled" id="permissionsSubmenu">
-                  {{#each page.owners}}
+                  {{#each page.viewers}}
                     <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
                   {{/each}}
+                  <li><input id="UserSearch" list="UserSuggest" class="login form-control"><datalist id="UserSuggest"></datalist></input></li>
+
                 </ul>
               {{/if}}
             </li>

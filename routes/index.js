@@ -11,7 +11,7 @@ router.get('/doc/:page_id', (req, res) => {
     'page_id': req.params.page_id
   }).exec((err, page) => {
     if (page) {
-      if(req.user && page.viewers.includes(req.user.username)){
+      if(page.published_by===null || req.user && page.viewers.includes(req.user.username)){
       res.render('editor', {
         page: page,
         docSaved: true,

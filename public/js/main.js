@@ -13,14 +13,8 @@ if (docSaved) {
   }, 8000);
 }
 
-// save on browser closing
-window.onunload = function() {
-  savePage();
-}
-
 // Save/re-saves page
 function savePage() {
-  var docExists = false; //TODO verify if doc exists
   var editorText = $('#EditorArea').val();
   var page = {
     content: editorText,
@@ -32,9 +26,9 @@ function savePage() {
     data: page,
     datatype: 'json',
     success: function(page, textStatus, xhr) {
-      if (xhr.status == 201)
+      if (xhr.status == 201){
         window.location.href = '/doc/' + page.page_id;
-      else
+      }else
         showSuccessMessage('Saved!');
     },
     error: function(err) {
@@ -45,11 +39,18 @@ function savePage() {
 $(document).ready(function () {
     $('#brand').on('click', function () {
         $('#sidebar').toggleClass('active');
+        $('#brand > svg').toggleClass('fa-chevron-circle-left fa-chevron-circle-right');
     });
 });
-function loginAlertFailed(){
-    $('#PasswordField').addClass('invalid');
-    $('#UsernameField').addClass('invalid');
+function invalidField(item, remove){
+    $(item).addClass('invalid');
+    if(remove)
+      $(item).removeClass('invalid');
+}
+function validField(item, remove){
+    $(item).addClass('valid');
+    if(remove)
+      $(item).removeClass('valid');
 }
 
 function showSuccessMessage(msg) {

@@ -1,29 +1,36 @@
 const Page = require('../models/page');
 let save = async function(req, res, next) {
-    let pageContent = req.body.content;
+  let pageContent = req.body.content;
   let isInDB = (req.body.isInDB == 'true')
-    //If in db update
+  //If in db update
   if (isInDB) {
     let pageID = req.headers.referer.slice(-5);
-    let query = {'page_id':pageID}
-    Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
-      if(err)
+    let query = {
+      'page_id': pageID
+    }
+    Page.update({
+      'page_id': pageID
+    }, {
+      'content': pageContent
+    }, (err, pageChanges) => {
+      if (err)
         res.sendStatus(500);
       else
         res.sendStatus(202);
     });
   } else {
+    console.log('creating new...');
     //else create new page
     let newPage = new Page();
     newPage.content = req.body.content;
     newPage.page_id = await generateUniqueID();
 
-    if(req.user){
-    newPage.published_by = req.user.username;
-    newPage.owners.push(req.user.username);
-    newPage.editors.push(req.user.username);
-    newPage.viewers.push(req.user.username);
-  }
+    if (req.user) {
+      newPage.published_by = req.user.username;
+      newPage.owners.push(req.user.username);
+      newPage.editors.push(req.user.username);
+      newPage.viewers.push(req.user.username);
+    }
     newPage.save((err, page) => {
       if (err)
         res.sendStatus(500);
