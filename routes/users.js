@@ -30,6 +30,7 @@ router.get('/users', (req, res) => {
   });
 });
 
+//TODO check that poster is owner
 router.post('/users/addViewer/:username', (req, res) => {
   let pageID = req.headers.referer.slice(-5);
   let username = req.params.username;

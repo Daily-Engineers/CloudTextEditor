@@ -19,7 +19,6 @@ let save = async function(req, res, next) {
         res.sendStatus(202);
     });
   } else {
-    console.log('creating new...');
     //else create new page
     let newPage = new Page();
     newPage.content = req.body.content;
