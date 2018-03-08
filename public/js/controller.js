@@ -32,7 +32,6 @@ $('#StlyeBtn').on('click', function() {
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
-  console.log('ShareBtn');
   //get full url of page
   var url = window.location.href;
   //creates dummy element
@@ -99,7 +98,7 @@ $('#LogoutBtn').on('click', function(){
             window.location = "/";
         },
         error: function (err) {
-            console.log(err);
+            console.err(err);
         }
     })
 })
@@ -152,29 +151,6 @@ $('#DownloadBtn').on('click', function () {
             }
    })
 })
-
-//Saves file
-$('#SaveBtn').on('click', function() {
-    var docExists = false; //TODO verify if doc exists
-    var editorText = $('#EditorArea').val();
-    var page = {
-        content: editorText,
-        isInDB: docSaved
-    };
-    $.ajax({
-        method: 'post',
-        url: '/page/download',
-        data: page,
-        datatype: 'json',
-        success: function (page, textStatus, xhr) {
-            if (xhr.status == 201)
-                window.location.href = '/page/download/' + page.page_id;
-        },
-        error: function (err) {
-            console.error(err);
-        }
-    });
-});
 
 //Deleting a file
 $('#DelBtn').on('click', function () {
