@@ -1,4 +1,5 @@
 const Page = require('../models/page');
+const users = require('../models/users');
 let save = async function(req, res, next) {
     let pageContent = req.body.content;
   let isInDB = (req.body.isInDB == 'true')
@@ -6,7 +7,30 @@ let save = async function(req, res, next) {
   if (isInDB) {
     let pageID = req.headers.referer.slice(-5);
     let query = {'page_id':pageID}
-    Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
+
+
+      // save a page in a user collection if user is logged in
+      /*
+      *   add a new field called pages as an array of objects
+      *   if it does not already exist.
+      *   Later, Associate a user to page by adding username to the page.
+      *
+      * */
+
+        if (req.user) {
+            users.findOneAndUpdate(
+                {'username': req.user.username},
+                {$push: {pages: pageID}},
+                { upsert: true, new: true, setDefaultsOnInsert: true },
+                function (err, model) {
+                    console.log(err);
+
+                }
+            );
+        }
+
+
+      Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
       if(err)
         res.sendStatus(500);
       else
@@ -21,6 +45,17 @@ let save = async function(req, res, next) {
     if(req.user){
     newPage.published_by = req.user.username;
     newPage.owners.push(req.user.username);
+
+    //save to user pages
+            users.findOneAndUpdate(
+                {'username': req.user.username},
+                {$push: {pages: newPage.page_id}},
+                { upsert: true, new: true, setDefaultsOnInsert: true },
+                function (err, model) {
+                    console.log(err);
+
+                }
+            );
   }
     newPage.save((err, page) => {
       if (err)
