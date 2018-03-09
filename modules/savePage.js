@@ -17,18 +17,6 @@ let save = async function(req, res, next) {
       *
       * */
 
-        if (req.user) {
-            users.findOneAndUpdate(
-                {'username': req.user.username},
-                {$push: {pages: pageID}},
-                { upsert: true, new: true, setDefaultsOnInsert: true },
-                function (err, model) {
-                    console.log(err);
-
-                }
-            );
-        }
-
 
       Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
       if(err)
