@@ -193,7 +193,6 @@ $('#DownloadBtn').on('click', function() {
     }
   })
 })
-
 //Deleting a file
 $('#DelBtn').on('click', function() {
   $.ajax({
@@ -207,4 +206,10 @@ $('#DelBtn').on('click', function() {
     }
 
   });
+});
+
+$(document).ready(function () {
+    var code = $(".codemirror-textarea")[0];
+    var editor = CodeMirror.fromTextArea(code, {
+    });
 });

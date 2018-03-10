@@ -15,7 +15,7 @@ if (docSaved) {
 
 // Save/re-saves page
 function savePage() {
-  var editorText = $('#EditorArea').val();
+  var editorText = $('.CodeMirror-scroll').val();
   var page = {
     content: editorText,
     isInDB: docSaved

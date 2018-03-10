@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Page = require('../models/page');
 //Serve landing page
-router.get('/', (req, res) => res.render('editor', {docSaved : false, user:req.user}));
+router.get('/', (req, res) => {res.render('editor', {docSaved : false, user:req.user});console.log(req.user);});
 
 
 router.get('/doc/:page_id', (req, res) => {

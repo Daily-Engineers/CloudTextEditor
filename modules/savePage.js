@@ -1,19 +1,18 @@
 const Page = require('../models/page');
+const users = require('../models/users');
 let save = async function(req, res, next) {
   let pageContent = req.body.content;
   let isInDB = (req.body.isInDB == 'true')
   //If in db update
   if (isInDB) {
     let pageID = req.headers.referer.slice(-5);
-    let query = {
-      'page_id': pageID
-    }
-    Page.update({
-      'page_id': pageID
-    }, {
-      'content': pageContent
-    }, (err, pageChanges) => {
-      if (err)
+    let query = {'page_id':pageID}
+
+
+
+
+      Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
+      if(err)
         res.sendStatus(500);
       else
         res.sendStatus(202);
@@ -24,12 +23,21 @@ let save = async function(req, res, next) {
     newPage.content = req.body.content;
     newPage.page_id = await generateUniqueID();
 
-    if (req.user) {
-      newPage.published_by = req.user.username;
-      newPage.owners.push(req.user.username);
-      newPage.editors.push(req.user.username);
-      newPage.viewers.push(req.user.username);
-    }
+    if(req.user){
+    newPage.published_by = req.user.username;
+    newPage.owners.push(req.user.username);
+
+    //save to user pages
+            users.findOneAndUpdate(
+                {'username': req.user.username},
+                {$push: {pages: newPage.page_id}},
+                { upsert: true, new: true, setDefaultsOnInsert: true },
+                function (err, model) {
+                    console.log(err);
+
+                }
+            );
+  }
     newPage.save((err, page) => {
       if (err)
         res.sendStatus(500);
