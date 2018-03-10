@@ -20,7 +20,7 @@ window.onunload = function() {
 
 function savePage() {
   var docExists = false; //TODO verify if doc exists
-  var editorText = $('.CodeMirror-scroll').val();
+  var editorText = ($('.CodeMirror-scroll')[0]).innerText;
   console.log(editorText);
   var page = {
     content: editorText,

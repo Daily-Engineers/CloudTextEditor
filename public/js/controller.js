@@ -152,7 +152,6 @@ $('#DownloadBtn').on('click', function () {
    })
 })
 
-
 //Deleting a file
 $('#DelBtn').on('click', function () {
     $.ajax({
