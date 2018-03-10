@@ -20,7 +20,8 @@ window.onunload = function() {
 
 function savePage() {
   var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
+  var editorText = $('.CodeMirror-scroll').val();
+  console.log(editorText);
   var page = {
     content: editorText,
     isInDB: docSaved
