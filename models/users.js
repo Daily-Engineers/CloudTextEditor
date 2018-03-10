@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 //Schema for users model, this is stored in database as well as the session, if you add or remove anything copy changes to the AuthController register or everything will brake.
 var userSchema = new Schema({
     email: String,
-    dateCreated: Date
+    dateCreated: Date,
+    pages:Array
 });
 
 
