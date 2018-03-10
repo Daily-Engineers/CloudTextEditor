@@ -1,21 +1,14 @@
 const Page = require('../models/page');
 const users = require('../models/users');
 let save = async function(req, res, next) {
-    let pageContent = req.body.content;
+  let pageContent = req.body.content;
   let isInDB = (req.body.isInDB == 'true')
-    //If in db update
+  //If in db update
   if (isInDB) {
     let pageID = req.headers.referer.slice(-5);
     let query = {'page_id':pageID}
 
 
-      // save a page in a user collection if user is logged in
-      /*
-      *   add a new field called pages as an array of objects
-      *   if it does not already exist.
-      *   Later, Associate a user to page by adding username to the page.
-      *
-      * */
 
 
       Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
