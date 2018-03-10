@@ -20,7 +20,8 @@ window.onunload = function() {
 
 function savePage() {
   var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
+  var editorText = $('.CodeMirror-scroll').val();
+  console.log(editorText);
   var page = {
     content: editorText,
     isInDB: docSaved
@@ -51,3 +52,4 @@ function showSuccessMessage(msg) {
   $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
   setTimeout(() => $('#MessageItem').fadeOut(300), 3000);
 }
+
