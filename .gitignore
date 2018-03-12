@@ -1,6 +1,7 @@
 /node_modules
 .DS_Store
 /config/config.js
+/config/MailConfig.js
 /.idea
 .app.js.swp
 /public/libs/highlightjs/.editorconfig
