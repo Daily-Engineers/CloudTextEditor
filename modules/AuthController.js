@@ -1,22 +1,43 @@
 const mongoose = require('mongoose');
 const User = require("../models/users");
+const savePage = require("../modules/savePage");
+const link = require("../models/AuthenticateEmailText");
+const sendEmail = require("../modules/MailToUser");
 
 
+let validateEmail = function (req) {
+    var username = req.body.username.trim();
+
+    User.findOne({username: username},function (err, rst, cb) {
+        if(err) console.log(err);
+
+        //TODO get the starting bit of address.
+        //req.protocol+ "//" +
+        var address = req.get('host') + "/"+ "authenticatetoken/"+ rst.authToken
+        sendEmail(username, 'Curlyboi account authentication', link(address), function () {
+            cb;
+        });
+    })
+};
+
+exports.validateUser = function (req, res, next) {
+    var token = req.params.authToken;
+
+    User.findOneAndUpdate({authToken: token}, {$set:{isAuthenticated: true}},function (err) {
+        if(err) console.log(err);
+        res.redirect('/');
+    })
+
+}
 
 //register user
 exports.register = function(req, res) {
   console.log("registering: ");
 
-  var username = req.body.username.trim();
-
   //User object, if you want the user to have more 'things' in it you must add it do here and the model users.js file
   User.register(new User({
 
-      username: username
-
-    //TODO get date for when account is created.
-    //dateCreated:
-
+      username: req.body.username.trim()
 
   }), req.body.password.trim(), function(err, user) {
     if (err) {
@@ -25,21 +46,15 @@ exports.register = function(req, res) {
       console.log(err);
       return res.send(err);
     } else {
-      //TODO When successful register
-
-        User.findOneAndUpdate({username: username}, {$set:{isAuthenticated: true}},function (err, doc) {
-            if(err) console.log(err);
-            res.status(200);
+        validateEmail(req, res, function () {
+            res.status(201);
         })
-
-
     }
   });
 };
 
 //login
 exports.login = function(req, res, next) {
-
   if (req.user) {
 
     //if user is already logged in
@@ -52,18 +67,15 @@ exports.login = function(req, res, next) {
         return next(err);
       if (user === false) {
         //When Failed login
-        res.status(403).json({
-          message: options.message
+          if(options.message === 'User did not verify email!'){
+              validateEmail(req, res);
+          }
+          res.status(403).json({
+            message: options.message
         })
 
       } else {
         req.login(user, function(err) {
-
-          //TODO fix this gross as shit.
-          req.user.hash = null;
-          req.user.salt = null;
-          req.user.authToken = null;
-          req.user.isAuthenticated = null;
 
           //When after logged in
           res.status(201).json(user)
@@ -77,12 +89,9 @@ exports.login = function(req, res, next) {
 
 //get login this see if the user is logged in and returns the user in the cookie
 //Not super useful
-exports.getLogin = function(req, res) {
-  console.log(req.user);
+exports.getLogin = function(req, res, next) {
   if (req.user) {
-    //TODO When user is logged in
-    return res.send(req.user);
-
+    res.sendStatus(201);
   } else {
     //TODO When user is not logged in
     res.sendStatus(403);
@@ -100,7 +109,4 @@ exports.saveLogout = function(req,res,next){
 
 exports.logout = function(req, res, next) {
   req.logout();
-  res.status(201).json({
-    message: 'logged out'
-  })
 };
