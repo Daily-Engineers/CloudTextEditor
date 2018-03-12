@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/public/libs/linedTextArea/jquery-linedtextarea.css">
   <!--Bootstrap CSS depedancy-->
   <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <!--sidebar CSS-->
   <link rel="stylesheet" type="text/css" href="/public/css/sidebar.css">
   <!--template CSS-->
@@ -19,10 +20,9 @@
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
 
   <!--Syntax hilighting-->
-  <link rel="stylesheet" type="text/css" href="/public/libs/highlightjs/styles/default.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/lib/codemirror.css">
+
+    <!--<link rel="stylesheet" type="text/css" href="/public/libs/codemirror/addon/hint/show-hint.css">-->
 
     <link rel="faq" href="faq.css">
 
@@ -127,12 +127,22 @@
           <li class="active">
             {{#if user}}
             <li>
-                <a href="#pageSubmenu" class="sidenav-item" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents<span class="glyphicon glyphicon-chevron-down glyphicon-align-left" aria-hidden="true"></span></a>
+                <a href="#pageSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li><a href="/doc/1d5q1w">Page 1</a></li>
                     <li><a href="/doc/1k6gep">Page 2</a></li>
                     <li><a href="/doc/VQ5n6">Page 3</a></li>
                 </ul>
+            </li>
+            <li>
+              {{#if docSaved}}
+                <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                <ul class="collapse list-unstyled" id="permissionsSubmenu">
+                  {{#each page.owners}}
+                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                  {{/each}}
+                </ul>
+              {{/if}}
             </li>
             </li>
             {{else}}
@@ -166,12 +176,21 @@
 <!--Controller-->
 <script src="/public/js/controller.js"></script>
 <!-- Highlight jS -->
+<script src="/public/libs/codemirror/lib/codemirror.js"></script>
+<!--<script src="/public/libs/codemirror/mode/javascript/javascript.js"></script>-->
+<script src="/public/libs/codemirror/mode/python/python.js"></script>
 
-<script>hljs.initHighlightingOnLoad();</script>
+<!-- AutoComplete -->
+<!--<script src="/public/libs/codemirror/addon/hint/show-hint.js"></script>-->
+<!--<script src="/public/libs/codemirror/addon/hint/css-hint.js"></script>-->
+
+
 <!--main-->
 <script src="/public/js/main.js"></script>
 <!--keyboard input-->
 <script src="/public/js/keyboard.js"></script>
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <!--Front end unit test library-->
 <!--<script src="chai.js"></script>-->
 <!--<script src="chai-http.js"></script>-->

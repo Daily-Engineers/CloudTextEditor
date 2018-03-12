@@ -10,6 +10,7 @@ var userSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    pages:Array
 });
 
 

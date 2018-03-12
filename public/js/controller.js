@@ -32,7 +32,6 @@ $('#StlyeBtn').on('click', function() {
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
-  console.log('ShareBtn');
   //get full url of page
   var url = window.location.href;
   //creates dummy element
@@ -99,7 +98,7 @@ $('#LogoutBtn').on('click', function(){
             window.location = "/";
         },
         error: function (err) {
-            console.log(err);
+            console.err(err);
         }
     })
 })
@@ -154,6 +153,7 @@ $('#DownloadBtn').on('click', function () {
    })
 });
 
+
 //Deleting a file
 $('#DelBtn').on('click', function () {
     $.ajax({
@@ -166,5 +166,11 @@ $('#DelBtn').on('click', function () {
            console.log(err);
         }
 
+    });
+});
+
+$(document).ready(function () {
+    var code = $(".codemirror-textarea")[0];
+    var editor = CodeMirror.fromTextArea(code, {
     });
 });
