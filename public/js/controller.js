@@ -20,7 +20,7 @@ $('#StlyeBtn').on('click', function() {
       "background-color": "white",
       "color": "#23272a"
     });
-    this.innerHTML= 'Dark';
+    this.innerHTML = 'Dark';
   } else {
     editor.css({
       "background-color": "#333",
@@ -55,118 +55,157 @@ $('#SaveBtn').on('click', function() {
   savePage()
 });
 
+function addUserToDoc(username){
+  $.ajax({
+    method: 'post',
+    url: '/users/addViewer/' + username,
+    success: function(users) {
+      showSuccessMessage('invited '+username);
+      $('#permissionsSubmenu').prepend('<li><a href="javascript:void(0);">'+username+'<i class="fas fa-trash-alt float-right"></i></a></li>');
+    },
+    error: function(err) {
+      invalidField('#UserSuggest');
+      console.log('no!');
+    }
+  });
+}
+
+$('#UserSearch').on('keyup', function(e) {
+  let value = this.value;
+  if (e.keyCode === 13) {
+    addUserToDoc(value);
+  } else {
+    $.ajax({
+      method: 'get',
+      url: '/users?search=' + value,
+      success: function(users, status, xhr) {
+
+        invalidField(this, true);
+        $('#UserSuggest').empty();
+        users.forEach(function(user) {
+          $('#UserSuggest').append('<option value="' + user.username + '"></option>')
+        })
+
+      },
+      error: function(err) {
+        invalidField(this);
+      }
+    });
+  }
+});
+
 
 //login
-$('#LoginBtn').on('click',function(){
+$('#LoginBtn').on('click', function() {
 
-    var username = $('#UsernameField').val().trim()
-    var password = $('#PasswordField').val().trim()
-    var user = {
-        username: username,
-        password: password
+  var username = $('#UsernameField').val().trim()
+  var password = $('#PasswordField').val().trim()
+  var user = {
+    username: username,
+    password: password
+  }
+  $.ajax({
+    method: 'post',
+    url: '/login',
+    data: user,
+    datatype: 'json',
+    success: function(user, Status, xhr) {
+      //If login secsefull
+      if (xhr.status == 201)
+        window.location = "";
+    },
+    error: function(err) {
+      invalidField('.login');
     }
-    $.ajax({
-        method: 'post',
-        url: '/login',
-        data: user,
-        datatype: 'json',
-        success: function(user, Status, xhr){
-            //If login secsefull
-            if(xhr.status == 201)
-                window.location = "";
-        },
-        error: function(err){
-            console.log(err)
-        }
-    })
+  })
 
 });
 
-$('#LogoutBtn').on('click', function(){
-    var editorText = $('#EditorArea').val();
-    var page = {
-        content: editorText,
-        isInDB: docSaved
-    };
+$('#LogoutBtn').on('click', function() {
+  var editorText = $('#EditorArea').val();
+  var page = {
+    content: editorText,
+    isInDB: docSaved
+  };
 
-    $.ajax({
-        method: 'post',
-        url: '/logout',
-        data: page,
-        datatype: 'json',
-        success: function (page, textStatus, xhr) {
-            window.location = "/";
-        },
-        error: function (err) {
-            console.err(err);
-        }
-    })
+  $.ajax({
+    method: 'get',
+    url: '/logout',
+    data: page,
+    datatype: 'json',
+    success: function(page, textStatus, xhr) {
+      window.location = "/";
+    },
+    error: function(err) {
+      console.error(err);
+    }
+  })
 })
 
+$('#RegisterBtn').on('click', function() {
+  var username = $('#UsernameField').val().trim();
+  var password = $('#PasswordField').val();
+  if (username.length < 1 || password.length < 1) {
+    loginAlertFailed();
+    return;
+  }
+  var user = {
+    username: username,
+    password: password
+  }
 
-
-$('#RegisterBtn').on('click', function () {
-    var username = $('#UsernameField').val().trim();
-    var password = $('#PasswordField').val();
-
-    var user = {
-        username: username,
-        password: password
+  $.ajax({
+    method: 'post',
+    url: '/register',
+    data: user,
+    datatype: 'json',
+    success: function(page, textStatus, xhr) {
+      window.location = "";
+    },
+    error: function(err) {
+      console.log(err);
     }
-
-    $.ajax({
-        method: 'post',
-        url: '/register',
-        data: user,
-        datatype: 'json',
-        success: function (page, textStatus, xhr) {
-          window.location = "";
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    })
+  })
 
 });
 
 
 //Download button
-$('#DownloadBtn').on('click', function () {
-    var editorText = $('#EditorArea').val();
-    var page = {
-        content: editorText,
-        isInDB: docSaved
-    };
-    $.ajax({
-        method: 'post',
-        url: '/page/download',
-        data: page,
-        datatype: 'json',
-        success: function (page, textStatus, xhr) {
-            console.log('posted! :)');
-            if(xhr.status == 201)
-                window.location.href = '/page/download/' + page.page_id;
-            },
-        error: function (err) {
-            console.log(err);
-            }
-   })
-});
-
+$('#DownloadBtn').on('click', function() {
+  var editorText = $('#EditorArea').val();
+  var page = {
+    content: editorText,
+    isInDB: docSaved
+  };
+  $.ajax({
+    method: 'post',
+    url: '/page/download',
+    data: page,
+    datatype: 'json',
+    success: function(page, textStatus, xhr) {
+      console.log('posted! :)');
+      if (xhr.status == 201)
+        window.location.href = '/page/download/' + page.page_id;
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  })
+})
 
 //Deleting a file
-$('#DelBtn').on('click', function () {
-    $.ajax({
-       method: 'post',
-       url: '/page/deleteFile',
-       success: function(page, textStatus, xhr) {
-           window.location = "/";
-       },
-        error: function(err) {
-           console.log(err);
-        }
+$('#DelBtn').on('click', function() {
+  $.ajax({
+    method: 'post',
+    url: '/page/deleteFile',
+    success: function(page, textStatus, xhr) {
+      window.location = "/";
+    },
+    error: function(err) {
+      console.log(err);
+    }
 
-    });
+  });
 });
 
 $(document).ready(function () {

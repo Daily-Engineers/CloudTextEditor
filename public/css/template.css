@@ -46,6 +46,13 @@ input.login:focus, button:active, button.login:focus{
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
   outline: 0 none;
 }
+
+input.login:focus, button:active, button.login:active{
+  border-color: rgba(160, 169, 177);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
+  outline: 0 none;
+}
+
 a.sidenav-item:hover{
   text-decoration: none;
 }
@@ -59,4 +66,16 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
 }
 a{
   outline:0;
+}
+
+.invalid{
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 25, 25, 0.8);
+}
+
+.valid{
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(25, 255, 25, 0.8);
+}
+
+.CodeMirror.cm-s-default{
+    height: 900px;
 }

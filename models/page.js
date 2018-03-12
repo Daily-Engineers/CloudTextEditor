@@ -9,7 +9,10 @@ let pageSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  published_by: String,
+  published_by: {
+    type: String,
+    default: null
+  },
   owners: Array,
   editors: Array,
   viewers: Array
