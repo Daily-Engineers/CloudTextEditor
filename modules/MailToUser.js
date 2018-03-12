@@ -21,6 +21,7 @@ let send = function (too, subject, contents, cb) {
         text: contents
     };
 
+
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);

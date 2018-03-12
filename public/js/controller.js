@@ -105,6 +105,7 @@ $('#LogoutBtn').on('click', function(){
 })
 
 
+
 $('#RegisterBtn').on('click', function () {
     var username = $('#UsernameField').val().trim();
     var password = $('#PasswordField').val();

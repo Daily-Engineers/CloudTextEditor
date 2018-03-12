@@ -10,7 +10,7 @@ let getContent = function (link) {
         link;
 return content;
 
-}
+};
 
 
 module.exports = getContent;

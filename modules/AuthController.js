@@ -53,6 +53,7 @@ exports.register = function(req, res) {
   });
 };
 
+
 //login
 exports.login = function(req, res, next) {
   if (req.user) {
