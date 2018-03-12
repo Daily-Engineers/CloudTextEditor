@@ -18,4 +18,7 @@ router.get('/login', auth.getLogin);
 // route for logout action
 router.get('/logout', auth.saveLogout,auth.logout);
 
+router.get('/authenticatetoken/:authToken', auth.validateUser);
+
+
 module.exports = router;

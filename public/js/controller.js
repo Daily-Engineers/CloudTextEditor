@@ -104,6 +104,7 @@ $('#LogoutBtn').on('click', function(){
 })
 
 
+
 $('#RegisterBtn').on('click', function () {
     var username = $('#UsernameField').val().trim();
     var password = $('#PasswordField').val();
@@ -150,7 +151,9 @@ $('#DownloadBtn').on('click', function () {
             console.log(err);
             }
    })
-})
+});
+
+
 //Deleting a file
 $('#DelBtn').on('click', function () {
     $.ajax({
