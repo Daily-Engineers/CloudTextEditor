@@ -23,7 +23,11 @@ ul.dropdown-menu{
   width: 100%;
   top:0px;
 }
-
+.faqButton{
+  background: #343A40;
+  boarder:#343A40;
+  color:#9A9DA0;
+}
 
 #sidebar{
   height: 2000px;

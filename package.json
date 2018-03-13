@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/Daily-Engineers/CloudTextEditor/issues"
   },
-
   "homepage": "https://github.com/Daily-Engineers/CloudTextEditor#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
