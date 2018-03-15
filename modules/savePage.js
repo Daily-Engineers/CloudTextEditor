@@ -2,21 +2,24 @@ const Page = require('../models/page');
 const users = require('../models/users');
 let save = async function(req, res, next) {
   let pageContent = req.body.content;
-  let isInDB = (req.body.isInDB == 'true')
+  let isInDB = (req.body.isInDB == 'true');
+
+  var username = 'guest';
+  if(req.user){
+    username = req.user.username;
+  }
+
+
   //If in db update
   if (isInDB) {
     let pageID = req.headers.referer.slice(-5);
-    let query = {'page_id':pageID}
-
-
-
-
-      Page.update({'page_id':pageID},{'content':pageContent},(err, pageChanges)=>{
-      if(err)
+      Page.update({page_id: pageID, editors: {$in: [username, 'guest']}},{'content':pageContent}, function (err, pageChanges){
+      if(err) {
         res.sendStatus(500);
-      else
-        res.sendStatus(202);
-    });
+      } else {
+        return next();
+      }});
+
   } else {
     //else create new page
     let newPage = new Page();
@@ -24,28 +27,29 @@ let save = async function(req, res, next) {
     newPage.page_id = await generateUniqueID();
 
     if(req.user){
-    newPage.published_by = req.user.username;
-    newPage.owners.push(req.user.username);
-
+    newPage.published_by = username;
     //save to user pages
-            users.findOneAndUpdate(
-                {'username': req.user.username},
-                {$push: {pages: newPage.page_id}},
-                { upsert: true, new: true, setDefaultsOnInsert: true },
-                function (err, model) {
-                    console.log(err);
-
-                }
-            );
+        users.findOneAndUpdate(
+            {'username': req.user.username},
+            {$push: {pages: newPage.page_id}},
+            { upsert: true, new: true, setDefaultsOnInsert: true },
+            function (err, model) {
+              console.log(err);
+              });
   }
+    newPage.owners.push(username);
+    newPage.editors.push(username);
+    newPage.viewers.push(username);
     newPage.save((err, page) => {
       if (err)
         res.sendStatus(500);
-      else
+      else {
         res.status(201).json(page);
+      }
     });
   }
-}
+};
+
 
 //Function generates random and guaranteed unique page IDs
 async function generateUniqueID() {

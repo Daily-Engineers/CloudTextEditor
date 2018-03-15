@@ -6,55 +6,80 @@ const saveFile = require('../modules/saveFile');
 const deleteFile = require('../modules/deleteFile');
 
 //download page.
-router.get('/page/download/:pageId', function (req, res, next) {
-    var pageId = req.params.pageId;
-    //TODO implemnt untitled download
+router.get('/page/download/', function (req, res, next) {
+    //get data from url
+    var pageId = req.query.pageId;
+    var type = req.query.type;
+    var docSaved = req.query.docSaved;
 
+    var username = 'guest';
+    if(req.user){
+        username = req.user.username;
+    }
     //find page
-    Page.findOne({'page_id':pageId}, function (err, rst) {
-
+    Page.findOne({'page_id':pageId, viewers: {$in: [username, 'guest']}}).exec(function (err, rst) {
+        if(err) console.log(err);
         //if result found
         if(rst) {
-            saveFile(rst.content, pageId, function(){
-                    res.download('./temp/' + pageId + '.txt', pageId + '.txt', function (err) {
-                        if (err) {
-                            console.error(err);
-                        }
-                        deleteFile(pageId);
-                    })
-                });
+            //create local file
+            saveFile(rst.content, pageId, type, function(){
+                //if file is need to be saved for download, delete from db after local write.
+                if(docSaved == 'false'){
+                    Page.deleteOne({page_id:pageId},function (err ,rst) {
+                        if(err) console.log(err);
+                    });
+                }
 
+                //send file to user
+                res.download('./temp/' + pageId + '.txt', pageId + '.' + type, function (err) {
+                    if (err) console.error(err);
+                    //delete local file.
+                    deleteFile(pageId, type);
+                });
+            });
         } else {
-            res.sendStatus(404);
+            res.status(403).send('<h1>You do not have permission to download this page</h1><p>Please <a href="/">sign in</a> to continue</p>');
 
         }
     });
-
 });
 
-
-router.post('/page/download', function (req, res, next) {
+router.post('/page/download', async function (req, res, next) {
     if(req.body.isTest == true){
         res.send('you are testing')
     }
+    //set pageData
+    var pageData = {
+        type: req.body.type,
+        docSaved: req.body.isInDB
+    };
 
-    var pageId = "untitled";
-    var content = req.body.content;
-    var docSaved = req.body.isInDB
-    if(docSaved == "true"){
-        pageId = req.headers.referer.slice(-5);
-        var page = {
-            page_id: pageId,
-            content: content,
-            docSaved: docSaved
-        }
+    //if page exists in db get pagId
+    if(req.body.isInDB == "true") {
+            pageData.page_id = req.headers.referer.slice(-5);
+        res.status(201).json(pageData);
 
-        //TODO Make this work for untitled files
-        res.status(201).json(page);
     }else {
-
-        res.status(200)
+        //save a temp page in db
+        let newPage = new Page();
+        newPage.content = req.body.content;
+        newPage.viewers.push('guest');
+        newPage.save(function (err, page) {
+            if (err) {
+                res.sendStatus(500);
+            } else {
+                //set page_id to be object id
+                //did this to avoid conflicts
+                pageData.page_id = page._id;
+                page.page_id = page._id;
+                //update page in db
+                page.save(function (err, newPage) {
+                    res.status(201).json(pageData);
+                })
+            }
+        });
     }
-})
+});
+
 
 module.exports = router;
