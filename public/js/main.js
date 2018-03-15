@@ -6,6 +6,15 @@ $(function() {
   })
 });
 
+var socket = io();
+
+socket.on('welcome',function(data){
+    console.log(data.msg);
+});
+
+socket.on('updated text', function(newText){
+    ($('.CodeMirror-scroll')[0]).innerText = newText;
+});
 //Auto-save every 8 seconds if the doc is in the database already
 if (docSaved) {
   setInterval(function() {
