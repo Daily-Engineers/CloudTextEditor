@@ -40,8 +40,9 @@ function savePage() {
         success: function(page, textStatus, xhr) {
             if (xhr.status == 201) {
                 window.location.href = '/doc/' + page.page_id;
-            } else
+            } else {
                 showSuccessMessage('Saved!');
+            }
         },
         error: function(err) {
             console.error(err);

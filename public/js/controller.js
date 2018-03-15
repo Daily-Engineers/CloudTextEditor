@@ -98,8 +98,8 @@ $('#UserSearch').on('keyup', function(e) {
 //login
 $('#LoginBtn').on('click', function() {
 
-  var username = $('#UsernameField').val().trim()
-  var password = $('#PasswordField').val().trim()
+  var username = $('#UsernameField').val().trim();
+  var password = $('#PasswordField').val();
   var user = {
     username: username,
     password: password
@@ -166,14 +166,18 @@ $('#RegisterBtn').on('click', function() {
       console.log(err);
     }
   })
-
 });
 
 
 //Download button
 $('#DownloadBtn').on('click', function() {
-  var editorText = $('#EditorArea').val();
+    var editorText = ($('.CodeMirror-scroll')[0]).innerText;
+    console.log(editorText)
+
+  var type = 'txt';
+
   var page = {
+    type: type,
     content: editorText,
     isInDB: docSaved
   };
@@ -183,9 +187,8 @@ $('#DownloadBtn').on('click', function() {
     data: page,
     datatype: 'json',
     success: function(page, textStatus, xhr) {
-      console.log('posted! :)');
       if (xhr.status == 201)
-        window.location.href = '/page/download/' + page.page_id;
+        window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
     },
     error: function(err) {
       console.log(err);

@@ -3,15 +3,17 @@ const express = require('express');
 const router = express.Router();
 const Page = require('../models/page');
 //Serve landing page
-router.get('/', (req, res) => {res.render('editor', {docSaved : false, user:req.user});console.log(req.user);});
+router.get('/', function(req, res){
+  res.render('editor', {docSaved : false, user:req.user});
+});
 
 
-router.get('/doc/:page_id', (req, res) => {
+router.get('/doc/:page_id', function(req, res){
   Page.findOne({
     'page_id': req.params.page_id
   }).exec((err, page) => {
     if (page) {
-      if(page.published_by===null || req.user && page.viewers.includes(req.user.username)){
+      if(page.viewers.includes('guest') || req.user && page.viewers.includes(req.user.username)){
       res.render('editor', {
         page: page,
         docSaved: true,

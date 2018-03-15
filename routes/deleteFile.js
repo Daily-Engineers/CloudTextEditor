@@ -11,16 +11,20 @@ router.post('/page/deleteFile/', function (req, res) {
     // saving pageId in the variable pageID
     var pageID = req.headers.referer.slice(-5);
 
-    //Search for the page
+    var username = 'guest';
+    if(req.user){
+        username = req.user.username;
+    }
 
-    Page.deleteOne({'page_id':pageID}, function (err, rst) {
+    //Search for the page
+    Page.deleteOne({page_id:pageID, owners: {$in: [username, 'guest']}}, function (err, rst) {
 
         //if result found
         if(rst) {
             res.sendStatus(200);
 
         } else {
-            res.sendStatus(404);
+            res.status(404).send('<h1>You do not have permission to delete this page</h1><p>Please <a href="/">sign in</a> to continue</p>');
 
         }
     });
