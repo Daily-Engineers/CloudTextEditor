@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/Daily-Engineers/CloudTextEditor/issues"
   },
-
   "homepage": "https://github.com/Daily-Engineers/CloudTextEditor#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -39,6 +38,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.5.0",
     "passport-local-mongoose-email": "^0.1.3",
+    "socket.io": "^2.0.4",
     "terminal": "^0.1.4"
   }
 }

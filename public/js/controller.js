@@ -187,7 +187,6 @@ $('#DownloadBtn').on('click', function() {
     data: page,
     datatype: 'json',
     success: function(page, textStatus, xhr) {
-      console.log('posted! :)');
       if (xhr.status == 201)
         window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
     },
@@ -212,8 +211,9 @@ $('#DelBtn').on('click', function() {
   });
 });
 
+var editor;
 $(document).ready(function () {
     var code = $(".codemirror-textarea")[0];
-    var editor = CodeMirror.fromTextArea(code, {
+    editor = CodeMirror.fromTextArea(code, {
     });
 });

@@ -6,14 +6,16 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const hbs = require('express-handlebars');
 const config = require('./config/config');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+const socketListener = require('./modules/socketListener')(io);
 
-const uri = config.getDatabaseURI();
 
 
 //connect to database
-mongoose.connect(uri);
+mongoose.connect(config.getDatabaseURI());
 
 // Parsers
 app.use(bodyParser.json());
@@ -60,9 +62,8 @@ app.get('/ping',(req, res)=>res.send('pong'));
 app.post('/ping',(req, res)=>res.send('pong'));
 
 //listen on port 3000
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log("Listening on port 3000!");
 });
 
 module.exports = app; //for testing
-

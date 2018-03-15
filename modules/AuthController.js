@@ -13,7 +13,7 @@ let validateEmail = function (req) {
 
         //TODO get the starting bit of address.
         //req.protocol+ "//" +
-        var address = req.get('host') + "/"+ "authenticatetoken/"+ rst.authToken
+        var address = req.get('host') + "/authenticatetoken/"+ rst.authToken
         sendEmail(username, 'Curlyboi account authentication', link(address), function () {
             cb;
         });
@@ -97,15 +97,8 @@ exports.getLogin = function(req, res, next) {
   }
 };
 
-//logs the user out
-//TODO save on logout
 
-//Save logic
-exports.saveLogout = function(req,res,next){
-    savePage(req, res, next);
-}
-
-exports.logout = function(req, res, next) {
+exports.logout = function(req, res) {
   req.logout();
-  res.status(201).json({message:'Logging Out'});
+  res.send(200);
 };
