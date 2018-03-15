@@ -13,7 +13,7 @@ let validateEmail = function (req) {
 
         //TODO get the starting bit of address.
         //req.protocol+ "//" +
-        var address = req.get('host') + "/"+ "authenticatetoken/"+ rst.authToken
+        var address = req.get('host') + "/authenticatetoken/"+ rst.authToken
         sendEmail(username, 'Curlyboi account authentication', link(address), function () {
             cb;
         });
