@@ -70,7 +70,7 @@ exports.login = function(req, res, next) {
         //When Failed login
           if(options.message === 'User did not verify email!'){
               validateEmail(req, res);
-          }
+          }logout
           res.status(403).json({
             message: options.message
         })
@@ -99,15 +99,8 @@ exports.getLogin = function(req, res, next) {
   }
 };
 
-//logs the user out
-//TODO save on logout
 
-//Save logic
-exports.saveLogout = function(req,res,next){
-    savePage(req, res, next);
-    return next();
-}
-
-exports.logout = function(req, res, next) {
+exports.logout = function(req, res) {
   req.logout();
+  res.send(200);
 };
