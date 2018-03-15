@@ -23,7 +23,7 @@ $(document).on('keydown', function(e) {
 });
 $(document).on('keyup', function(e) {
   keypressed[e.keyCode] = false;
-  socket.emit('text updating',($('.CodeMirror-scroll')[0]).innerText.substring(1));
+  socket.emit('text updating',($('.CodeMirror-scroll')[0]).innerText.substring(2));
 });
 
 function activateShortcut(e) {
