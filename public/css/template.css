@@ -1,4 +1,81 @@
 html, body {
   height: 100%;
+  width: 100%;
   background-color: #5D6A77;
+}
+ul.dropdown-menu{
+  background-color: #343A40;
+  margin-top: 8px;
+  border-top: 2px solid #3b8586;
+  border-radius: 0px 0px 5px 5px;
+  z-index: 100;
+}
+
+.btn-primary{
+  background: #3B8586;
+  boarder:#3B8586;
+}
+
+.navbar{
+  border-bottom: 2px solid #3b8586;
+  position: fixed;
+  z-index: 200;
+  width: 100%;
+  top:0px;
+}
+
+
+#sidebar{
+  height: 2000px;
+  z-index: 10;
+}
+
+.wrapper{
+  margin-top:55px;
+}
+
+input.login, button.login, input.login:focus, button.login:focus{
+  margin: 10px 0px;
+  background: #5d6a77;
+  color:white;
+  border: solid 1px #3b8586;
+}
+
+input.login:focus, button:active, button.login:focus{
+  border-color: rgba(59, 133, 134, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
+  outline: 0 none;
+}
+
+input.login:focus, button:active, button.login:active{
+  border-color: rgba(160, 169, 177);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
+  outline: 0 none;
+}
+
+a.sidenav-item:hover{
+  text-decoration: none;
+}
+
+::placeholder{
+  color:white;
+  opacity: 1;
+}
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    display: none;
+}
+a{
+  outline:0;
+}
+
+.invalid{
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 25, 25, 0.8);
+}
+
+.valid{
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(25, 255, 25, 0.8);
+}
+
+.CodeMirror.cm-s-default{
+    height: 900px;
 }

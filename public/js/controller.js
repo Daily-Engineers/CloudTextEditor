@@ -7,48 +7,33 @@ $('#NewBtn').on('click', function() {
   var editor = $('#EditorArea').val();
   if (editor.trim().length > 0) {
     if (confirm('Are you sure? You will lose any unsaved progress.')) {
-      $('#EditorArea').val('');
+      window.location = "/";
     }
-  }
-});
-
-//Allows tabs to indent in textarea
-$(document).on('keydown', '#EditorArea', function(e) {
-  var keyCode = e.keyCode;
-  var start = this.selectionStart;
-  var end = this.selectionEnd;
-  if (e.keyCode === 9) {
-    e.preventDefault();
-    $(this).val(
-      $(this).val().substring(0, start) +
-      '\t' +
-      $(this).val().substring(end)
-    );
-    this.selectionStart = this.selectionEnd = start + 1;
   }
 });
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
+  var editor = $("#EditorArea");
   if (lightTheme) {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "white",
       "color": "#23272a"
     });
-    //23272a
-
+    this.innerHTML = 'Dark';
   } else {
-    $("#EditorArea").css({
+    editor.css({
       "background-color": "#333",
       "color": "white"
     });
+    this.innerHTML = 'Light';
   }
 });
 
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
   //get full url of page
-  var url = window.locahttp;
+  var url = window.location.href;
   //creates dummy element
   var copyFrom = document.createElement("textarea");
   //adds text to dummy element
@@ -65,12 +50,134 @@ $('#ShareBtn').on('click', function() {
   showSuccessMessage('Link copied!');
 });
 
+//Saves file
+$('#SaveBtn').on('click', function() {
+  savePage()
+});
+
+function addUserToDoc(username){
+  $.ajax({
+    method: 'post',
+    url: '/users/addViewer/' + username,
+    success: function(users) {
+      showSuccessMessage('invited '+username);
+      $('#permissionsSubmenu').prepend('<li><a href="javascript:void(0);">'+username+'<i class="fas fa-trash-alt float-right"></i></a></li>');
+    },
+    error: function(err) {
+      invalidField('#UserSuggest');
+      console.log('no!');
+    }
+  });
+}
+
+$('#UserSearch').on('keyup', function(e) {
+  let value = this.value;
+  if (e.keyCode === 13) {
+    addUserToDoc(value);
+  } else {
+    $.ajax({
+      method: 'get',
+      url: '/users?search=' + value,
+      success: function(users, status, xhr) {
+
+        invalidField(this, true);
+        $('#UserSuggest').empty();
+        users.forEach(function(user) {
+          $('#UserSuggest').append('<option value="' + user.username + '"></option>')
+        })
+
+      },
+      error: function(err) {
+        invalidField(this);
+      }
+    });
+  }
+});
+
+
+//login
+$('#LoginBtn').on('click', function() {
+
+  var username = $('#UsernameField').val().trim();
+  var password = $('#PasswordField').val();
+  var user = {
+    username: username,
+    password: password
+  }
+  $.ajax({
+    method: 'post',
+    url: '/login',
+    data: user,
+    datatype: 'json',
+    success: function(user, Status, xhr) {
+      //If login secsefull
+      if (xhr.status == 201)
+        window.location = "";
+    },
+    error: function(err) {
+      invalidField('.login');
+    }
+  })
+
+});
+
+$('#LogoutBtn').on('click', function() {
+  var editorText = $('#EditorArea').val();
+  var page = {
+    content: editorText,
+    isInDB: docSaved
+  };
+
+  $.ajax({
+    method: 'get',
+    url: '/logout',
+    data: page,
+    datatype: 'json',
+    success: function(page, textStatus, xhr) {
+      window.location = "/";
+    },
+    error: function(err) {
+      console.error(err);
+    }
+  })
+})
+
+$('#RegisterBtn').on('click', function() {
+  var username = $('#UsernameField').val().trim();
+  var password = $('#PasswordField').val();
+  if (username.length < 1 || password.length < 1) {
+    loginAlertFailed();
+    return;
+  }
+  var user = {
+    username: username,
+    password: password
+  }
+
+  $.ajax({
+    method: 'post',
+    url: '/register',
+    data: user,
+    datatype: 'json',
+    success: function(page, textStatus, xhr) {
+      window.location = "";
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  })
+});
+
 
 //Download button
 $('#DownloadBtn').on('click', function() {
+    var editorText = ($('.CodeMirror-scroll')[0]).innerText;
+    console.log(editorText)
 
-  var editorText = $('#EditorArea').val();
+  var type = 'txt';
+
   var page = {
+    type: type,
     content: editorText,
     isInDB: docSaved
   };
@@ -80,67 +187,33 @@ $('#DownloadBtn').on('click', function() {
     data: page,
     datatype: 'json',
     success: function(page, textStatus, xhr) {
+      console.log('posted! :)');
       if (xhr.status == 201)
-        window.location.href = '/page/download/' + page.page_id;
+        window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
     },
     error: function(err) {
-      console.error(err);
+      console.log(err);
     }
   })
 })
 
-//Auto-save every 8 seconds if the doc is in the database already
-if (docSaved) {
-  setInterval(function() {
-    savePage();
-  }, 8000);
-}
-//Saves file
-$('#SaveBtn').on('click', function() {
-  savePage()
+//Deleting a file
+$('#DelBtn').on('click', function() {
+  $.ajax({
+    method: 'post',
+    url: '/page/deleteFile',
+    success: function(page, textStatus, xhr) {
+      window.location = "/";
+    },
+    error: function(err) {
+      console.log(err);
+    }
+
+  });
 });
 
-// save on browser closing
-window.onunload = function() {
-  savePage();
-}
-
-function savePage() {
-  var docExists = false; //TODO verify if doc exists
-  var editorText = $('#EditorArea').val();
-  if (docExists) {
-    //update page in db
-  } else {
-    var page = {
-      content: editorText,
-      isInDB: docSaved
-    };
-    $.ajax({
-      method: 'post',
-      url: '/save',
-      data: page,
-      datatype: 'json',
-      success: function(page, textStatus, xhr) {
-        if (xhr.status == 201)
-          window.location.href = '/doc/' + page.page_id;
-        else
-          showSuccessMessage();
-      },
-      error: function(err) {
-        console.error(err);
-      }
+$(document).ready(function () {
+    var code = $(".codemirror-textarea")[0];
+    var editor = CodeMirror.fromTextArea(code, {
     });
-  }
-}
-
-function showSuccessMessage(msg) {
-  $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);
-  setTimeout(() => $('#MessageItem').fadeOut(300), 3000);
-}
-
-$(function() {
-  // Target all classed with ".lined"
-  $("#EditorArea").linedtextarea({
-    selectedLine: 1
-  })
-})
+});
