@@ -32,7 +32,6 @@ exports.validateUser = function (req, res, next) {
 
 //register user
 exports.register = function(req, res) {
-  console.log("registering: ");
 
   //User object, if you want the user to have more 'things' in it you must add it do here and the model users.js file
   User.register(new User({
@@ -41,13 +40,10 @@ exports.register = function(req, res) {
 
   }), req.body.password.trim(), function(err, user) {
     if (err) {
-      //TODO When failed register
-
-      console.log(err);
-      return res.send(err);
+            res.status(403).json({message: err.message});
     } else {
         validateEmail(req, res, function () {
-            res.status(201);
+            res.status(201).json({message: 'Registration successful, An validation email has been send.'});
         })
     }
   });
@@ -61,23 +57,25 @@ exports.login = function(req, res, next) {
     //if user is already logged in
     res.status(201).json(req.user);
   } else {
-
     User.authenticate()(req.body.username.trim(), req.body.password, function(err, user, options) {
       if (err)
         //When error
         return next(err);
       if (user === false) {
+
+          var info = {message: ''};
+
         //When Failed login
           if(options.message === 'User did not verify email!'){
+              info.message = 'Account not validated, An validation email has been send to your email.';
               validateEmail(req, res);
+          }else if(options.message === 'Incorrect username' || options.message === 'Incorrect password' ){
+              info.message = 'Invalid Login'
           }
-          res.status(403).json({
-            message: options.message
-        })
+          res.status(403).json(info)
 
       } else {
         req.login(user, function(err) {
-
           //When after logged in
           res.status(201).json(user)
         });
@@ -105,9 +103,9 @@ exports.getLogin = function(req, res, next) {
 //Save logic
 exports.saveLogout = function(req,res,next){
     savePage(req, res, next);
-    return next();
 }
 
 exports.logout = function(req, res, next) {
   req.logout();
+  res.status(201).json({message:'Logging Out'});
 };

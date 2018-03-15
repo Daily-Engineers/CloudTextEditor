@@ -12,7 +12,10 @@ router.get('/pages', (req, res) => {
   });
 });
 
-router.post('/save', require('../modules/savePage'));
+//if save is successful go to next function, if save fails will send status 500 to res.
+router.post('/save', require('../modules/savePage'), function (req, res, next) {
+    res.sendStatus(202);
+});
 
 
 module.exports = router;
