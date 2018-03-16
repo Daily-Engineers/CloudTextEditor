@@ -9,3 +9,4 @@
 /public/libs/codemirror/.npmignor
 /public/libs/codemirror/.travis.yml
 *.swp
+.package-lock.json
