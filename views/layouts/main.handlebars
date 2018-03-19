@@ -96,21 +96,59 @@
                   <!--Style Toggle-->
 
                   <!--Saving-->
-                  <p>Saving:</p>
-                  <button class="faqButton" id="SaveBtn_Faq" href="javascript:void(0);">Save</button>
-                  <div class="alert alert-success fade in">
-                      <strong>Saved!</strong>
+
+                  <button class="faqButton" onclick="myFunction('mySave')" id="SaveBtn_Faq" href="javascript:void(0);">Save</button>
+                  <div id="mySave">
+
+                      Clicking this saves the document and starts an <b>auto-save</b> function for the file, ensuring your
+                      documents are constantly backed up
+                  </div>
+
+
+                  <!--New-->
+                  <p></p>
+                  <button class="faqButton" onclick="myFunction('myNew')" id="NewBtn_Faq" href="javascript:void(0);">New</button>
+                  <div id="myNew">
+                      Clicking this creates a <b>new document</b> but prompts the user to save if they have not already done so
+                  </div>
+
+                  <!--Downloading-->
+                  <p></p>
+
+                  <button class="faqButton" onclick="myFunction('myDown')" id="DownloadBtn_Faq" href="javascript:void(0);">Download</button>
+                  <div id="myDown">
+                      Clicking this downloads the document to a user specified location
+                  </div>
+
+                  <!--Sharing-->
+                  <p></p>
+
+                  <button class="faqButton" onclick="myFunction('myShare')" id="ShareBtn_Faq" href="javascript:void(0);">Share</button>
+                  <div id="myShare">
+                      Clicking this shares the document with others who you wish to collaborate with (only available after saving)
+                  </div>
+
+                  <!--Dark-->
+                  <p></p>
+
+                  <button class="faqButton" onclick="myFunction('myDark')" id="ShareBtn_Faq" href="javascript:void(0);">Dark</button>
+                  <div id="myDark">
+                      Clicking this toggles the documents theme between dark/light
                   </div>
 
 
 
 
-
-                  <!--New-->
-
-                  <!--Downloading-->
-
-                  <!--Sharing-->
+                  <script>
+                      function myFunction(id) {
+                          var x = document.getElementById(id);
+                          if (x.style.display === "none") {
+                              x.style.display = "block";
+                          } else {
+                              x.style.display = "none";
+                          }
+                      }
+                  </script>
 
 
               </div>
