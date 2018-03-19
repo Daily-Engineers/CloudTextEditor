@@ -12,8 +12,14 @@ ul.dropdown-menu{
 }
 
 .btn-primary{
-  background: #3B8586;
-  boarder:#3B8586;
+    background: #3B8586;
+    boarder:#3B8586;
+}
+
+.btn-primary:hover{
+    background: #3B9889;
+    boarder:#3B9889;
+
 }
 
 .navbar{
