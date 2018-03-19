@@ -204,6 +204,7 @@ $('#DelBtn').on('click', function() {
     success: function(page, textStatus, xhr) {
       window.location = "/";
     },
+
     error: function(err) {
       console.log(err);
     }
@@ -212,8 +213,10 @@ $('#DelBtn').on('click', function() {
 });
 
 var editor;
+
 $(document).ready(function () {
     var code = $(".codemirror-textarea")[0];
     editor = CodeMirror.fromTextArea(code, {
+      extraKeys:{"Ctrl-Space": "autocomplete"},//
     });
 });
