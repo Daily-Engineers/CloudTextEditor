@@ -95,7 +95,7 @@ $('#UserSearch').on('keyup', function(e) {
 });
 
 //validator for email
-$(document).on('keydown', '#UsernameField', function () {
+$(document).on('keyup', '#UsernameField', function () {
   var item = '#UsernameField';
   var email = document.getElementById('UsernameField');
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -138,7 +138,7 @@ $('#LoginBtn').on('click', function() {
 });
 
 $('#LogoutBtn').on('click', function() {
-  var editorText = $('#EditorArea').val();
+  var editorText = editor.getValue();
   var page = {
     content: editorText,
     isInDB: docSaved
@@ -219,7 +219,31 @@ $('#DownloadBtn').on('click', function() {
       console.log(err);
     }
   })
-})
+});
+
+//namefile
+$('#nameFileBtn').on('click', function () {
+    var filename = $('#filename').val().trim();
+    var filter = /^[a-z0-9]+$/i;
+    if(filename != '' && filter.test(filename)){
+        var page = {
+            filename: filename
+        };
+        $.ajax({
+            method: 'post',
+            url: '/namefile',
+            data: page,
+            datatype: 'json',
+            success: function(newpage, textStatus, xhr) {
+                //TODO display filename
+                //do stuff
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        })
+    }
+});
 
 //Deleting a file
 $('#DelBtn').on('click', function() {
@@ -232,7 +256,6 @@ $('#DelBtn').on('click', function() {
     error: function(err) {
       console.log(err);
     }
-
   });
 });
 

@@ -50,7 +50,16 @@
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
                   <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
-                  {{#if docSaved}}<li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>{{/if}}
+                  {{#if docSaved}}
+                      <li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>
+
+
+                      <li class="nav-item">
+                          <input type="text" placeholder="filename" id="filename" maxlength="20">
+                          <a class="nav-link" id="nameFileBtn" href="javascript:void(0);">Rename</a>
+                      </li>
+
+                  {{/if}}
                 </ul>
         </li>
           <li class="nav-item">

@@ -14,5 +14,24 @@ router.get('/pages', (req, res) => {
 
 router.post('/save', require('../modules/savePage'));
 
+router.post('/namefile', function (req, res, next) {
+    var filename = req.body.filename;
+    var filter = /^[a-z0-9]+$/i;
+
+    if(filename != '' && filter.test(filename)){
+        var pageId = req.headers.referer.slice(-5);
+        Page.findOneAndUpdate({page_id:pageId}, {filename: filename},function (err, rst) {
+            if(err){
+                console.log(err);
+                res.sendStatus(500)
+            }else{
+                res.sendStatus(201);
+            }
+        })
+    }else{
+     res.sendStatus(500);
+    }
+});
+
 
 module.exports = router;
