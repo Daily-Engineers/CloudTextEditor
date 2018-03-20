@@ -172,12 +172,13 @@ $('#RegisterBtn').on('click', function() {
 //Download button
 $('#DownloadBtn').on('click', function() {
     var editorText = ($('.CodeMirror-scroll')[0]).innerText;
-    console.log(editorText)
+    console.log(editorText);
+    // var type = 'txt';
 
-  var type = 'txt';
+
 
   var page = {
-    type: type,
+    type: typeext,
     content: editorText,
     isInDB: docSaved
   };
@@ -211,9 +212,49 @@ $('#DelBtn').on('click', function() {
   });
 });
 
+
+
 var editor;
 $(document).ready(function () {
+    // the initial language mode of the editor will be javascript
+    modlang="javascript";
+    // initial value of the typeext
+    typeext='js';
+    // codemirror text editor initiates
     var code = $(".codemirror-textarea")[0];
     editor = CodeMirror.fromTextArea(code, {
+        lineNumbers: true,
+        mode: modlang
     });
+    // Listing the language options and appending them to the datalist with id='langs'
+    for(var i=0; i<languages.length; i++){
+        $('#langs').append("<option id='"+i+"' class='"+languages[i].mode+"' value='"+languages[i].name+"'>");
+    }
+
+    // when selecting a language
+    $('#langBtn').on('click', function () {
+        modlang = $('#plangid').val(); // getting the value of the selected option
+        // based on the value obtained above, we get the value of the id and parse it to integer as the index number
+        var langIndex = parseInt($('option[value="'+modlang+'"]').attr('id'));
+        // setting the mode of the text editor to the language selected
+        if($.type(languages[langIndex].mime) == 'undefined'){
+            editor.setOption("mode", languages[langIndex].mimes[0]);
+        }else{
+            editor.setOption("mode", languages[langIndex].mime);
+        }
+        // creating a script tag to insert as the library for the selected language
+        var script = document.createElement('script');
+        // the type of script is text/javascript
+        script.type = "text/javascript";
+        // the path to the language library
+        script.src = "/public/libs/codemirror/mode/"+languages[langIndex].mode+"/"+languages[langIndex].mode+".js";
+        // appending the script to the head
+        document.head.appendChild(script);
+        // assigning the corresponding extention to the typeext
+        typeext = languages[langIndex].ext[0];
+    });
+
 });
+// creating global variables as they will be accessed in other function like download
+var modlang;
+var typeext;
