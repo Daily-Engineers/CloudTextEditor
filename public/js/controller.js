@@ -94,35 +94,51 @@ $('#UserSearch').on('keyup', function(e) {
   }
 });
 
+//validator for email
+$(document).on('keyup', '#UsernameField', function () {
+  var item = '#UsernameField';
+  var email = document.getElementById('UsernameField');
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!filter.test(email.value)) {
+        $(item).removeClass('valid');
+        invalidField(email);
+    }else{
+        $(item).removeClass('invalid');
+        validField(email);
+    }
+});
 
 //login
 $('#LoginBtn').on('click', function() {
 
-  var username = $('#UsernameField').val().trim();
-  var password = $('#PasswordField').val();
-  var user = {
-    username: username,
-    password: password
-  }
-  $.ajax({
-    method: 'post',
-    url: '/login',
-    data: user,
-    datatype: 'json',
-    success: function(user, Status, xhr) {
-      //If login secsefull
-      if (xhr.status == 201)
-        window.location = "";
-    },
-    error: function(err) {
-      invalidField('.login');
-    }
-  })
+      var username = $('#UsernameField').val().trim();
+      var password = $('#PasswordField').val();
 
+      //rest password on login attempt
+      $('#PasswordField').val('');
+
+      var user = {
+          username: username,
+          password: password
+      }
+      $.ajax({
+          method: 'post',
+          url: '/login',
+          data: user,
+          datatype: 'json',
+          success: function (user, Status, xhr) {
+              //If login secsefull
+              if (xhr.status == 201)
+                  window.location = "";
+          },
+          error: function (err) {
+              invalidField('.login');
+          }
+      })
 });
 
 $('#LogoutBtn').on('click', function() {
-  var editorText = $('#EditorArea').val();
+  var editorText = editor.getValue();
   var page = {
     content: editorText,
     isInDB: docSaved
@@ -143,29 +159,38 @@ $('#LogoutBtn').on('click', function() {
 })
 
 $('#RegisterBtn').on('click', function() {
-  var username = $('#UsernameField').val().trim();
-  var password = $('#PasswordField').val();
-  if (username.length < 1 || password.length < 1) {
-    loginAlertFailed();
-    return;
-  }
-  var user = {
-    username: username,
-    password: password
-  }
 
-  $.ajax({
-    method: 'post',
-    url: '/register',
-    data: user,
-    datatype: 'json',
-    success: function(page, textStatus, xhr) {
-      window.location = "";
-    },
-    error: function(err) {
-      console.log(err);
+    if($('#UsernameField').hasClass('invalid')){
+        alert("Invalid Email Address");
+    }else {
+        var username = $('#UsernameField').val().trim();
+        var password = $('#PasswordField').val();
+
+        //rest password on register attempt
+        $('#PasswordField').val('');
+
+        if (username.length < 1 || password.length < 1) {
+            loginAlertFailed();
+            return;
+        }
+        var user = {
+            username: username,
+            password: password
+        }
+
+        $.ajax({
+            method: 'post',
+            url: '/register',
+            data: user,
+            datatype: 'json',
+            success: function (page, textStatus, xhr) {
+                window.location = "";
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
     }
-  })
 });
 
 
@@ -194,7 +219,31 @@ $('#DownloadBtn').on('click', function() {
       console.log(err);
     }
   })
-})
+});
+
+//namefile
+$('#nameFileBtn').on('click', function () {
+    var filename = $('#filename').val().trim();
+    var filter = /^[a-z0-9]+$/i;
+    if(filename != '' && filter.test(filename)){
+        var page = {
+            filename: filename
+        };
+        $.ajax({
+            method: 'post',
+            url: '/namefile',
+            data: page,
+            datatype: 'json',
+            success: function(newpage, textStatus, xhr) {
+                //TODO display filename
+                //do stuff
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        })
+    }
+});
 
 //Deleting a file
 $('#DelBtn').on('click', function() {
@@ -207,7 +256,6 @@ $('#DelBtn').on('click', function() {
     error: function(err) {
       console.log(err);
     }
-
   });
 });
 
