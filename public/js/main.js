@@ -67,13 +67,21 @@ function validField(item, remove) {
     if (remove)
         $(item).removeClass('valid');
 }
-$(document).ready(function () {
+
+$(document).ready(loadPageNav());
+
+
+function loadPageNav() {
+    $('#ownersSubmenu').empty();
+    $('#editorsSubmenu').empty();
+    $('#viewersSubmenu').empty();
     $.ajax({
         method: 'post',
         url: '/pages',
         datatype: 'json',
         success: function(pages, textStatus, xhr) {
-            if(xhr.status == 200) {
+            if(xhr.status == 200){
+                loadFileName();
                 pages.owners.forEach(function (page, index, arr) {
                     $('#ownersSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
                 });
@@ -89,8 +97,30 @@ $(document).ready(function () {
             console.error(err);
         }
     })
+}
 
-});
+
+
+function loadFileName() {
+    var inputField = document.getElementById('displayNameAbleFile');
+    if(docSaved){
+        $.ajax({
+            method: 'post',
+            url: '/findname',
+            datatype: 'json',
+            success: function(filename, textStatus, xhr) {
+                if(xhr.status == 200) {
+                    $('#filename').attr('placeholder', filename);
+                    inputField.style.display = 'block';
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                inputField.style.display = 'none';
+            }
+        })
+    }
+}
 
 function showSuccessMessage(msg) {
     $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);

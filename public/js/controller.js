@@ -222,9 +222,28 @@ $('#DownloadBtn').on('click', function() {
 });
 
 //namefile
+
+$(document).on('keyup', '#filename', function () {
+    var item = '#filename';
+    var filename = document.getElementById('filename');
+    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
+
+    if (!filter.test(filename.value)) {
+        $(item).removeClass('valid');
+        invalidField(filename);
+    }else{
+        $(item).removeClass('invalid');
+        validField(filename);
+    }
+})
+
+
 $('#nameFileBtn').on('click', function () {
+    if($('#filename').hasClass('invalid')){
+        alert("Invalid characters detected, Please use alphanumeric and period characters");
+    }
     var filename = $('#filename').val().trim();
-    var filter = /^[a-z0-9]+$/i;
+    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
     if(filename != '' && filter.test(filename)){
         var page = {
             filename: filename
@@ -235,8 +254,10 @@ $('#nameFileBtn').on('click', function () {
             data: page,
             datatype: 'json',
             success: function(newpage, textStatus, xhr) {
-                //TODO display filename
-                //do stuff
+                if(xhr.status == 201) {
+                    $('#filename').val('');
+                    loadPageNav();
+                }
             },
             error: function(err) {
                 console.log(err);

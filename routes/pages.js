@@ -47,15 +47,41 @@ router.post('/pages', function(req, res, next){
     }
 });
 
+router.post('/findname', function (req, res, next) {
+
+    var username = ''
+    if(req.user){
+        username = req.user.username;
+    }
+    var pageId = req.headers.referer.slice(-5);
+    Page.findOne({page_id:pageId, owners:{$in:[username]}}, function (err, rst) {
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+        }else if(rst){
+            res.status(200).json(rst.filename);
+        }else{
+            res.sendStatus(401);
+        }
+
+    })
+})
+
 router.post('/save', require('../modules/savePage'));
 
 router.post('/namefile', function (req, res, next) {
-    var filename = req.body.filename;
-    var filter = /^[a-z0-9]+$/i;
+    var username = 'guest';
+    if(req.user){
+        username = req.user.username;
+    }
 
+    var filename = req.body.filename;
+    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
     if(filename != '' && filter.test(filename)){
         var pageId = req.headers.referer.slice(-5);
-        Page.findOneAndUpdate({page_id:pageId}, {filename: filename},function (err, rst) {
+
+        Page.findOneAndUpdate({page_id:pageId, owners: {$in: [username, 'guest']}}, {filename: filename},function (err, rst) {
+        //Page.findOneAndUpdate({page_id:pageId}, {filename: filename},function (err, rst) {
             if(err){
                 console.log(err);
                 res.sendStatus(500)
