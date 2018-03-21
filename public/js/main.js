@@ -67,6 +67,30 @@ function validField(item, remove) {
     if (remove)
         $(item).removeClass('valid');
 }
+$(document).ready(function () {
+    $.ajax({
+        method: 'post',
+        url: '/pages',
+        datatype: 'json',
+        success: function(pages, textStatus, xhr) {
+            if(xhr.status == 200) {
+                pages.owners.forEach(function (page, index, arr) {
+                    $('#ownersSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
+                });
+                pages.editors.forEach(function (page, index, arr) {
+                    $('#editorsSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
+                });
+                pages.viewers.forEach(function (page, index, arr) {
+                    $('#viewersSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
+                });
+            }
+        },
+        error: function(err) {
+            console.error(err);
+        }
+    })
+
+});
 
 function showSuccessMessage(msg) {
     $('#MessageItem').text(msg).removeClass('invisible').hide().fadeIn(300);

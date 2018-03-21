@@ -136,11 +136,20 @@
           <li class="active">
             {{#if user}}
             <li>
-                <a href="#pageSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="/doc/1d5q1w">Page 1</a></li>
-                    <li><a href="/doc/1k6gep">Page 2</a></li>
-                    <li><a href="/doc/VQ5n6">Page 3</a></li>
+                <a href="#menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
+                <ul class="collapse list-unstyled" id="menuSubmenu">
+                    <a href="#ownersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owned pages</a>
+                    <ul class="collapse list-unstyled" id="ownersSubmenu">
+                    </ul>
+
+                    <a href="#editorsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editable pages</a>
+                    <ul class="collapse list-unstyled" id="editorsSubmenu">
+                    </ul>
+
+                    <a href="#viewersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewable pages</a>
+                    <ul class="collapse list-unstyled" id="viewersSubmenu">
+                    </ul>
+
                 </ul>
             </li>
             <li>
