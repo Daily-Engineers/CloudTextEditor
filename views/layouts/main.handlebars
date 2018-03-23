@@ -149,8 +149,8 @@
               {{#if docSaved}}
 
                   <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
-                <ul class="collapse list-unstyled" id="pageOptionSubmenu">
-                    <div id="displayNameAbleFile">
+                  <ul class="collapse list-unstyled" id="pageOptionSubmenu">
+                      <div id="displayNameAbleFile" style="display:none">
                          <li>
                              <input class="login form-control" type="text" placeholder="filename" id="filename" maxlength="20">
                          </li>
@@ -158,8 +158,8 @@
                             <button class="login form-control" id="nameFileBtn">Rename File</button>
                         </li>
                     </div>
-                <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
-                    <ul class="collapse list-unstyled" id="permissionsSubmenu">
+                      <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                      <ul class="collapse list-unstyled" id="permissionsSubmenu">
                         {{#each page.viewers}}
                             <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
                         {{/each}}
@@ -172,6 +172,9 @@
             {{else}}
               <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
               <ul class="collapse list-unstyled" id="homeSubmenu">
+                  <div id='loginReturnBlock' style="display:none">
+                      <li><p style="color:red" id="loginReturnText"></p></li>
+                  </div>
                   <li><input type="text" placeholder="email" class="login form-control" id="UsernameField"></li>
                   <li><input type="password" placeholder="password" class="login form-control" id="PasswordField"></li>
                   <li><button class="login form-control" id="LoginBtn">Login</button></li>

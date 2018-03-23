@@ -12,10 +12,7 @@ router.post('/page/deleteFile/', function (req, res) {
     // saving pageId in the variable pageID
     var pageId = req.headers.referer.slice(-5);
 
-    var username = 'guest';
-    if(req.user){
-        username = req.user.username;
-    }
+    var username = req.user?req.user.username:'guest';
 
     //Search for the page
     Page.findOne({page_id: pageId}, function (err, rst) {

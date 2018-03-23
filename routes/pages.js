@@ -48,13 +48,9 @@ router.post('/pages', function(req, res, next){
 });
 
 router.post('/findname', function (req, res, next) {
-
-    var username = ''
-    if(req.user){
-        username = req.user.username;
-    }
+    var username = req.user?req.user.username:'';
     var pageId = req.headers.referer.slice(-5);
-    Page.findOne({page_id:pageId, owners:{$in:[username]}}, function (err, rst) {
+    Page.findOne({page_id:pageId, viewers:{$in:[username]}}, function (err, rst) {
         if(err){
             console.log(err);
             res.sendStatus(500);
@@ -63,17 +59,36 @@ router.post('/findname', function (req, res, next) {
         }else{
             res.sendStatus(401);
         }
-
     })
-})
+});
 
 router.post('/save', require('../modules/savePage'));
 
+router.post('/getPagePermissions', function (req, res, next) {
+    var username = req.user?req.user.username:'';
+    var pageId = req.headers.referer.slice(-5);
+    Page.findOne({page_id:pageId, viewers:{$in:[username]}}, function (err, rst) {
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+        }else if(rst){
+            var auth = 'none';
+            if(rst.owners.includes(username)){
+                auth = 'owner';
+            }else if(rst.editors.includes(username)){
+                auth = 'editor';
+            }else if(rst.viewers.includes(username)){
+                auth = 'viewer';
+            }
+            res.status(200).json(auth);
+        }else{
+            res.sendStatus(401);
+        }
+    })
+});
+
 router.post('/namefile', function (req, res, next) {
-    var username = 'guest';
-    if(req.user){
-        username = req.user.username;
-    }
+    var username = req.user?req.user.username:'guest';
 
     var filename = req.body.filename;
     var filter = /^(?!\s*$)[a-z0-9.]+$/i;
