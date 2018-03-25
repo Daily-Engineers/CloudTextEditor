@@ -1,10 +1,10 @@
 //init line numbers
-$(function() {
-    // Target all classed with ".lined"
-    $("#EditorArea").linedtextarea({
-        selectedLine: 1
-    })
-});
+// $(function() {
+//     // Target all classed with ".lined"
+//     $("#EditorArea").linedtextarea({
+//         selectedLine: 1
+//     })
+// });
 
 if (docSaved) {
     var socket = io();

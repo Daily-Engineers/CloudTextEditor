@@ -20,6 +20,7 @@ router.get('/page/download/', function (req, res, next) {
     Page.findOne({'page_id':pageId, viewers: {$in: [username, 'guest']}}).exec(function (err, rst) {
         if(err) console.log(err);
         //if result found
+        console.log("rst: " +rst);
         if(rst) {
             //create local file
             saveFile(rst.content, rst.filename, type, function(){
@@ -53,7 +54,7 @@ router.post('/page/download', async function (req, res, next) {
         type: req.body.type,
         docSaved: req.body.isInDB
     };
-
+    console.log("the extention type: ." + req.body.type);
     //if page exists in db get pagId
     if(req.body.isInDB == "true") {
             pageData.page_id = req.headers.referer.slice(-5);
