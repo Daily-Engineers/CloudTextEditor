@@ -3,7 +3,10 @@ const getPassword = require('../config/MailConfig');
 
 
 
-let send = function (too, subject, contents, cb) {
+let send = function (to, subject, contents, cb) {
+    if(!to || to.length<5){
+        throw Error('No recipent');
+    }
     var email = 'curlyboiseditor@gmail.com';
 
     var transporter = nodemailer.createTransport({
@@ -16,7 +19,7 @@ let send = function (too, subject, contents, cb) {
 
     var mailOptions = {
         from: email,
-        to: too,
+        to: to,
         subject: subject,
         text: contents
     };
@@ -27,7 +30,6 @@ let send = function (too, subject, contents, cb) {
             console.log(error);
             cb()
         } else {
-            console.log('Email sent: ' + info.response);
             cb()
         }
     });

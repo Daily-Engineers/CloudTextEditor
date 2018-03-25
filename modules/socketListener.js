@@ -7,4 +7,5 @@ module.exports = function(io) {
            socket.broadcast.to(roomID).emit('updated text',msg);
         });
     });
+    return true;
 }
