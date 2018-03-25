@@ -78,7 +78,7 @@
 
 
   </nav>
-  <!-- Modal -->
+  <!-- FAQ -->
   <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
           <div class="modal-content modal-lg">
@@ -95,7 +95,6 @@
                   <!--Style Toggle-->
 
                   <!--Saving-->
-
                   <!--New-->
 
                   <!--Downloading-->
@@ -110,6 +109,45 @@
           </div>
       </div>
   </div>
+
+  <!-- Add User -->
+  <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content modal-lg">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Invite User</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <form id="#AddUserForm">
+              <div class="container">
+                  <div class="row">
+
+                  <div class="col-8">
+                      <input type="email" placeholder="email address.." class="side-btn form-control" id="AddUserEmailField">
+                  </div>
+                  <div class="col-4">
+                      <select id="AddUserPermissionLevelSelect" class="custom-select" style="margin-top:10px">
+                          <option value="3">Owner</option>
+                          <option value="1">Editor</option>
+                          <option value="0">Viewer</option>
+                        </select>
+                  </div>
+              </div>
+              </div>
+              <div class="modal-body">
+                  <div id="includedContent"></div>
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button id="SendInviteBtn" type="submit" class="btn btn-primary">Send Invite</button>
+              </div>
+          </form>
+          </div>
+      </div>
+  </div>
   <div class = "wrapper">
 
   <!-- Sidebar -->
@@ -121,39 +159,60 @@
       <ul class="list-unstyled components">
         {{#if user}}
         <p><b>Account:</b> {{user.username}}</p>
+        <li>
+            <a href="#pageSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu">
+                {{#each user.pages}}
+                <li><a href="/doc/{{this}}">{{this}}</a></li>
+                {{/each}}
+            </ul>
+        </li>
         {{/if}}
       <div class="container-editor container">
 
           <li class="active">
             {{#if user}}
             <li>
-                <a href="#pageSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="/doc/1d5q1w">Page 1</a></li>
-                    <li><a href="/doc/1k6gep">Page 2</a></li>
-                    <li><a href="/doc/VQ5n6">Page 3</a></li>
-                </ul>
-            </li>
-            <li>
               {{#if docSaved}}
                 <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
                 <ul class="collapse list-unstyled" id="permissionsSubmenu">
-                  {{#each page.viewers}}
-                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                  {{/each}}
-                  <li><input id="UserSearch" list="UserSuggest" class="login form-control"><datalist id="UserSuggest"></datalist></input></li>
-
+                    <!--owners submenu-->
+                    <a href="#ownersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
+                    <ul class="collapse list-unstyled" id="ownersSubmenu">
+                        {{#each page.owner}}
+                          <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                        {{/each}}
+                    </ul>
+                    <!--editors submenu-->
+                    <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
+                    <ul class="collapse list-unstyled" id="editorsSubmenu">
+                        {{#each page.editors}}
+                          <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                        {{/each}}
+                    </ul>
+                    <!--viewers submenu-->
+                    <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
+                    <ul class="collapse list-unstyled" id="viewersSubmenu">
+                        {{#each page.viewers}}
+                          <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                        {{/each}}
+                    </ul>
+                    <div class="container">
+                        <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
+                        <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
+                    </div>
                 </ul>
               {{/if}}
+
             </li>
             </li>
             {{else}}
               <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
               <ul class="collapse list-unstyled" id="homeSubmenu">
-                  <li><input type="text" placeholder="username" class="login form-control" id="UsernameField"></li>
-                  <li><input type="password" placeholder="password" class="login form-control" id="PasswordField"></li>
-                  <li><button class="login form-control" id="LoginBtn">Login</button></li>
-                  <li><button class="login form-control" id="RegisterBtn">Signup</button></li>
+                  <li><input type="text" placeholder="username" class="side-btn form-control" id="UsernameField"></li>
+                  <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                  <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
+                  <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
               </ul>
             {{/if}}
           </li>
@@ -161,7 +220,7 @@
       </ul>
         <div class="container">
           {{#if user}}
-          <button class="login form-control" id="LogoutBtn">Logout</button>
+          <button class="side-btn form-control" id="LogoutBtn">Logout</button>
           {{/if}}
       </div>
   </nav>

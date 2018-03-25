@@ -25,7 +25,7 @@ var userSchema = new Schema({
 
 
 //selected fields has to be string, each field is separated by a space, Required fields username, hash, salt, isAuthenticated.
-var selectedFields = 'username hash salt isAuthenticated';
+var selectedFields = 'username hash salt isAuthenticated pages';
 var options = ({selectFields: selectedFields, usernameUnique: true, usernameLowerCase: true});
 userSchema.plugin(passportLocalMongooseEmail, options);
 

@@ -23,11 +23,16 @@ if (docSaved) {
     }, 8000);
 }
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
 // Save/re-saves page
 function savePage() {
     var docExists = false; //TODO verify if doc exists
     var editorText = editor.getValue();
-    console.log(editorText);
     var page = {
         content: editorText,
         isInDB: docSaved
@@ -66,6 +71,8 @@ function validField(item, remove) {
     $(item).addClass('valid');
     if (remove)
         $(item).removeClass('valid');
+
+    $(item).blur();
 }
 
 function showSuccessMessage(msg) {
