@@ -25,10 +25,10 @@ let send = function (too, subject, contents, cb) {
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
-            cb
+            cb()
         } else {
             console.log('Email sent: ' + info.response);
-            cb
+            cb()
         }
     });
 }

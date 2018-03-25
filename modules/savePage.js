@@ -6,15 +6,23 @@ let save = async function(req, res, next) {
 
   var username = req.user?req.user.username:'guest';
 
-
-  //If in db update
+    //If in db update
   if (isInDB) {
     let pageID = req.headers.referer.slice(-5);
-      Page.update({page_id: pageID, editors: {$in: [username, 'guest']}},{'content':pageContent}, function (err, pageChanges){
-        if (err)
-            res.sendStatus(500);
-        else
-            res.sendStatus(200); //Page updated
+    Page.update({page_id: pageID, editors: {$in: [username, 'guest']}},{'content':pageContent}, function (err, rst){
+        if (err) {
+            console.log('error');
+        }else if(rst.n > 0){
+            //Page updated
+            if(rst.nModified > 0) {
+                res.sendStatus(200);
+            }else{
+                res.sendStatus(304);
+            }
+        }else{
+            //user not authorized to edit page
+            res.sendStatus(401);
+        }
         });
   } else {
     //else create new page

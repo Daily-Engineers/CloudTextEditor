@@ -4,12 +4,13 @@ var lightTheme = true;
 
 //Clears editor's textarea
 $('#NewBtn').on('click', function() {
-  var editor = $('#EditorArea').val();
-  if (editor.trim().length > 0) {
-    if (confirm('Are you sure? You will lose any unsaved progress.')) {
-      window.location = "/";
+    if(confirm('Are you sure? You will lose any unsaved progress.')){
+        if(window.location.pathname == "/"){
+            window.location.reload();
+        }else{
+            window.location = "/";
+        }
     }
-  }
 });
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
@@ -108,6 +109,27 @@ $(document).on('keyup', '#UsernameField', function () {
     }
 });
 
+$('#LogoutBtn').on('click', function() {
+    var editorText = editor.getValue();
+    var page = {
+        content: editorText,
+        isInDB: docSaved
+    };
+
+    $.ajax({
+        method: 'get',
+        url: '/logout',
+        data: page,
+        datatype: 'json',
+        success: function(page, textStatus, xhr) {
+            window.location = "/";
+        },
+        error: function(err) {
+            console.error(err);
+        }
+    })
+});
+
 //login
 $('#LoginBtn').on('click', function() {
 
@@ -126,53 +148,33 @@ $('#LoginBtn').on('click', function() {
           url: '/login',
           data: user,
           datatype: 'json',
-          success: function (user, Status, xhr) {
+          success: function (msg, Status, xhr) {
               //If login secsefull
-              if (xhr.status == 201)
-                  window.location = "";
+              if(xhr.status == 200){
+                  displayLoginMsg(msg)
+              }else if (xhr.status == 201) {
+                   window.location = "";
+              }
           },
           error: function (err) {
+              console.log('err');
               invalidField('.login');
           }
       })
 });
 
-$('#LogoutBtn').on('click', function() {
-  var editorText = editor.getValue();
-  var page = {
-    content: editorText,
-    isInDB: docSaved
-  };
-
-  $.ajax({
-    method: 'get',
-    url: '/logout',
-    data: page,
-    datatype: 'json',
-    success: function(page, textStatus, xhr) {
-      window.location = "/";
-    },
-    error: function(err) {
-      console.error(err);
-    }
-  })
-})
-
 $('#RegisterBtn').on('click', function() {
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var username = $('#UsernameField').val().trim();
+    var password = $('#PasswordField').val();
 
-    if($('#UsernameField').hasClass('invalid')){
-        alert("Invalid Email Address");
+    if($('#UsernameField').hasClass('invalid') || !filter.test(username) || username.length < 1 || password.length < 1){
+        displayLoginMsg("Invalid Email Address or Password");
     }else {
-        var username = $('#UsernameField').val().trim();
-        var password = $('#PasswordField').val();
-
+        console.log('else')
         //rest password on register attempt
         $('#PasswordField').val('');
 
-        if (username.length < 1 || password.length < 1) {
-            loginAlertFailed();
-            return;
-        }
         var user = {
             username: username,
             password: password
@@ -183,8 +185,14 @@ $('#RegisterBtn').on('click', function() {
             url: '/register',
             data: user,
             datatype: 'json',
-            success: function (page, textStatus, xhr) {
-                window.location = "";
+            success: function (msg, textStatus, xhr) {
+                console.log(msg);
+                if(xhr.status == 200){
+                    displayLoginMsg(msg);
+                }else if(xhr.status == 201){
+                    displayLoginMsg(msg, true);
+                }
+                $('#UsernameField').removeClass('invalid');
             },
             error: function (err) {
                 console.log(err);
@@ -193,6 +201,16 @@ $('#RegisterBtn').on('click', function() {
     }
 });
 
+function displayLoginMsg(msg, valid) {
+    if(valid == true){
+        $('#loginReturnText').attr('style', 'color:green');
+    }else {
+        $('#loginReturnText').attr('style', 'color:red');
+    }
+    $('#loginReturnText').text('');
+    document.getElementById('loginReturnBlock').style.display = 'block';
+    $('#loginReturnText').text(msg);
+}
 
 //Download button
 $('#DownloadBtn').on('click', function() {
@@ -223,9 +241,27 @@ $('#DownloadBtn').on('click', function() {
 });
 
 //namefile
+$(document).on('keyup', '#filename', function () {
+    var item = '#filename';
+    var filename = document.getElementById('filename');
+    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
+
+    if (!filter.test(filename.value)) {
+        $(item).removeClass('valid');
+        invalidField(filename);
+    }else{
+        $(item).removeClass('invalid');
+        validField(filename);
+    }
+})
+
+
 $('#nameFileBtn').on('click', function () {
+    if($('#filename').hasClass('invalid')){
+        alert("Invalid characters detected, Please use alphanumeric and period characters");
+    }
     var filename = $('#filename').val().trim();
-    var filter = /^[a-z0-9]+$/i;
+    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
     if(filename != '' && filter.test(filename)){
         var page = {
             filename: filename
@@ -236,8 +272,11 @@ $('#nameFileBtn').on('click', function () {
             data: page,
             datatype: 'json',
             success: function(newpage, textStatus, xhr) {
-                //TODO display filename
-                //do stuff
+                if(xhr.status == 201) {
+                    $('#filename').val('');
+                    $(item).removeClass('valid');
+                    loadPageNav();
+                }
             },
             error: function(err) {
                 console.log(err);

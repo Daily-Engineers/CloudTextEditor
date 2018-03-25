@@ -51,12 +51,6 @@
                   {{#if docSaved}}
                       <li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>
 
-
-                      <li class="nav-item">
-                          <input type="text" placeholder="filename" id="filename" maxlength="20">
-                          <a class="nav-link" id="nameFileBtn" href="javascript:void(0);">Rename</a>
-                      </li>
-
                   {{/if}}
                 </ul>
         </li>
@@ -141,22 +135,41 @@
           <li class="active">
             {{#if user}}
             <li>
-                <a href="#pageSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="/doc/1d5q1w">Page 1</a></li>
-                    <li><a href="/doc/1k6gep">Page 2</a></li>
-                    <li><a href="/doc/VQ5n6">Page 3</a></li>
+                <a href="#menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
+                <ul class="collapse list-unstyled" id="menuSubmenu">
+                    <a href="#ownersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owned pages</a>
+                    <ul class="collapse list-unstyled" id="ownersSubmenu">
+                    </ul>
+
+                    <a href="#editorsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editable pages</a>
+                    <ul class="collapse list-unstyled" id="editorsSubmenu">
+                    </ul>
+
+                    <a href="#viewersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewable pages</a>
+                    <ul class="collapse list-unstyled" id="viewersSubmenu">
+                    </ul>
                 </ul>
             </li>
             <li>
               {{#if docSaved}}
-                <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
-                <ul class="collapse list-unstyled" id="permissionsSubmenu">
-                  {{#each page.viewers}}
-                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                  {{/each}}
-                  <li><input id="UserSearch" list="UserSuggest" class="login form-control"><datalist id="UserSuggest"></datalist></input></li>
 
+                  <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
+                  <ul class="collapse list-unstyled" id="pageOptionSubmenu">
+                      <div id="displayNameAbleFile" style="display:none">
+                         <li>
+                             <input class="login form-control" type="text" placeholder="filename" id="filename" maxlength="20">
+                         </li>
+                        <li>
+                            <button class="login form-control" id="nameFileBtn">Rename File</button>
+                        </li>
+                    </div>
+                      <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                      <ul class="collapse list-unstyled" id="permissionsSubmenu">
+                        {{#each page.viewers}}
+                            <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                        {{/each}}
+                        <li><input id="UserSearch" list="UserSuggest" class="login form-control"><datalist id="UserSuggest"></datalist></input></li>
+                    </ul>
                 </ul>
               {{/if}}
             </li>
@@ -164,6 +177,9 @@
             {{else}}
               <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
               <ul class="collapse list-unstyled" id="homeSubmenu">
+                  <div id='loginReturnBlock' style="display:none">
+                      <li><p style="color:red" id="loginReturnText"></p></li>
+                  </div>
                   <li><input type="text" placeholder="email" class="login form-control" id="UsernameField"></li>
                   <li><input type="password" placeholder="password" class="login form-control" id="PasswordField"></li>
                   <li><button class="login form-control" id="LoginBtn">Login</button></li>

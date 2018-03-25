@@ -12,10 +12,7 @@ router.get('/page/download/', function (req, res, next) {
     var type = req.query.type;
     var docSaved = req.query.docSaved;
 
-    var username = 'guest';
-    if(req.user){
-        username = req.user.username;
-    }
+    var username = req.user?req.user.username:'guest';
     //find page
     Page.findOne({'page_id':pageId, viewers: {$in: [username, 'guest']}}).exec(function (err, rst) {
         if(err) console.log(err);
@@ -40,7 +37,6 @@ router.get('/page/download/', function (req, res, next) {
             });
         } else {
             res.status(403).send('<h1>You do not have permission to download this page</h1><p>Please <a href="/">sign in</a> to continue</p>');
-
         }
     });
 });
@@ -57,7 +53,7 @@ router.post('/page/download', async function (req, res, next) {
     console.log("the extention type: ." + req.body.type);
     //if page exists in db get pagId
     if(req.body.isInDB == "true") {
-            pageData.page_id = req.headers.referer.slice(-5);
+        pageData.page_id = req.headers.referer.slice(-5);
         res.status(201).json(pageData);
 
     }else {
