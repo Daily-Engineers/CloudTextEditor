@@ -17,6 +17,16 @@ let pageSchema = new Schema({
     owners: Array,
     editors: Array,
     viewers: Array
+});
+
+pageSchema.pre('save', function (next) {
+    if(!this.page_id){
+        this.page_id = this._id;
+    }
+    if(!this.filename){
+        this.filename = this.page_id
+    }
+    next();
 })
 
 module.exports = mongoose.model('Page', pageSchema);

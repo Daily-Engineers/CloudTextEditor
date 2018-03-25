@@ -20,9 +20,7 @@
   <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
 
   <!--Syntax hilighting-->
-    <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/lib/codemirror.css">
-
-    <!--<link rel="stylesheet" type="text/css" href="/public/libs/codemirror/addon/hint/show-hint.css">-->
+  <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/lib/codemirror.css">
 
     <link rel="faq" href="faq.css">
 
@@ -50,7 +48,10 @@
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
                   <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
-                  {{#if docSaved}}<li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>{{/if}}
+                  {{#if docSaved}}
+                      <li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>
+
+                  {{/if}}
                 </ul>
         </li>
           <li class="nav-item">
@@ -61,6 +62,13 @@
             <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
           </li>
 
+          <li class="nav-item">
+              <input list="langs" name="plangs" id="plangid">
+              <datalist id="langs">
+              </datalist>
+              <button id="langBtn">Change language</button>
+              <!--<input type="submit" value="Change language" onsubmit="modlang = $('#plangid').val()">-->
+          </li>
         <li class="nav-item">
           <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
         </li>
@@ -160,63 +168,160 @@
         {{#if user}}
         <p><b>Account:</b> {{user.username}}</p>
         <li>
-            <a href="#pageSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
-                {{#each user.pages}}
-                <li><a href="/doc/{{this}}">{{this}}</a></li>
-                {{/each}}
+            <!--User's Documents-->
+            <a href="#menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
+            <ul class="collapse list-unstyled" id="menuSubmenu">
+                <a href="#ownersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owned pages</a>
+                <ul class="collapse list-unstyled" id="ownersSubmenu">
+                </ul>
+
+                <a href="#editorsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editable pages</a>
+                <ul class="collapse list-unstyled" id="editorsSubmenu">
+                </ul>
+
+                <a href="#viewersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewable pages</a>
+                <ul class="collapse list-unstyled" id="viewersSubmenu">
+                </ul>
             </ul>
         </li>
         {{/if}}
-      <div class="container-editor container">
+        <div class="container-editor container">
 
-          <li class="active">
-            {{#if user}}
-            <li>
-              {{#if docSaved}}
-                <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
-                <ul class="collapse list-unstyled" id="permissionsSubmenu">
-                    <!--owners submenu-->
-                    <a href="#ownersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
-                    <ul class="collapse list-unstyled" id="ownersSubmenu">
-                        {{#each page.owner}}
-                          <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                        {{/each}}
-                    </ul>
-                    <!--editors submenu-->
-                    <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
-                    <ul class="collapse list-unstyled" id="editorsSubmenu">
-                        {{#each page.editors}}
-                          <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                        {{/each}}
-                    </ul>
-                    <!--viewers submenu-->
-                    <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
-                    <ul class="collapse list-unstyled" id="viewersSubmenu">
-                        {{#each page.viewers}}
-                          <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                        {{/each}}
-                    </ul>
-                    <div class="container">
-                        <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
-                        <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
-                    </div>
-                </ul>
-              {{/if}}
+            <li class="active">
+                {{#if user}}
+                    {{#if docSaved}}
+                        <li>
+                            <!-- Page Options -->
+                            <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
+                            <ul class="collapse list-unstyled" id="pageOptionSubmenu">
+                                <div id="displayNameAbleFile" style="display:none">
+                                    <li>
+                                        <input class="login form-control" type="text" placeholder="filename" id="filename" maxlength="20">
+                                    </li>
+                                    <li>
+                                        <button class="login form-control" id="nameFileBtn">Rename File</button>
+                                    </li>
+                                </div>
+                            </ul>
+                        </li>
+                    </li>
 
+                        <li>
+                            <!--User Permissions -->
+                            <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                            <ul class="collapse list-unstyled" id="permissionsSubmenu">
+                                <!--owners submenu-->
+                                <a href="#ownersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
+                                <ul class="collapse list-unstyled" id="ownersSubmenu">
+                                    {{#each page.owner}}
+                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    {{/each}}        <div class="container-editor container">
+
+            <li class="active">
+                {{#if user}}
+                    {{#if docSaved}}
+                        <li>
+                            <!-- Page Options -->
+                            <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
+                            <ul class="collapse list-unstyled" id="pageOptionSubmenu">
+                                <div id="displayNameAbleFile" style="display:none">
+                                    <li>
+                                        <input class="login form-control" type="text" placeholder="filename" id="filename" maxlength="20">
+                                    </li>
+                                    <li>
+                                        <button class="login form-control" id="nameFileBtn">Rename File</button>
+                                    </li>
+                                </div>
+                        </li>
+                    </li>
+
+                        <li>
+                            <!--User Permissions -->
+                            <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                            <ul class="collapse list-unstyled" id="permissionsSubmenu">
+                                <!--owners submenu-->
+                                <a href="#ownersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
+                                <ul class="collapse list-unstyled" id="ownersSubmenu">
+                                    {{#each page.owner}}
+                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    {{/each}}
+                                </ul>
+                                <!--editors submenu-->
+                                <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
+                                <ul class="collapse list-unstyled" id="editorsSubmenu">
+                                    {{#each page.editors}}
+                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    {{/each}}
+                                </ul>
+                                <!--viewers submenu-->
+                                <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
+                                <ul class="collapse list-unstyled" id="viewersSubmenu">
+                                    {{#each page.viewers}}
+                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    {{/each}}
+                                </ul>
+                                <div class="container">
+                                    <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
+                                    <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
+                                </div>
+                            </ul>
+                        </li>
+                    {{/if}}
+                {{else}}
+                    <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <div id='loginReturnBlock' style="display:none">
+                            <li>
+                                <p style="color:red" id="loginReturnText"></p>
+                            </li>
+                        </div>
+                        <li><input type="text" placeholder="username" class="side-btn form-control" id="UsernameField"></li>
+                        <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                        <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
+                        <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
+                    </ul>
+                {{/if}}
             </li>
-            </li>
-            {{else}}
-              <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
-              <ul class="collapse list-unstyled" id="homeSubmenu">
-                  <li><input type="text" placeholder="username" class="side-btn form-control" id="UsernameField"></li>
-                  <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
-                  <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
-                  <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
-              </ul>
-            {{/if}}
-          </li>
         </div>
+                                </ul>
+                                <!--editors submenu-->
+                                <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
+                                <ul class="collapse list-unstyled" id="editorsSubmenu">
+                                    {{#each page.editors}}
+                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    {{/each}}
+                                </ul>
+                                <!--viewers submenu-->
+                                <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
+                                <ul class="collapse list-unstyled" id="viewersSubmenu">
+                                    {{#each page.viewers}}
+                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    {{/each}}
+                                </ul>
+                                <div class="container">
+                                    <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
+                                    <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
+                                </div>
+                            </ul>
+                        </li>
+                    {{/if}}
+                {{else}}
+                    <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <div id='loginReturnBlock' style="display:none">
+                            <li>
+                                <p style="color:red" id="loginReturnText"></p>
+                            </li>
+                        </div>
+                        <li><input type="text" placeholder="username" class="side-btn form-control" id="UsernameField"></li>
+                        <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                        <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
+                        <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
+                    </ul>
+                {{/if}}
+            </li>
+        </div>
+
       </ul>
         <div class="container">
           {{#if user}}
@@ -238,14 +343,10 @@
 <script src="/public/js/controller.js"></script>
 <!-- Highlight jS -->
 <script src="/public/libs/codemirror/lib/codemirror.js"></script>
-<!--<script src="/public/libs/codemirror/mode/javascript/javascript.js"></script>-->
-<script src="/public/libs/codemirror/mode/python/python.js"></script>
+<script src="/public/libs/codemirror/mode/meta.js"></script>
+<script src="/public/libs/codemirror/mode/javascript/javascript.js"></script>
 
-<!-- AutoComplete -->
-<!--<script src="/public/libs/codemirror/addon/hint/show-hint.js"></script>-->
-<!--<script src="/public/libs/codemirror/addon/hint/css-hint.js"></script>-->
-
-
+<!--Socket.io-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script
 <!--main-->
 <script src="/public/js/main.js"></script>

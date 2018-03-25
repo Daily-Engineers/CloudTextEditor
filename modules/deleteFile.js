@@ -4,10 +4,10 @@ let deleteFile = function (fileName){
     try {
         //try to delete file.
         fs.unlinkSync('./temp/' + fileName + '.txt');
-        return
+        return;
     } catch (err) {
         console.error('Error: File delete failed');
-        return
+        return;
     }
 }
 

@@ -28,9 +28,9 @@ let send = function (to, subject, contents, cb) {
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
-            cb
+            cb()
         } else {
-            cb
+            cb()
         }
     });
 }

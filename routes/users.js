@@ -16,6 +16,9 @@ router.get('/login', auth.getLogin);
 // route for logout action
 router.get('/logout', auth.logout);
 
+//autherisation for user
+router.get('/authenticatetoken/:authToken', auth.validateUser);
+
 //Route allows ajax queries for searching users
 router.get('/users', (req, res) => {
     User.find({
