@@ -183,15 +183,17 @@ var typeext;
 var editor;
 $(document).ready(function () {
     // the initial language mode of the editor will be javascript
-    modlang="javascript";
+    modlang="text/javascript";
     // initial value of the typeext
     typeext='js';
+    var themi = "eclipse";
 
     // codemirror text editor initiates
     var code = $(".codemirror-textarea")[0];
     editor = CodeMirror.fromTextArea(code, {
         lineNumbers: true,
-        mode: modlang
+        mode: modlang,
+        theme: themi
     });
     // Listing the language options and appending them to the datalist with id='langs'
     for(var i=0; i<languages.length; i++){
@@ -219,5 +221,19 @@ $(document).ready(function () {
         document.head.appendChild(script);
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
+    });
+
+    var btnWord;
+    $('#StlyeBtn').on("click", function () {
+        if(editor.options.theme == "eclipse") {
+            themi = "tomorrow-night-bright";
+            btnWord = 'Light';
+        }
+        else{
+            themi = "eclipse";
+            btnWord = 'Dark';
+        }
+        editor.setOption('theme', themi);
+        this.innerHTML = btnWord;
     });
 });

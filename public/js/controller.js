@@ -10,23 +10,23 @@ $('#NewBtn').on('click', function() {
     }
 });
 //Toggles between light and dark css files
-$('#StlyeBtn').on('click', function() {
-    lightTheme = !lightTheme;
-    var editor = $("#EditorArea");
-    if (lightTheme) {
-        editor.css({
-            "background-color": "white",
-            "color": "#23272a"
-        });
-        this.innerHTML = 'Dark';
-    } else {
-        editor.css({
-            "background-color": "#333",
-            "color": "white"
-        });
-        this.innerHTML = 'Light';
-    }
-});
+// $('#StlyeBtn').on('click', function() {
+//     lightTheme = !lightTheme;
+//     var editor = $("#EditorArea");
+//     if (lightTheme) {
+//         editor.css({
+//             "background-color": "white",
+//             "color": "#23272a"
+//         });
+//         this.innerHTML = 'Dark';
+//     } else {
+//         editor.css({
+//             "background-color": "#333",
+//             "color": "white"
+//         });
+//         this.innerHTML = 'Light';
+//     }
+// });
 
 $('form').on('submit', function(e) {
     var email  = $('#AddUserEmailField').val();
