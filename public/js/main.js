@@ -181,12 +181,13 @@ function showSuccessMessage(msg) {
 var modlang;
 var typeext;
 var editor;
+var themi
 $(document).ready(function () {
     // the initial language mode of the editor will be javascript
     modlang="text/javascript";
     // initial value of the typeext
     typeext='js';
-    var themi = "eclipse";
+    themi = "eclipse";
 
     // codemirror text editor initiates
     var code = $(".codemirror-textarea")[0];
@@ -223,17 +224,5 @@ $(document).ready(function () {
         typeext = languages[langIndex].ext[0];
     });
 
-    var btnWord;
-    $('#StlyeBtn').on("click", function () {
-        if(editor.options.theme == "eclipse") {
-            themi = "tomorrow-night-bright";
-            btnWord = 'Light';
-        }
-        else{
-            themi = "eclipse";
-            btnWord = 'Dark';
-        }
-        editor.setOption('theme', themi);
-        this.innerHTML = btnWord;
-    });
+
 });

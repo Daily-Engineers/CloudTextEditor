@@ -43,23 +43,20 @@ $('form').on('submit', function(e) {
 });
 
 //Sets link to clipboard
-$('#ShareBtn').on('click', function() {
-    //get full url of page
-    var url = window.location.href;
-    //creates dummy element
-    var copyFrom = document.createElement("textarea");
-    //adds text to dummy element
-    copyFrom.textContent = url;
-    var body = document.getElementsByTagName('body')[0];
-    body.appendChild(copyFrom);
-    //select dummy
-    copyFrom.select();
-    //pushes test from dummy to clipboard
-    document.execCommand('copy');
-    //removes dummy
-    body.removeChild(copyFrom);
-
-    showSuccessMessage('Link copied!');
+$(document).ready(function () {
+    var btnWord;
+    $('#StlyeBtn').on("click", function () {
+        if(editor.options.theme == "eclipse") {
+            themi = "tomorrow-night-bright";
+            btnWord = 'Light';
+        }
+        else{
+            themi = "eclipse";
+            btnWord = 'Dark';
+        }
+        editor.setOption('theme', themi);
+        this.innerHTML = btnWord;
+    });
 });
 
 //Saves file
