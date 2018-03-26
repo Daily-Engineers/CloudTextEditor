@@ -9,6 +9,7 @@ $('#NewBtn').on('click', function() {
         window.location = "/";
     }
 });
+
 //Toggles between light and dark css files
 $(document).ready(function () {
     var btnWord;
@@ -26,15 +27,29 @@ $(document).ready(function () {
     });
 });
 
-$('form').on('submit', function(e) {
-    var email  = $('#AddUserEmailField').val();
+$('form.addUserForm').on('submit', function(e) {
+    var email = $('#AddUserEmailField').val();
+
     var permLevel = parseInt($('#AddUserPermissionLevelSelect :selected').val());
     console.log(typeof permLevel)
-    /*$.ajax({
-        method:'post',
-        url:'/users/invite',
-
-    })*/
+    var data = {
+        username: email,
+        permLevel: permLevel
+    }
+    $.ajax({
+        method: 'post',
+        url: '/users/invite',
+        data: data,
+        datatype: 'json',
+        success: function(status) {
+            showSuccessMessage('Invited!');
+            $('#AddUserModal').modal('hide');
+        },
+        error: function(err) {
+            console.log('User already added');
+            $('#AddUserModal').modal('hide');
+        }
+    });
     console.log('submitted');
     console.log($('#AddUserPermissionLevelSelect :selected').text());
     e.preventDefault();
@@ -60,56 +75,59 @@ $('#ShareBtn').on('click', function() {
     showSuccessMessage('Link copied!');
 });
 
-
 //Saves file
 $('#SaveBtn').on('click', function() {
     savePage()
 });
 
-//validator for email
-$(document).on('keyup', '#UsernameField', function () {
-  var item = '#UsernameField';
-  var email = document.getElementById('UsernameField');
-    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (!filter.test(email.value)) {
-        $(item).removeClass('valid');
-        invalidField(email);
-    }else{
-        $(item).removeClass('invalid');
-        validField(email);
+
+//login + register form
+$('form.signin-form').on('submit', function(e) {
+    e.preventDefault();
+    var action = $("input[type=submit][clicked=true]").prevObject[0].activeElement.value;
+    var username = $('#UsernameField').val().trim();
+    var password = $('#PasswordField').val();
+
+    if ($('#UsernameField').hasClass('invalid') || !validateEmail(username) || username.length < 1 || password.length < 1) {
+        displayLoginMsg("Invalid Email Address or Password");
+    } else {
+        //rest password on login attempt
+        $('#PasswordField').val('');
+
+        var user = {
+            username: username,
+            password: password
+        }
+
+        $.ajax({
+            method: 'post',
+            url: '/' + action,
+            data: user,
+            datatype: 'json',
+            success: function(msg, Status, xhr) {
+                if (action === 'login') {
+                    //If login secsefull
+                    if (xhr.status == 200) {
+                        displayLoginMsg(msg)
+                    } else if (xhr.status == 201) {
+                        window.location = "";
+                    }
+                }else if(action === 'register'){
+                    if (xhr.status == 200) {
+                        displayLoginMsg(msg);
+                    } else if (xhr.status == 201) {
+                        displayLoginMsg(msg, true);
+                    }
+                    $('#UsernameField').removeClass('invalid');
+                    //rest password on register attempt
+                    $('#PasswordField').val('');
+                }
+            },
+            error: function(err) {
+                invalidField('.login');
+            }
+        });
     }
-});
-
-//login
-$('#LoginBtn').on('click', function() {
-
-      var username = $('#UsernameField').val().trim();
-      var password = $('#PasswordField').val();
-
-      //rest password on login attempt
-      $('#PasswordField').val('');
-
-      var user = {
-          username: username,
-          password: password
-      }
-      $.ajax({
-          method: 'post',
-          url: '/login',
-          data: user,
-          datatype: 'json',
-          success: function (msg, Status, xhr) {
-              //If login secsefull
-              if(xhr.status == 200){
-                  displayLoginMsg(msg)
-              }else if (xhr.status == 201) {
-                   window.location = "";
-              }
-          },
-          error: function (err) {
-              invalidField('.login');
-          }
-      })
 });
 
 $('#LogoutBtn').on('click', function() {
@@ -133,71 +151,36 @@ $('#LogoutBtn').on('click', function() {
     })
 });
 
-$('#RegisterBtn').on('click', function() {
-    var email = $('#UsernameField').val().trim();
-    var password = $('#PasswordField').val();
-
-    if($('#UsernameField').hasClass('invalid') || !validateEmail(email) || username.length < 1 || password.length < 1){
-        displayLoginMsg("Invalid Email Address");
-    }else {
-        //rest password on register attempt
-        $('#PasswordField').val('');
-
-        var user = {
-            username: email,
-            password: password
-        }
-
-        $.ajax({
-            method: 'post',
-            url: '/register',
-            data: user,
-            datatype: 'json',
-            success: function (msg, textStatus, xhr) {
-                console.log(msg);
-                if(xhr.status == 200){
-                    displayLoginMsg(msg);
-                }else if(xhr.status == 201){
-                    displayLoginMsg(msg, true);
-                }
-                $('#UsernameField').removeClass('invalid');
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
-    }
-});
 
 //Download button
 $('#DownloadBtn').on('click', function() {
     var editorText = editor.getValue();
     console.log(editorText);
 
-  var page = {
-    type: typeext,
-    content: editorText,
-    isInDB: docSaved
-  };
-  $.ajax({
-    method: 'post',
-    url: '/page/download',
-    data: page,
-    datatype: 'json',
-    success: function(page, textStatus, xhr) {
-        console.log('callll')
-      if (xhr.status == 201){
-            window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
+    var page = {
+        type: typeext,
+        content: editorText,
+        isInDB: docSaved
+    };
+    $.ajax({
+        method: 'post',
+        url: '/page/download',
+        data: page,
+        datatype: 'json',
+        success: function(page, textStatus, xhr) {
+            console.log('callll')
+            if (xhr.status == 201) {
+                window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
+            }
+        },
+        error: function(err) {
+            console.log(err);
         }
-      },
-    error: function(err) {
-      console.log(err);
-    }
-  })
+    })
 });
 
 //namefile
-$(document).on('keyup', '#filename', function () {
+$(document).on('keyup', '#filename', function() {
     var item = '#filename';
     var filename = document.getElementById('filename');
     var filter = /^(?!\s*$)[a-z0-9.]+$/i;
@@ -205,20 +188,20 @@ $(document).on('keyup', '#filename', function () {
     if (!filter.test(filename.value)) {
         $(item).removeClass('valid');
         invalidField(filename);
-    }else{
+    } else {
         $(item).removeClass('invalid');
         validField(filename);
     }
 })
 
 
-$('#nameFileBtn').on('click', function () {
-    if($('#filename').hasClass('invalid')){
+$('#nameFileBtn').on('click', function() {
+    if ($('#filename').hasClass('invalid')) {
         alert("Invalid characters detected, Please use alphanumeric and period characters");
     }
     var filename = $('#filename').val().trim();
     var filter = /^(?!\s*$)[a-z0-9.]+$/i;
-    if(filename != '' && filter.test(filename)){
+    if (filename != '' && filter.test(filename)) {
         var page = {
             filename: filename
         };
@@ -228,7 +211,7 @@ $('#nameFileBtn').on('click', function () {
             data: page,
             datatype: 'json',
             success: function(newpage, textStatus, xhr) {
-                if(xhr.status == 201) {
+                if (xhr.status == 201) {
                     $('#filename').val('');
                     $(item).removeClass('valid');
                     loadPageNav();

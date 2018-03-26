@@ -34,9 +34,11 @@ router.get('/users', (req, res) => {
 });
 
 //TODO check that poster is owner
-router.post('/users/addViewer/:username', (req, res) => {
+router.post('/users/invite', (req, res) => {
     let pageID = req.headers.referer.slice(-5);
-    let username = req.params.username;
+    let username = req.body.username;
+    let permLevel =  parseInt(req.body.permLevel);
+
     User.findOneAndUpdate({
         'username': username
     }, {
@@ -52,16 +54,28 @@ router.post('/users/addViewer/:username', (req, res) => {
             console.error(err);
             res.sendStatus(409)
         } else {
-            Page.update({
-                page_id: pageID,
-                viewers: {
-                    $nin: [username]
-                }
-            }, {
-                $push: {
-                    viewers: username
-                }
-            }, (err, update) => {
+            let query = {
+                page_id: pageID
+            }
+            let pushUsername = {
+                $nin: [username]
+            };
+
+            let pushQuery = {};
+            if(permLevel >= 0)
+                pushQuery['viewers'] = username;//pushUsername;
+            if(permLevel >= 1)
+                pushQuery['editors'] = username; //pushUsername;
+            if(permLevel === 2)
+                pushQuery['owners'] = username; //pushUsername;
+
+            let updateQuery = {
+                $addToSet: pushQuery
+            }
+            console.log(updateQuery);
+            Page.update(query, updateQuery, (err, update) => {
+                if(err)
+                    console.log(err);
                 if (update.nModified == 0)
                     res.sendStatus(409);
                 else

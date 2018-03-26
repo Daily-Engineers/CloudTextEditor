@@ -40,302 +40,248 @@
 <body>
 
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" id="brand" href="javascript:void(0);"><i class="fas fa-chevron-circle-right"></i> Curlybois</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="dropdown nav-item">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
-                  <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
-                  {{#if docSaved}}
-                      <li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" id="brand" href="javascript:void(0);"><i class="fas fa-chevron-circle-right"></i> Curlybois</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
+                        <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
+                        {{#if docSaved}}
+                            <li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>
+                        {{/if}}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
+                </li>
+                {{#if docSaved}}
+                    <li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>
+                {{/if}}
+                <li class="nav-item">
+                    <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
+                </li>
 
-                  {{/if}}
-                </ul>
-        </li>
-          <li class="nav-item">
-            <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
-          </li>
-          {{#if docSaved}}<li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>{{/if}}
-          <li class="nav-item">
-            <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
-          </li>
-
-          <li class="nav-item">
-              <input list="langs" name="plangs" id="plangid">
-              <datalist id="langs">
+                <li class="nav-item">
+                    <input list="langs" name="plangs" id="plangid">
+                    <datalist id="langs">
               </datalist>
-              <button id="langBtn">Change language</button>
-              <!--<input type="submit" value="Change language" onsubmit="modlang = $('#plangid').val()">-->
-          </li>
-        <li class="nav-item">
-          <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
-        </li>
+                    <button id="langBtn">Change language</button>
+                    <!--<input type="submit" value="Change language" onsubmit="modlang = $('#plangid').val()">-->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
+                </li>
 
 
-      </ul>
-        <!-- Button trigger modal -->
-       <div class="ml-auto">
-          <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
+            </ul>
+            <!-- Button trigger modal -->
+            <div class="ml-auto">
+                <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
               ?
           </button>
-      </div>
-      </div>
+            </div>
+        </div>
 
 
 
-  </nav>
-  <!-- FAQ -->
-  <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content modal-lg">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    </nav>
+    <!-- FAQ -->
+    <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
-              </div>
-              <div class="modal-body">
-                  <div id="includedContent"></div>
-                  <!--Greeting-->
+                </div>
+                <div class="modal-body">
+                    <div id="includedContent"></div>
+                    <!--Greeting-->
 
-                  <!--Style Toggle-->
+                    <!--Style Toggle-->
 
-                  <!--Saving-->
-                  <!--New-->
+                    <!--Saving-->
+                    <!--New-->
 
-                  <!--Downloading-->
+                    <!--Downloading-->
 
-                  <!--Sharing-->
+                    <!--Sharing-->
 
 
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-          </div>
-      </div>
-  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <!-- Add User -->
-  <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalTitle" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content modal-lg">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Invite User</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- Add User -->
+    <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Invite User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
-              </div>
-              <form id="#AddUserForm">
-              <div class="container">
-                  <div class="row">
+                </div>
+                <form class="addUserForm">
+                    <div class="container">
+                        <div class="row">
 
-                  <div class="col-8">
-                      <input type="email" placeholder="email address.." class="side-btn form-control" id="AddUserEmailField">
-                  </div>
-                  <div class="col-4">
-                      <select id="AddUserPermissionLevelSelect" class="custom-select" style="margin-top:10px">
-                          <option value="3">Owner</option>
+                            <div class="col-8">
+                                <input type="email" placeholder="email address.." class="side-btn form-control" id="AddUserEmailField">
+                            </div>
+                            <div class="col-4">
+                                <select id="AddUserPermissionLevelSelect" class="custom-select" style="margin-top:10px">
+                          <option value="2">Owner</option>
                           <option value="1">Editor</option>
                           <option value="0">Viewer</option>
                         </select>
-                  </div>
-              </div>
-              </div>
-              <div class="modal-body">
-                  <div id="includedContent"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div id="includedContent"></div>
 
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button id="SendInviteBtn" type="submit" class="btn btn-primary">Send Invite</button>
-              </div>
-          </form>
-          </div>
-      </div>
-  </div>
-  <div class = "wrapper">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="SendInviteBtn" type="submit" class="btn btn-primary">Send Invite</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
 
-  <!-- Sidebar -->
-  <nav id="sidebar" class="active">
-      <div class="sidebar-header">
-          <h3>Curlybois</h3>
-      </div>
 
-      <ul class="list-unstyled components">
-        {{#if user}}
-        <p><b>Account:</b> {{user.username}}</p>
-        <li>
-            <!--User's Documents-->
-            <a href="#menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">{{user.username}}'s documents</a>
-            <ul class="collapse list-unstyled" id="menuSubmenu">
-                <a href="#ownersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owned pages</a>
-                <ul class="collapse list-unstyled" id="ownersSubmenu">
-                </ul>
 
-                <a href="#editorsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editable pages</a>
-                <ul class="collapse list-unstyled" id="editorsSubmenu">
-                </ul>
 
-                <a href="#viewersSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewable pages</a>
-                <ul class="collapse list-unstyled" id="viewersSubmenu">
-                </ul>
-            </ul>
-        </li>
-        {{/if}}
-        <div class="container-editor container">
 
-            <li class="active">
+
+        <!-- Sidebar -->
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <h3>Curlybois</h3>
+            </div>
+
+            <ul class="list-unstyled components">
                 {{#if user}}
-                    {{#if docSaved}}
-                        <li>
-                            <!-- Page Options -->
-                            <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
-                            <ul class="collapse list-unstyled" id="pageOptionSubmenu">
-                                <div id="displayNameAbleFile" style="display:none">
-                                    <li>
-                                        <input class="login form-control" type="text" placeholder="filename" id="filename" maxlength="20">
-                                    </li>
-                                    <li>
-                                        <button class="login form-control" id="nameFileBtn">Rename File</button>
-                                    </li>
-                                </div>
+                    <p><b>Account:</b> {{user.username}}</p>
+                    <li>
+                        <!--User's Documents-->
+                        <a href="#menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Your documents</a>
+                        <ul class="collapse list-unstyled" id="menuSubmenu">
+                            <a href="#ownersDocsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owned pages</a>
+                            <ul class="collapse list-unstyled sub-ul" id="ownersDocsSubmenu">
                             </ul>
-                        </li>
+
+                            <a href="#editorsDocsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editable pages</a>
+                            <ul class="collapse list-unstyled sub-ul" id="editorsDocsSubmenu">
+                            </ul>
+
+                            <a href="#viewersDocsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewable pages</a>
+                            <ul class="collapse list-unstyled sub-ul" id="viewersDocsSubmenu">
+                            </ul>
+                        </ul>
+                    </li>
+                {{/if}}
+
+
+                <div class="container-editor container">
+                    <li class="active">
+                        {{#if user}}
+                            {{#if docSaved}}
+                                <li>
+                                    <!-- Page Options -->
+                                    <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
+                                    <ul class="collapse list-unstyled" id="pageOptionSubmenu">
+                                        <div id="displayNameAbleFile" style="display:none">
+                                            <li>
+                                                <input class="side-btn form-control" type="text" placeholder="filename" id="filename" maxlength="20">
+                                            </li>
+                                            <li>
+                                                <button class="side-btn form-control" id="nameFileBtn">Rename File</button>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </li>
                     </li>
 
-                        <li>
-                            <!--User Permissions -->
-                            <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
-                            <ul class="collapse list-unstyled" id="permissionsSubmenu">
-                                <!--owners submenu-->
-                                <a href="#ownersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
-                                <ul class="collapse list-unstyled" id="ownersSubmenu">
-                                    {{#each page.owner}}
-                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                                    {{/each}}        <div class="container-editor container">
+                    <li>
+                        <!--User Permissions -->
+                        <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                        <ul class="collapse list-unstyled" id="permissionsSubmenu">
 
-            <li class="active">
-                {{#if user}}
-                    {{#if docSaved}}
-                        <li>
-                            <!-- Page Options -->
-                            <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
-                            <ul class="collapse list-unstyled" id="pageOptionSubmenu">
-                                <div id="displayNameAbleFile" style="display:none">
-                                    <li>
-                                        <input class="login form-control" type="text" placeholder="filename" id="filename" maxlength="20">
-                                    </li>
-                                    <li>
-                                        <button class="login form-control" id="nameFileBtn">Rename File</button>
-                                    </li>
-                                </div>
-                        </li>
+                            <!--owners submenu-->
+                            <a href="#ownersPermsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
+                            <ul class="collapse list-unstyled" id="ownersPermsSubmenu">
+                                {{#each page.owners}}
+                                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                {{/each}}
+                            </ul>
+
+                            <!--editors submenu-->
+                            <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
+                            <ul class="collapse list-unstyled" id="editorsSubmenu">
+                                {{#each page.editors}}
+                                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                {{/each}}
+                            </ul>
+
+                            <!--viewers submenu-->
+                            <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
+                            <ul class="collapse list-unstyled" id="viewersSubmenu">
+                                {{#each page.viewers}}
+                                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                {{/each}}
+                            </ul>
+
+                            <div class="container">
+                                <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
+                                <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
+                            </div>
+                        </ul>
                     </li>
-
-                        <li>
-                            <!--User Permissions -->
-                            <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
-                            <ul class="collapse list-unstyled" id="permissionsSubmenu">
-                                <!--owners submenu-->
-                                <a href="#ownersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
-                                <ul class="collapse list-unstyled" id="ownersSubmenu">
-                                    {{#each page.owner}}
-                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                                    {{/each}}
-                                </ul>
-                                <!--editors submenu-->
-                                <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
-                                <ul class="collapse list-unstyled" id="editorsSubmenu">
-                                    {{#each page.editors}}
-                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                                    {{/each}}
-                                </ul>
-                                <!--viewers submenu-->
-                                <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
-                                <ul class="collapse list-unstyled" id="viewersSubmenu">
-                                    {{#each page.viewers}}
-                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                                    {{/each}}
-                                </ul>
-                                <div class="container">
-                                    <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
-                                    <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
-                                </div>
-                            </ul>
-                        </li>
                     {{/if}}
                 {{else}}
-                    <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <div id='loginReturnBlock' style="display:none">
-                            <li>
-                                <p style="color:red" id="loginReturnText"></p>
-                            </li>
-                        </div>
-                        <li><input type="text" placeholder="username" class="side-btn form-control" id="UsernameField"></li>
-                        <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
-                        <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
-                        <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
-                    </ul>
+                        <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <div id='loginReturnBlock' style="display:none">
+                                <li>
+                                    <p style="color:red" id="loginReturnText"></p>
+                                </li>
+                            </div>
+                            <form class="signin-form">
+                              <li><input type="email" placeholder="email" class="side-btn form-control" id="UsernameField"></li>
+                              <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                              <li><button class="side-btn form-control" type="submit" value="login" id="LoginBtn">Login</button></li>
+                              <li><button class="side-btn form-control" type="submit" value="register" id="RegisterBtn">Signup</button></li>
+                          </form>
+                        </ul>
                 {{/if}}
-            </li>
-        </div>
-                                </ul>
-                                <!--editors submenu-->
-                                <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
-                                <ul class="collapse list-unstyled" id="editorsSubmenu">
-                                    {{#each page.editors}}
-                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                                    {{/each}}
-                                </ul>
-                                <!--viewers submenu-->
-                                <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
-                                <ul class="collapse list-unstyled" id="viewersSubmenu">
-                                    {{#each page.viewers}}
-                                        <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
-                                    {{/each}}
-                                </ul>
-                                <div class="container">
-                                    <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
-                                    <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
-                                </div>
-                            </ul>
                         </li>
+                </div>
+
+                </ul>
+                <div class="container">
+                    {{#if user}}
+                        <button class="side-btn form-control" id="LogoutBtn">Logout</button>
                     {{/if}}
-                {{else}}
-                    <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <div id='loginReturnBlock' style="display:none">
-                            <li>
-                                <p style="color:red" id="loginReturnText"></p>
-                            </li>
-                        </div>
-                        <li><input type="text" placeholder="username" class="side-btn form-control" id="UsernameField"></li>
-                        <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
-                        <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
-                        <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
-                    </ul>
-                {{/if}}
-            </li>
-        </div>
+                </div>
+        </nav>
 
-      </ul>
-        <div class="container">
-          {{#if user}}
-          <button class="side-btn form-control" id="LogoutBtn">Logout</button>
-          {{/if}}
-      </div>
-  </nav>
-
-  {{{body}}}
-</div>
+        {{{body}}}
+    </div>
 </body>
 <!--jQuery-->
 <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
