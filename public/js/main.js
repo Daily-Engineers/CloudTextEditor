@@ -1,7 +1,19 @@
 
 
+//socket stuff
 if (docSaved) {
+    //set socket
     var socket = io();
+
+    //on connect send a authorisation to server, this is middleware
+    socket.on('connect', function(){
+        //sends a json to the authenticate function, i have not used it as im looking in the db. If you would like to use look int app and fallow the comments
+        socket.emit('authentication', {obj: 'random object,'});
+        //when client is authenticated do thing.
+        socket.on('authenticated', function() {
+        });
+    });
+
     socket.on('welcome', function(data) {
         console.log(data.msg);
     });
@@ -125,7 +137,7 @@ function getPagePermissions() {
             success: function(auth, textStatus, xhr) {
                 if(xhr.status == 200) {
                     //auth checking for UI, this will be loaded when page list is loaded
-                    //This is UI only please if you use this authenticate on server side
+                    //This is UI only please if you use authenticate on server side
                     if(auth === 'owner') {
                         document.getElementById('displayNameAbleFile').style.display = 'block';
                     }else if(auth === 'editor'){
