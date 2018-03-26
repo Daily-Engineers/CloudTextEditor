@@ -193,17 +193,20 @@ function showSuccessMessage(msg) {
 var modlang;
 var typeext;
 var editor;
+var themi
 $(document).ready(function () {
     // the initial language mode of the editor will be javascript
-    modlang="javascript";
+    modlang="text/javascript";
     // initial value of the typeext
     typeext='js';
+    themi = "eclipse";
 
     // codemirror text editor initiates
     var code = $(".codemirror-textarea")[0];
     editor = CodeMirror.fromTextArea(code, {
         lineNumbers: true,
-        mode: modlang
+        mode: modlang,
+        theme: themi
     });
     // Listing the language options and appending them to the datalist with id='langs'
     for(var i=0; i<languages.length; i++){
@@ -232,4 +235,6 @@ $(document).ready(function () {
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
     });
+
+
 });
