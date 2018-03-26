@@ -87,9 +87,9 @@ $(document).ready(getPagePermissions());
 
 
 function loadPageNav() {
-    $('#ownersSubmenu').empty();
-    $('#editorsSubmenu').empty();
-    $('#viewersSubmenu').empty();
+    $('#ownersDocsSubmenu').empty();
+    $('#editorsDocsSubmenu').empty();
+    $('#viewersDocsSubmenu').empty();
     $.ajax({
         method: 'post',
         url: '/pages',
@@ -98,13 +98,13 @@ function loadPageNav() {
             if(xhr.status == 200){
                 loadFileName()
                 pages.owners.forEach(function (page, index, arr) {
-                    $('#ownersSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
+                    $('#ownersDocsSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
                 });
                 pages.editors.forEach(function (page, index, arr) {
-                    $('#editorsSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
+                    $('#editorsDocsSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
                 });
                 pages.viewers.forEach(function (page, index, arr) {
-                    $('#viewersSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
+                    $('#viewersDocsSubmenu').append('<li><a href=\"/doc/'+ page.page_id +'">' + page.filename + '</a></li>');
                 });
             }
         },
@@ -145,14 +145,6 @@ function getPagePermissions() {
         })
     }
 }
-
-
-var old = alert;
-
-alert = function() {
-  console.log(new Error().stack);
-  old.apply(window, arguments);
-};
 
 function loadFileName() {
     if(docSaved){

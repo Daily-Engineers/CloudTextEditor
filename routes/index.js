@@ -22,7 +22,7 @@ router.get('/doc/:page_id', function(req, res) {
     }).exec((err, page) => {
         if (page) {
             if (page.viewers.includes('guest') || req.user && page.viewers.includes(req.user.username)) {
-
+                console.log(page);
                 res.render('editor', {
                     page: page,
                     docSaved: true,
