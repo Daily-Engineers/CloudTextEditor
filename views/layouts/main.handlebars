@@ -133,7 +133,7 @@
                       <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form id="#AddUserForm">
+                <form class="addUserForm">
                     <div class="container">
                         <div class="row">
 
@@ -261,10 +261,12 @@
                                     <p style="color:red" id="loginReturnText"></p>
                                 </li>
                             </div>
-                            <li><input type="text" placeholder="email" class="side-btn form-control" id="UsernameField"></li>
-                            <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
-                            <li><button class="side-btn form-control" id="LoginBtn">Login</button></li>
-                            <li><button class="side-btn form-control" id="RegisterBtn">Signup</button></li>
+                            <form class="signin-form">
+                              <li><input type="email" placeholder="email" class="side-btn form-control" id="UsernameField"></li>
+                              <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                              <li><button class="side-btn form-control" type="submit" value="login" id="LoginBtn">Login</button></li>
+                              <li><button class="side-btn form-control" type="submit" value="register" id="RegisterBtn">Signup</button></li>
+                          </form>
                         </ul>
                 {{/if}}
                         </li>

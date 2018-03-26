@@ -37,19 +37,7 @@ router.get('/users', (req, res) => {
 router.post('/users/invite', (req, res) => {
     let pageID = req.headers.referer.slice(-5);
     let username = req.body.username;
-    let permLevel =  req.body.permLevel;
-    let permString = '';
-
-    if(permLevel == 2){
-        permString = 'owners';
-    }else if(permLevel == 1){
-        permString = 'editors';
-    }else if(permLevel == 0){
-        permLevel = 'viewers';
-    }else{
-        res.sendStatus(500);
-        return;
-    }
+    let permLevel =  parseInt(req.body.permLevel);
 
     User.findOneAndUpdate({
         'username': username
@@ -69,14 +57,25 @@ router.post('/users/invite', (req, res) => {
             let query = {
                 page_id: pageID
             }
-            query[permString] = {
+            let pushUsername = {
                 $nin: [username]
             };
+
             let pushQuery = {};
-            pushQuery[permString] = username;
-            Page.update(query, {
-                $push: pushQuery
-            }, (err, update) => {
+            if(permLevel >= 0)
+                pushQuery['viewers'] = username;//pushUsername;
+            if(permLevel >= 1)
+                pushQuery['editors'] = username; //pushUsername;
+            if(permLevel === 2)
+                pushQuery['owners'] = username; //pushUsername;
+
+            let updateQuery = {
+                $addToSet: pushQuery
+            }
+            console.log(updateQuery);
+            Page.update(query, updateQuery, (err, update) => {
+                if(err)
+                    console.log(err);
                 if (update.nModified == 0)
                     res.sendStatus(409);
                 else
