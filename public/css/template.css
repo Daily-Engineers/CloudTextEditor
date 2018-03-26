@@ -34,20 +34,20 @@ ul.dropdown-menu{
   margin-top:55px;
 }
 
-input.login, button.login, input.login:focus, button.login:focus{
+input.side-btn, button.side-btn, input.side-btn:focus, button.side-btn:focus{
   margin: 10px 0px;
   background: #5d6a77;
   color:white;
   border: solid 1px #3b8586;
 }
 
-input.login:focus, button:active, button.login:focus{
+input.side-btn:focus, button:active, button.side-btn:focus{
   border-color: rgba(59, 133, 134, 0.8);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
   outline: 0 none;
 }
 
-input.login:focus, button:active, button.login:active{
+input.side-btn:focus, button:active, button.side-btn:active{
   border-color: rgba(160, 169, 177);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59, 133, 134, 0.4);
   outline: 0 none;
@@ -58,8 +58,8 @@ a.sidenav-item:hover{
 }
 
 ::placeholder{
-  color:white;
-  opacity: 1;
+  color:white !important;
+  opacity: 0.75;
 }
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     display: none;
@@ -68,7 +68,7 @@ a{
   outline:0;
 }
 
-.invalid{
+.invalid, .invalid.side-btn:focus, .invalid.side-btn:active{
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 25, 25, 0.8);
 }
 
@@ -78,4 +78,7 @@ a{
 
 .CodeMirror.cm-s-default{
     height: 900px;
+}
+.sub-ul{
+    padding-left: 1em;
 }
