@@ -29,14 +29,27 @@ $('#NewBtn').on('click', function() {
 // });
 
 $('form').on('submit', function(e) {
-    var email  = $('#AddUserEmailField').val();
+    var email = $('#AddUserEmailField').val();
     var permLevel = parseInt($('#AddUserPermissionLevelSelect :selected').val());
     console.log(typeof permLevel)
-    /*$.ajax({
+    var data = {
+        username: email,
+        permLevel: permLevel
+    }
+    $.ajax({
         method:'post',
         url:'/users/invite',
-
-    })*/
+        data: data,
+        datatype: 'json',
+        success: function(status){
+            showSuccessMessage('Invited!');
+            $('#AddUserModal').modal('hide');
+        },
+        error: function(err){
+            console.log(err);
+            console.log('could not find user');
+        }
+    });
     console.log('submitted');
     console.log($('#AddUserPermissionLevelSelect :selected').text());
     e.preventDefault();
@@ -135,11 +148,9 @@ $('#RegisterBtn').on('click', function() {
     var email = $('#UsernameField').val().trim();
     var password = $('#PasswordField').val();
 
-    if($('#UsernameField').hasClass('invalid') || !validateEmail(email) || username.length < 1 || password.length < 1){
-        displayLoginMsg("Invalid Email Address");
+    if($('#UsernameField').hasClass('invalid') || !validateEmail(email) || email.length < 1 || password.length < 1){
+        displayLoginMsg("Invalid Email Address or Password");
     }else {
-        //rest password on register attempt
-        $('#PasswordField').val('');
 
         var user = {
             username: email,
@@ -159,9 +170,13 @@ $('#RegisterBtn').on('click', function() {
                     displayLoginMsg(msg, true);
                 }
                 $('#UsernameField').removeClass('invalid');
+                //rest password on register attempt
+                $('#PasswordField').val('');
             },
             error: function (err) {
                 console.log(err);
+                //rest password on register attempt
+                $('#PasswordField').val('');
             }
         })
     }
