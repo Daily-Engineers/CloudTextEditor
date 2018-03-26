@@ -179,13 +179,9 @@ $('#DownloadBtn').on('click', function() {
     })
 });
 
-
 $('#nameFileBtn').on('click', function() {
-    if ($('#filename').hasClass('invalid')) {
-        alert("Invalid characters detected, Please use alphanumeric and period characters");
-    }
     var filename = $('#filename').val().trim();
-    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
+    var filter = /^(?!\s*$)[a-z\d\-_\s]+$/i;
     if (filename != '' && filter.test(filename)) {
         var page = {
             filename: filename
@@ -198,7 +194,6 @@ $('#nameFileBtn').on('click', function() {
             success: function(newpage, textStatus, xhr) {
                 if (xhr.status == 201) {
                     $('#filename').val('');
-                    $(item).removeClass('valid');
                     loadPageNav();
                 }
             },
@@ -206,6 +201,8 @@ $('#nameFileBtn').on('click', function() {
                 console.log(err);
             }
         })
+    }else{
+        alert("Invalid characters detected, Please use alphanumeric and period characters");
     }
 });
 
