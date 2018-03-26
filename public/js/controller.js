@@ -10,23 +10,23 @@ $('#NewBtn').on('click', function() {
     }
 });
 //Toggles between light and dark css files
-$('#StlyeBtn').on('click', function() {
-    lightTheme = !lightTheme;
-    var editor = $("#EditorArea");
-    if (lightTheme) {
-        editor.css({
-            "background-color": "white",
-            "color": "#23272a"
-        });
-        this.innerHTML = 'Dark';
-    } else {
-        editor.css({
-            "background-color": "#333",
-            "color": "white"
-        });
-        this.innerHTML = 'Light';
-    }
-});
+// $('#StlyeBtn').on('click', function() {
+//     lightTheme = !lightTheme;
+//     var editor = $("#EditorArea");
+//     if (lightTheme) {
+//         editor.css({
+//             "background-color": "white",
+//             "color": "#23272a"
+//         });
+//         this.innerHTML = 'Dark';
+//     } else {
+//         editor.css({
+//             "background-color": "#333",
+//             "color": "white"
+//         });
+//         this.innerHTML = 'Light';
+//     }
+// });
 
 $('form').on('submit', function(e) {
     var email = $('#AddUserEmailField').val();
@@ -56,23 +56,20 @@ $('form').on('submit', function(e) {
 });
 
 //Sets link to clipboard
-$('#ShareBtn').on('click', function() {
-    //get full url of page
-    var url = window.location.href;
-    //creates dummy element
-    var copyFrom = document.createElement("textarea");
-    //adds text to dummy element
-    copyFrom.textContent = url;
-    var body = document.getElementsByTagName('body')[0];
-    body.appendChild(copyFrom);
-    //select dummy
-    copyFrom.select();
-    //pushes test from dummy to clipboard
-    document.execCommand('copy');
-    //removes dummy
-    body.removeChild(copyFrom);
-
-    showSuccessMessage('Link copied!');
+$(document).ready(function () {
+    var btnWord;
+    $('#StlyeBtn').on("click", function () {
+        if(editor.options.theme == "eclipse") {
+            themi = "tomorrow-night-bright";
+            btnWord = 'Light';
+        }
+        else{
+            themi = "eclipse";
+            btnWord = 'Dark';
+        }
+        editor.setOption('theme', themi);
+        this.innerHTML = btnWord;
+    });
 });
 
 //Saves file
@@ -187,11 +184,8 @@ $('#RegisterBtn').on('click', function() {
 
 //Download button
 $('#DownloadBtn').on('click', function() {
-    var editorText = ($('.CodeMirror-scroll')[0]).innerText;
+    var editorText = editor.getValue();
     console.log(editorText);
-    // var type = 'txt';
-
-
 
   var page = {
     type: typeext,
@@ -204,9 +198,11 @@ $('#DownloadBtn').on('click', function() {
     data: page,
     datatype: 'json',
     success: function(page, textStatus, xhr) {
-      if (xhr.status == 201)
-        window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
-    },
+        console.log('callll')
+      if (xhr.status == 201){
+            window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
+        }
+      },
     error: function(err) {
       console.log(err);
     }
