@@ -26,7 +26,8 @@ router.get('/doc/:page_id', function(req, res) {
                 res.render('editor', {
                     page: page,
                     docSaved: true,
-                    user: req.user
+                    user: req.user,
+                    isOwner: page.owners.includes(req.user.username)
                 });
             } else {
                 res.status(403).send('<h1>You do not have permission to view this page</h1><p>Please <a href="/">sign in</a> to continue</p>');

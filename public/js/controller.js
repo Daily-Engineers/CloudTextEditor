@@ -179,8 +179,6 @@ $('#DownloadBtn').on('click', function() {
     })
 });
 
-
-
 $('#nameFileBtn').on('click', function() {
     var filename = $('#filename').val().trim();
     var filter = /^(?!\s*$)[a-z\d\-_\s]+$/i;
