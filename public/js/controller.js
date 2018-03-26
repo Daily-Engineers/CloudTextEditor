@@ -11,12 +11,14 @@ $('#NewBtn').on('click', function() {
     }
   }
 });
+
 //Toggles between light and dark css files
 $('#StlyeBtn').on('click', function() {
   lightTheme = !lightTheme;
   var editor = $("#EditorArea");
   if (lightTheme) {
     editor.css({
+
       "background-color": "white",
       "color": "#23272a"
     });
@@ -217,6 +219,8 @@ var editor;
 $(document).ready(function () {
     var code = $(".codemirror-textarea")[0];
     editor = CodeMirror.fromTextArea(code, {
-      extraKeys:{"Ctrl-Space": "autocomplete"},//
+        mode:"python",
+      extraKeys:{"Ctrl-Space": "autocomplete"}
+
     });
 });
