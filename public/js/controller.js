@@ -10,9 +10,26 @@ $('#NewBtn').on('click', function() {
     }
 });
 
+//Toggles between light and dark css files
+$(document).ready(function () {
+    var btnWord;
+    $('#StlyeBtn').on("click", function () {
+        if(editor.options.theme == "eclipse") {
+            themi = "tomorrow-night-bright";
+            btnWord = 'Light';
+        }
+        else{
+            themi = "eclipse";
+            btnWord = 'Dark';
+        }
+        editor.setOption('theme', themi);
+        this.innerHTML = btnWord;
+    });
+});
 
 $('form.addUserForm').on('submit', function(e) {
     var email = $('#AddUserEmailField').val();
+
     var permLevel = parseInt($('#AddUserPermissionLevelSelect :selected').val());
     console.log(typeof permLevel)
     var data = {
@@ -36,6 +53,26 @@ $('form.addUserForm').on('submit', function(e) {
     console.log('submitted');
     console.log($('#AddUserPermissionLevelSelect :selected').text());
     e.preventDefault();
+});
+
+//Sets link to clipboard
+$('#ShareBtn').on('click', function() {
+    //get full url of page
+    var url = window.location.href;
+    //creates dummy element
+    var copyFrom = document.createElement("textarea");
+    //adds text to dummy element
+    copyFrom.textContent = url;
+    var body = document.getElementsByTagName('body')[0];
+    body.appendChild(copyFrom);
+    //select dummy
+    copyFrom.select();
+    //pushes test from dummy to clipboard
+    document.execCommand('copy');
+    //removes dummy
+    body.removeChild(copyFrom);
+
+    showSuccessMessage('Link copied!');
 });
 
 //Saves file
