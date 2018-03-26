@@ -136,7 +136,7 @@ $('#RegisterBtn').on('click', function() {
     var password = $('#PasswordField').val();
 
     if($('#UsernameField').hasClass('invalid') || !validateEmail(email) || username.length < 1 || password.length < 1){
-        displayLoginMsg("Invalid Email Address or Password");
+        displayLoginMsg("Invalid Email Address");
     }else {
         //rest password on register attempt
         $('#PasswordField').val('');
@@ -169,11 +169,8 @@ $('#RegisterBtn').on('click', function() {
 
 //Download button
 $('#DownloadBtn').on('click', function() {
-    var editorText = ($('.CodeMirror-scroll')[0]).innerText;
+    var editorText = editor.getValue();
     console.log(editorText);
-    // var type = 'txt';
-
-
 
   var page = {
     type: typeext,
@@ -186,9 +183,11 @@ $('#DownloadBtn').on('click', function() {
     data: page,
     datatype: 'json',
     success: function(page, textStatus, xhr) {
-      if (xhr.status == 201)
-        window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
-    },
+        console.log('callll')
+      if (xhr.status == 201){
+            window.location.href = '/page/download/?pageId=' + page.page_id + '&type=' + page.type + '&docSaved=' + page.docSaved;
+        }
+      },
     error: function(err) {
       console.log(err);
     }
