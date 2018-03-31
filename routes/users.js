@@ -39,6 +39,7 @@ router.post('/users/invite', (req, res) => {
     let username = req.body.username;
     let permLevel =  parseInt(req.body.permLevel);
 
+
     User.findOneAndUpdate({
         'username': username
     }, {

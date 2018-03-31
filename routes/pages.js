@@ -91,12 +91,11 @@ router.post('/namefile', function (req, res, next) {
     var username = req.user?req.user.username:'guest';
 
     var filename = req.body.filename;
-    var filter = /^(?!\s*$)[a-z0-9.]+$/i;
+    var filter = /^(?!\s*$)[a-z\d\-_\s]+$/i;
     if(filename != '' && filter.test(filename)){
         var pageId = req.headers.referer.slice(-5);
 
         Page.findOneAndUpdate({page_id:pageId, owners: {$in: [username, 'guest']}}, {filename: filename},function (err, rst) {
-        //Page.findOneAndUpdate({page_id:pageId}, {filename: filename},function (err, rst) {
             if(err){
                 console.log(err);
                 res.sendStatus(500)
@@ -105,7 +104,7 @@ router.post('/namefile', function (req, res, next) {
             }
         })
     }else{
-     res.sendStatus(500);
+        res.sendStatus(500);
     }
 });
 
