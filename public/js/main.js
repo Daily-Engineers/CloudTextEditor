@@ -187,10 +187,21 @@ var typeext;
 var editor;
 var themi;
 $(document).ready(function () {
-    // the initial language mode of the editor will be javascript
-    modlang="text/javascript";
+
     // initial value of the typeext
-    typeext='js';
+    if(localStorage.length != 0){
+        typeext = languages[localStorage.langIndex].ext[0];
+        if($.type(languages[localStorage.langIndex].mime == 'undefined'))
+            modlang = languages[localStorage.langIndex].mimes[0];
+        else
+            modlang = languages[localStorage.langIndex].mime;
+    }
+    else{
+        typeext='js';
+        // the initial language mode of the editor will be javascript
+        modlang="text/javascript";
+    }
+
     themi = "eclipse";
 
     // codemirror text editor initiates
@@ -227,6 +238,7 @@ $(document).ready(function () {
         document.head.appendChild(script);
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
+        localStorage.langIndex = langIndex;
     });
 
 
