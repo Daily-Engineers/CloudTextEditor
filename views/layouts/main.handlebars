@@ -47,6 +47,11 @@
       </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                {{#if docSaved}}
+                    <li>
+                        <b><a style="color:whitesmoke" class="nav-link" id="displayFileName"></a></b>
+                    </li>
+                {{/if}}
                 <li class="dropdown nav-item">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
                     <ul class="dropdown-menu">
