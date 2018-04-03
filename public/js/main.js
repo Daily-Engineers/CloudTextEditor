@@ -185,7 +185,7 @@ function showSuccessMessage(msg) {
 var modlang;
 var typeext;
 var editor;
-var themi
+var themi;
 $(document).ready(function () {
     // the initial language mode of the editor will be javascript
     modlang="text/javascript";
@@ -198,7 +198,9 @@ $(document).ready(function () {
     editor = CodeMirror.fromTextArea(code, {
         lineNumbers: true,
         mode: modlang,
-        theme: themi
+        theme: themi,
+       extraKeys: {"Ctrl-Space": "autocomplete"}
+
     });
     // Listing the language options and appending them to the datalist with id='langs'
     for(var i=0; i<languages.length; i++){

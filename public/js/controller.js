@@ -11,16 +11,7 @@ $('#NewBtn').on('click', function() {
 });
 
 //Toggles between light and dark css files
-<<<<<<< HEAD
-$('#StlyeBtn').on('click', function() {
-  lightTheme = !lightTheme;
-  var editor = $("#EditorArea");
-  if (lightTheme) {
-    editor.css({
 
-      "background-color": "white",
-      "color": "#23272a"
-=======
 $(document).ready(function () {
     var btnWord;
     $('#StlyeBtn').on("click", function () {
@@ -34,7 +25,7 @@ $(document).ready(function () {
         }
         editor.setOption('theme', themi);
         this.innerHTML = btnWord;
->>>>>>> c0ac1b6d7396cef41abc872aacfece0345fd6e50
+
     });
 });
 
@@ -221,30 +212,7 @@ $('#nameFileBtn').on('click', function() {
 
 //Deleting a file
 $('#DelBtn').on('click', function() {
-<<<<<<< HEAD
-  $.ajax({
-    method: 'post',
-    url: '/page/deleteFile',
-    success: function(page, textStatus, xhr) {
-      window.location = "/";
-    },
 
-    error: function(err) {
-      console.log(err);
-    }
-
-  });
-});
-
-var editor;
-
-$(document).ready(function () {
-    var code = $(".codemirror-textarea")[0];
-    editor = CodeMirror.fromTextArea(code, {
-        mode:"python",
-      extraKeys:{"Ctrl-Space": "autocomplete"}
-
-=======
     $.ajax({
         method: 'post',
         url: '/page/deleteFile',
@@ -255,6 +223,6 @@ $(document).ready(function () {
             console.log(err);
         }
 
->>>>>>> c0ac1b6d7396cef41abc872aacfece0345fd6e50
+
     });
 });
