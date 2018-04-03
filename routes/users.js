@@ -37,9 +37,12 @@ router.get('/users', (req, res) => {
 router.post('/users/invite', (req, res) => {
     let pageID = req.headers.referer.slice(-5);
     let username = req.body.username;
-    let permLevel =  parseInt(req.body.permLevel);
+    let permLevel = parseInt(req.body.permLevel);
+    let byPageIDQuery = {
+        'page_id': pageID
+    }
 
-
+    //Add page to user collection
     User.findOneAndUpdate({
         'username': username
     }, {
@@ -55,27 +58,21 @@ router.post('/users/invite', (req, res) => {
             console.error(err);
             res.sendStatus(409)
         } else {
-            let query = {
-                page_id: pageID
-            }
-            let pushUsername = {
-                $nin: [username]
-            };
 
             let pushQuery = {};
-            if(permLevel >= 0)
-                pushQuery['viewers'] = username;//pushUsername;
-            if(permLevel >= 1)
-                pushQuery['editors'] = username; //pushUsername;
-            if(permLevel === 2)
-                pushQuery['owners'] = username; //pushUsername;
+            if (permLevel >= 0)
+                pushQuery['viewers'] = username;
+            if (permLevel >= 1)
+                pushQuery['editors'] = username;
+            if (permLevel === 2)
+                pushQuery['owners'] = username;
 
             let updateQuery = {
                 $addToSet: pushQuery
             }
-            console.log(updateQuery);
-            Page.update(query, updateQuery, (err, update) => {
-                if(err)
+            //Add user to page collection
+            Page.update(byPageIDQuery, updateQuery, (err, update) => {
+                if (err)
                     console.log(err);
                 if (update.nModified == 0)
                     res.sendStatus(409);
@@ -83,6 +80,39 @@ router.post('/users/invite', (req, res) => {
                     res.sendStatus(200);
             });
         }
+    });
+});
+
+router.delete('/users/remove', (req, res) => {
+    let pageID = req.headers.referer.slice(-5);
+    let username = req.body.username;
+    let byUsernameQuery = {
+        'username': username,
+    }
+    let byPageIDQuery = {
+        'page_id': pageID
+    }
+
+    User.findOneAndUpdate(byUsernameQuery, {
+        $pull: {
+            pages: pageID
+        }
+    }, (err, model) => {
+        let updateQuery = {
+            $pull: {
+                viewer: username,
+                editors: username,
+                owners: username
+            }
+        }
+        Page.update(byPageIDQuery, updateQuery, (err, model) => {
+            if (err) {
+                console.error(err);
+                res.sendStatus(500);
+            } else {
+                res.sendStatus(200);
+            }
+        });
     });
 });
 
