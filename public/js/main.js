@@ -167,6 +167,7 @@ function loadFileName() {
             success: function(filename, textStatus, xhr) {
                 if(xhr.status == 200) {
                     $('#filename').attr('placeholder', filename);
+                    $('#displayFileName').text(filename);
                 }
             },
             error: function(err) {
