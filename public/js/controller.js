@@ -11,6 +11,7 @@ $('#NewBtn').on('click', function() {
 });
 
 //Toggles between light and dark css files
+
 $(document).ready(function () {
     var btnWord;
     $('#StlyeBtn').on("click", function () {
@@ -24,6 +25,7 @@ $(document).ready(function () {
         }
         editor.setOption('theme', themi);
         this.innerHTML = btnWord;
+
     });
 });
 
@@ -222,6 +224,7 @@ $('#nameFileBtn').on('click', function() {
 
 //Deleting a file
 $('#DelBtn').on('click', function() {
+
     $.ajax({
         method: 'post',
         url: '/page/deleteFile',
@@ -231,6 +234,7 @@ $('#DelBtn').on('click', function() {
         error: function(err) {
             console.log(err);
         }
+
 
     });
 });

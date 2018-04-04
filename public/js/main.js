@@ -187,7 +187,6 @@ var modlang;
 var typeext;
 var editor;
 var themi;
-var langIndex;
 $(document).ready(function () {
     for(var j = 0; j<langslist.length;j++){
         // creating a script tag to insert as the library for the selected language
@@ -210,7 +209,9 @@ $(document).ready(function () {
     editor = CodeMirror.fromTextArea(code, {
         lineNumbers: true,
         mode: modlang,
-        theme: themi
+        theme: themi,
+       extraKeys:{"Ctrl-Space": "autocomplete"}
+
     });
     // Listing the language options and appending them to the datalist with id='langs'
     for(var i=0; i<languages.length; i++){
