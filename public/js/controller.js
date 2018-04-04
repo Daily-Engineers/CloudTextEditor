@@ -180,6 +180,20 @@ $('#DownloadBtn').on('click', function() {
         }
     })
 });
+//namefile
+// $(document).on('keyup', '#filename', function() {
+//     var item = '#filename';
+//     var filename = document.getElementById('filename');
+//     var filter = /^(?!\s*$)[a-z0-9.]+$/i;
+//
+//     if (!filter.test(filename.value)) {
+//         $(item).removeClass('valid');
+//         invalidField(filename);
+//     } else {
+//         $(item).removeClass('invalid');
+//         validField(filename);
+//     }
+// })
 
 $('#nameFileBtn').on('click', function() {
     var filename = $('#filename').val().trim();

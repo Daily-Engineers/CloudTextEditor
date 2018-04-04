@@ -188,6 +188,16 @@ var typeext;
 var editor;
 var themi;
 $(document).ready(function () {
+    for(var j = 0; j<langslist.length;j++){
+        // creating a script tag to insert as the library for the selected language
+        var script = document.createElement('script');
+        // the type of script is text/javascript
+        script.type = "text/javascript";
+        // the path to the language library
+        script.src = "/public/libs/codemirror/mode/"+langslist[j]+"/"+langslist[j]+".js";
+        // appending the script to the head
+        document.head.appendChild(script);
+    }
     // the initial language mode of the editor will be javascript
     modlang="text/javascript";
     // initial value of the typeext
@@ -219,14 +229,6 @@ $(document).ready(function () {
         }else{
             editor.setOption("mode", languages[langIndex].mime);
         }
-        // creating a script tag to insert as the library for the selected language
-        var script = document.createElement('script');
-        // the type of script is text/javascript
-        script.type = "text/javascript";
-        // the path to the language library
-        script.src = "/public/libs/codemirror/mode/"+languages[langIndex].mode+"/"+languages[langIndex].mode+".js";
-        // appending the script to the head
-        document.head.appendChild(script);
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
     });
