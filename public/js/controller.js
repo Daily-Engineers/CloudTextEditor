@@ -57,6 +57,29 @@ $('form.addUserForm').on('submit', function(e) {
     e.preventDefault();
 });
 
+$('form.remove-user-form').on('submit', function(e) {
+    var email = $('#RemoveUserEmailField').val();
+
+    var data = {
+        username: email
+    }
+    $.ajax({
+        method: 'delete',
+        url: '/users/remove',
+        data: data,
+        datatype: 'json',
+        success: function(status) {
+            showSuccessMessage('Removed!');
+            $('#RemoveUserModal').modal('hide');
+        },
+        error: function(err) {
+            console.error(err);
+            //$('#RemoveUserModal').modal('hide');
+        }
+    });
+    e.preventDefault();
+});
+
 //Sets link to clipboard
 $('#ShareBtn').on('click', function() {
     //get full url of page

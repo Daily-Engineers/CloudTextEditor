@@ -151,7 +151,7 @@
         </div>
     </div>
 
-    <!-- Add User -->
+    <!-- Invite User Modal-->
     <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content modal-lg">
@@ -274,8 +274,38 @@
     <div class="wrapper">
 
 
+    <!-- Remove User Modal-->
+    <div class="modal fade" id="RemoveUserModal" tabindex="-1" role="dialog" aria-labelledby="RemoveUserModalTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Remove User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form class="remove-user-form">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-8">
+                                    <input type="email" placeholder="email address.." class="side-btn form-control" id="RemoveUserEmailField">
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div id="includedContent"></div>
 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="RemoveUserBtn" type="submit" class="btn btn-primary">Remove User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="wrapper">
 
 
         <!-- Sidebar -->
@@ -336,7 +366,7 @@
                             <a href="#ownersPermsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
                             <ul class="collapse list-unstyled" id="ownersPermsSubmenu">
                                 {{#each page.owners}}
-                                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    <li><a href="javascript:void(0);">{{this}}</a></li>
                                 {{/each}}
                             </ul>
 
@@ -344,7 +374,7 @@
                             <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
                             <ul class="collapse list-unstyled" id="editorsSubmenu">
                                 {{#each page.editors}}
-                                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    <li><a href="javascript:void(0);">{{this}}</a></li>
                                 {{/each}}
                             </ul>
 
@@ -352,13 +382,13 @@
                             <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
                             <ul class="collapse list-unstyled" id="viewersSubmenu">
                                 {{#each page.viewers}}
-                                    <li><a href="javascript:void(0);">{{this}}<i class="fas fa-trash-alt float-right"></i></a></li>
+                                    <li><a href="javascript:void(0);">{{this}}</a></li>
                                 {{/each}}
                             </ul>
                             <div class="container">
                                 {{#if isOwner}}
-                                <button class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
-                                <button class="side-btn form-control" id="AddUserMenuBtn">Remove User</button>
+                                <button href="#AddUserModal" class="side-btn form-control" id="AddUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
+                                <button href="#RemoveUserModal" class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#RemoveUserModal">Remove User</button>
                                 {{/if}}
                             </div>
                         </ul>
@@ -372,12 +402,14 @@
                                     <p style="color:red" id="loginReturnText"></p>
                                 </li>
                             </div>
-                            <form class="signin-form">
-                              <li><input type="email" placeholder="email" class="side-btn form-control" id="UsernameField"></li>
-                              <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
-                              <li><button class="side-btn form-control" type="submit" value="login" id="LoginBtn">Login</button></li>
-                              <li><button class="side-btn form-control" type="submit" value="register" id="RegisterBtn">Signup</button></li>
-                          </form>
+                            <div class="container">
+                                <form class="signin-form">
+                                  <li><input type="email" placeholder="email" class="side-btn form-control" id="UsernameField"></li>
+                                  <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                                  <li><button class="side-btn form-control" type="submit" value="login" id="LoginBtn">Login</button></li>
+                                  <li><button class="side-btn form-control" type="submit" value="register" id="RegisterBtn">Signup</button></li>
+                              </form>
+                          </div>
                         </ul>
                 {{/if}}
                         </li>
