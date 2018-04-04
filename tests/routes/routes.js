@@ -28,23 +28,6 @@ describe('Routes unit test', function() {
         });
       });
     });
-    describe('/doc/teste', function() {
-      it('Should display a loaded document.', function(done) {
-        http.get('http://localhost:3000/doc/teste', function(res) {
-          assert.equal(res.statusCode, 200);
-
-          let body = '';
-          res.on('data', function(d) {
-            body += d;
-          });
-
-          res.on('end', function() {
-            assert.match(body, /<textarea .*>Hello World!<\/textarea>/, 'Textarea not found. page not loading correctly');
-            done();
-          })
-        });
-      });
-    });
   });
 
 

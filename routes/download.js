@@ -8,30 +8,32 @@ const deleteFile = require('../modules/deleteFile');
 //download page.
 router.get('/page/download/', function (req, res, next) {
     //get data from url
+
     var pageId = req.query.pageId;
     var type = req.query.type;
     var docSaved = req.query.docSaved;
 
-    var username = 'guest';
-    if(req.user){
-        username = req.user.username;
-    }
+    var username = req.user?req.user.username:'guest';
+
     //find page
-    Page.findOne({'page_id':pageId, viewers: {$in: [username, 'guest']}}).exec(function (err, rst) {
-        if(err) console.log(err);
+    Page.findOne({page_id: pageId, viewers: {$in: [username, 'guest']}}, function (err, rst) {
+        console.log("rst: " +rst);
+        if(err){
+            console.log(err);
+        }
         //if result found
         if(rst) {
             //create local file
-            saveFile(rst.content, pageId, type, function(){
+
+            saveFile(rst.content, rst.filename, type, function(){
                 //if file is need to be saved for download, delete from db after local write.
                 if(docSaved == 'false'){
                     Page.deleteOne({page_id:pageId},function (err ,rst) {
                         if(err) console.log(err);
                     });
                 }
-
                 //send file to user
-                res.download('./temp/' + pageId + '.txt', pageId + '.' + type, function (err) {
+                res.download('./temp/' + rst.filename + '.' + type, rst.filename + '.' + type, function (err) {
                     if (err) console.error(err);
                     //delete local file.
                     deleteFile(pageId, type);
@@ -39,7 +41,6 @@ router.get('/page/download/', function (req, res, next) {
             });
         } else {
             res.status(403).send('<h1>You do not have permission to download this page</h1><p>Please <a href="/">sign in</a> to continue</p>');
-
         }
     });
 });
@@ -53,10 +54,9 @@ router.post('/page/download', async function (req, res, next) {
         type: req.body.type,
         docSaved: req.body.isInDB
     };
-
     //if page exists in db get pagId
     if(req.body.isInDB == "true") {
-            pageData.page_id = req.headers.referer.slice(-5);
+        pageData.page_id = req.headers.referer.slice(-5);
         res.status(201).json(pageData);
 
     }else {
@@ -68,14 +68,9 @@ router.post('/page/download', async function (req, res, next) {
             if (err) {
                 res.sendStatus(500);
             } else {
-                //set page_id to be object id
-                //did this to avoid conflicts
+                //using object id as page_id to avoid conflicts with multiple users downloading at one time
                 pageData.page_id = page._id;
-                page.page_id = page._id;
-                //update page in db
-                page.save(function (err, newPage) {
-                    res.status(201).json(pageData);
-                })
+                res.status(201).json(pageData);
             }
         });
     }
