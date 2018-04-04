@@ -99,28 +99,77 @@
 
 
     </nav>
-    <!-- FAQ -->
+    <!-- FAQ Modal -->
     <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content modal-lg">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">FAQ</h5>
+                    <h5 class="modal-title" id="faqModalLongTitle">FAQ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div id="includedContent"></div>
                     <!--Greeting-->
-
+                    <p>Welcome to the FAQ</p>
+                    <p>Below you can find general information on each of the Curlybois functions</p>
                     <!--Style Toggle-->
 
                     <!--Saving-->
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('mySave')" id="SaveBtn_Faq" href="javascript:void(0);">Save</button>
+                    <div id="mySave" style="display:none">
+
+                        Clicking this saves the document and starts an <b>auto-save</b> function for the file, ensuring your
+                        documents are constantly backed up
+                    </div>
+
+
                     <!--New-->
+                    <p></p>
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myNew')" id="NewBtn_Faq" href="javascript:void(0);">New</button>
+                    <div id="myNew" style="display:none">
+                        Clicking this creates a <b>new document</b> but prompts the user to save if they have not already done so
+                    </div>
 
                     <!--Downloading-->
+                    <p></p>
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myDown')" id="DownloadBtn_Faq" href="javascript:void(0);">Download</button>
+                    <div id="myDown" style="display:none">
+                        Clicking this downloads the document to a user specified location
+                    </div>
 
                     <!--Sharing-->
+                    <p></p>
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myShare')" id="ShareBtn_Faq" href="javascript:void(0);">Share</button>
+                    <div id="myShare" style="display:none">
+                        Clicking this shares the document with others who you wish to collaborate with (only available after saving)
+                    </div>
+
+                    <!--Dark-->
+                    <p></p>
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myDark')" id="ShareBtn_Faq" href="javascript:void(0);">Dark</button>
+                    <div id="myDark" display="none">
+                        Clicking this toggles the documents theme between dark/light
+                    </div>
+
+
+
+
+                    <script>
+                        function myFunction(id) {
+                            var x = document.getElementById(id);
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+                        }
+                    </script>
 
 
                 </div>
@@ -205,6 +254,7 @@
 
 
         <!-- Sidebar -->
+
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
                 <h3>Curlybois</h3>
