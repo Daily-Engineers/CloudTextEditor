@@ -189,33 +189,21 @@ var editor;
 var themi;
 var langIndex;
 $(document).ready(function () {
-    // initial value of the typeext
-    if(localStorage.extention != "" && localStorage.modlang != ""){
-        typeext = localStorage.extention;
-        modlang = localStorage.modlang;
-        langIndex = localStorage.langIndex;
+    for(var j = 0; j<langslist.length;j++){
+        console.log(langslist[i]);
         // creating a script tag to insert as the library for the selected language
         var script = document.createElement('script');
         // the type of script is text/javascript
         script.type = "text/javascript";
         // the path to the language library
-        script.src = "/public/libs/codemirror/mode/"+languages[langIndex].mode+"/"+languages[langIndex].mode+".js";
+        script.src = "/public/libs/codemirror/mode/"+langslist[i]+"/"+langslist[i]+".js";
         // appending the script to the head
         document.head.appendChild(script);
-        // assigning the corresponding extention to the typeext
-        typeext = languages[langIndex].ext[0];
-        localStorage.extention = typeext;
     }
-    else{
-        typeext='js';
-        localStorage.extention = typeext;
-        // the initial language mode of the editor will be javascript
-        modlang="text/javascript";
-        localStorage.modlang = modlang;
-        langIndex = 58;
-        localStorage.langIndex = langIndex;
-    }
-
+    // the initial language mode of the editor will be javascript
+    modlang="text/javascript";
+    // initial value of the typeext
+    typeext='js';
     themi = "eclipse";
 
     // codemirror text editor initiates
@@ -223,8 +211,7 @@ $(document).ready(function () {
     editor = CodeMirror.fromTextArea(code, {
         lineNumbers: true,
         mode: modlang,
-        theme: themi,
-        indentUnit: 4
+        theme: themi
     });
     // Listing the language options and appending them to the datalist with id='langs'
     for(var i=0; i<languages.length; i++){
@@ -232,29 +219,19 @@ $(document).ready(function () {
     }
 
     // when selecting a language
-    $('#langBtn').on('mousedown', function () {
+    $('#langBtn').on('click', function () {
         modlang = $('#plangid').val(); // getting the value of the selected option
         // based on the value obtained above, we get the value of the id and parse it to integer as the index number
-        langIndex = parseInt($('option[value="'+modlang+'"]').attr('id'));
-        localStorage.langIndex = langIndex;
+        var langIndex = parseInt($('option[value="'+modlang+'"]').attr('id'));
         // setting the mode of the text editor to the language selected
         if($.type(languages[langIndex].mime) == 'undefined'){
             editor.setOption("mode", languages[langIndex].mimes[0]);
-            localStorage.modlang = languages[langIndex].mimes[0];
         }else{
             editor.setOption("mode", languages[langIndex].mime);
-            localStorage.modlang = languages[langIndex].mime;
         }
-        // creating a script tag to insert as the library for the selected language
-        var script = document.createElement('script');
-        // the type of script is text/javascript
-        script.type = "text/javascript";
-        // the path to the language library
-        script.src = "/public/libs/codemirror/mode/"+languages[langIndex].mode+"/"+languages[langIndex].mode+".js";
-        // appending the script to the head
-        document.head.appendChild(script);
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
-        localStorage.extention = typeext;
     });
+
+
 });
