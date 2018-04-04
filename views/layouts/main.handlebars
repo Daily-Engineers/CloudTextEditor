@@ -22,9 +22,12 @@
   <!--Syntax hilighting-->
   <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/lib/codemirror.css">
 
+    <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/addon/hint/show-hint.css">
+
   <!-- Theme -->
   <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/theme/eclipse.css">
   <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/theme/tomorrow-night-bright.css">
+
 
     <link rel="faq" href="faq.css">
 
@@ -37,6 +40,7 @@
     var docSaved = false;
   {{/if}}
 </script>
+
 <body>
 
 
@@ -47,6 +51,11 @@
       </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                {{#if docSaved}}
+                    <li>
+                        <b><a style="color:whitesmoke" class="nav-link" id="displayFileName"></a></b>
+                    </li>
+                {{/if}}
                 <li class="dropdown nav-item">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
                     <ul class="dropdown-menu">
@@ -69,8 +78,7 @@
 
                 <li class="nav-item">
                     <input list="langs" name="plangs" id="plangid">
-                    <datalist id="langs">
-              </datalist>
+                    <datalist id="langs"></datalist>
                     <button id="langBtn">Change language</button>
                     <!--<input type="submit" value="Change language" onsubmit="modlang = $('#plangid').val()">-->
                 </li>
@@ -324,9 +332,19 @@
 <!--Controller-->
 <script src="/public/js/controller.js"></script>
 <!-- Highlight jS -->
+
 <script src="/public/libs/codemirror/lib/codemirror.js"></script>
+
+<script src="/public/libs/codemirror/addon/hint/show-hint.js"></script>
+<script src="/public/libs/codemirror/addon/hint/css-hint.js"></script>
+<script src="/public/libs/codemirror/addon/hint/javascript-hint.js"></script>
+<script src="/public/libs/codemirror/addon/hint/anyword-hint.js"></script>
 <script src="/public/libs/codemirror/mode/meta.js"></script>
-<script src="/public/libs/codemirror/mode/javascript/javascript.js"></script>
+<!--<script src="/public/libs/codemirror/mode/javascript/javascript.js"></script>-->
+<!--<script src="/public/libs/codemirror/mode/python/python.js"></script>-->
+<!--<script src="/public/libs/codemirror/mode/clike/clike.js"></script>-->
+
+
 
 <!--Socket.io-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script

@@ -11,6 +11,7 @@ $('#NewBtn').on('click', function() {
 });
 
 //Toggles between light and dark css files
+
 $(document).ready(function () {
     var btnWord;
     $('#StlyeBtn').on("click", function () {
@@ -24,6 +25,7 @@ $(document).ready(function () {
         }
         editor.setOption('theme', themi);
         this.innerHTML = btnWord;
+
     });
 });
 
@@ -201,6 +203,20 @@ $('#DownloadBtn').on('click', function() {
         }
     })
 });
+//namefile
+// $(document).on('keyup', '#filename', function() {
+//     var item = '#filename';
+//     var filename = document.getElementById('filename');
+//     var filter = /^(?!\s*$)[a-z0-9.]+$/i;
+//
+//     if (!filter.test(filename.value)) {
+//         $(item).removeClass('valid');
+//         invalidField(filename);
+//     } else {
+//         $(item).removeClass('invalid');
+//         validField(filename);
+//     }
+// })
 
 $('#nameFileBtn').on('click', function() {
     var filename = $('#filename').val().trim();
@@ -231,6 +247,7 @@ $('#nameFileBtn').on('click', function() {
 
 //Deleting a file
 $('#DelBtn').on('click', function() {
+
     $.ajax({
         method: 'post',
         url: '/page/deleteFile',
@@ -240,6 +257,7 @@ $('#DelBtn').on('click', function() {
         error: function(err) {
             console.log(err);
         }
+
 
     });
 });

@@ -10,7 +10,7 @@
     define(["../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})
+});
 const languages = [
   {name: "APL", mime: "text/apl", mode: "apl", ext: ["dyalog", "apl"]},
   {name: "PGP", mimes: ["application/pgp", "application/pgp-encrypted", "application/pgp-keys", "application/pgp-signature"], mode: "asciiarmor", ext: ["asc", "pgp", "sig"]},

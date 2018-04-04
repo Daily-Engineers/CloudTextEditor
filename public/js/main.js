@@ -167,6 +167,7 @@ function loadFileName() {
             success: function(filename, textStatus, xhr) {
                 if(xhr.status == 200) {
                     $('#filename').attr('placeholder', filename);
+                    $('#displayFileName').text(filename);
                 }
             },
             error: function(err) {
@@ -185,8 +186,18 @@ function showSuccessMessage(msg) {
 var modlang;
 var typeext;
 var editor;
-var themi
+var themi;
 $(document).ready(function () {
+    for(var j = 0; j<langslist.length;j++){
+        // creating a script tag to insert as the library for the selected language
+        var script = document.createElement('script');
+        // the type of script is text/javascript
+        script.type = "text/javascript";
+        // the path to the language library
+        script.src = "/public/libs/codemirror/mode/"+langslist[j]+"/"+langslist[j]+".js";
+        // appending the script to the head
+        document.head.appendChild(script);
+    }
     // the initial language mode of the editor will be javascript
     modlang="text/javascript";
     // initial value of the typeext
@@ -198,7 +209,9 @@ $(document).ready(function () {
     editor = CodeMirror.fromTextArea(code, {
         lineNumbers: true,
         mode: modlang,
-        theme: themi
+        theme: themi,
+       extraKeys:{"Ctrl-Space": "autocomplete"}
+
     });
     // Listing the language options and appending them to the datalist with id='langs'
     for(var i=0; i<languages.length; i++){
@@ -216,14 +229,6 @@ $(document).ready(function () {
         }else{
             editor.setOption("mode", languages[langIndex].mime);
         }
-        // creating a script tag to insert as the library for the selected language
-        var script = document.createElement('script');
-        // the type of script is text/javascript
-        script.type = "text/javascript";
-        // the path to the language library
-        script.src = "/public/libs/codemirror/mode/"+languages[langIndex].mode+"/"+languages[langIndex].mode+".js";
-        // appending the script to the head
-        document.head.appendChild(script);
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
     });
