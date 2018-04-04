@@ -5,17 +5,16 @@ const link = require("../models/AuthenticateEmailText");
 const sendEmail = require("../modules/MailToUser");
 
 
-let validateEmail = function (req) {
+let validateEmail = function (req, res) {
     var username = req.body.username.trim();
 
-    User.findOne({username: username},function (err, rst, cb) {
+    User.findOne({username: username},function (err, rst) {
         if(err) console.log(err);
-
         //TODO get the starting bit of address.
         //req.protocol+ "//" +
-        var address = req.get('host') + "/"+ "authenticatetoken/"+ rst.authToken
+        var address = req.get('host') + "/authenticatetoken/"+ rst.authToken
         sendEmail(username, 'Curlyboi account authentication', link(address), function () {
-            cb;
+            res.status(201).json('Registration successful. An validation email has been send.');
         });
     })
 };
@@ -32,24 +31,16 @@ exports.validateUser = function (req, res, next) {
 
 //register user
 exports.register = function(req, res) {
-  console.log("registering: ");
 
   //User object, if you want the user to have more 'things' in it you must add it do here and the model users.js file
   User.register(new User({
-
       username: req.body.username.trim()
-
   }), req.body.password.trim(), function(err, user) {
-    if (err) {
-      //TODO When failed register
-
-      console.log(err);
-      return res.send(err);
-    } else {
-        validateEmail(req, res, function () {
-            res.status(201);
-        })
-    }
+     if (err) {
+        res.status(200).json(err.message);
+     } else {
+        validateEmail(req, res)
+     }
   });
 };
 
@@ -57,27 +48,27 @@ exports.register = function(req, res) {
 //login
 exports.login = function(req, res, next) {
   if (req.user) {
-
     //if user is already logged in
     res.status(201).json(req.user);
   } else {
-
-    User.authenticate()(req.body.username.trim(), req.body.password, function(err, user, options) {
-      if (err)
+      User.authenticate()(req.body.username.trim(), req.body.password, function(err, user, options) {
+          if (err)
         //When error
         return next(err);
       if (user === false) {
+          var message = options.message;
+
         //When Failed login
           if(options.message === 'User did not verify email!'){
+              message = 'Account not validated, An validation email has been send to your email.';
               validateEmail(req, res);
+          }else if(options.message === 'Incorrect username' || options.message === 'Incorrect password' ){
+              message = 'Invalid Login'
           }
-          res.status(403).json({
-            message: options.message
-        })
 
+          res.status(200).json(message)
       } else {
         req.login(user, function(err) {
-
           //When after logged in
           res.status(201).json(user)
         });
@@ -99,15 +90,8 @@ exports.getLogin = function(req, res, next) {
   }
 };
 
-//logs the user out
-//TODO save on logout
 
-//Save logic
-exports.saveLogout = function(req,res,next){
-    savePage(req, res, next);
-    return next();
-}
-
-exports.logout = function(req, res, next) {
+exports.logout = function(req, res) {
   req.logout();
+  res.sendStatus(200);
 };

@@ -7,7 +7,8 @@ let getContent = function (link) {
         'Please click the link below to authenticate your new account. ' +
         'If you did not make this request please ignore this email.\n' +
         'Thank you - Curlybois\n\n\n\n' +
-        link;
+
+        '<a href='+link+'>Verify Account</a>';
 return content;
 
 };

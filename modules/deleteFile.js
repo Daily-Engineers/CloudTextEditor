@@ -1,13 +1,13 @@
 const fs = require('fs');
 
-let deleteFile = function (fileName){
+let deleteFile = function (fileName, type){
     try {
         //try to delete file.
-        fs.unlinkSync('./temp/' + fileName + '.txt');
-        return
+        fs.unlinkSync('./temp/' + fileName + '.'+ type);
+        return;
     } catch (err) {
         console.error('Error: File delete failed');
-        return
+        return;
     }
 }
 
