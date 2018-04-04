@@ -200,7 +200,7 @@ $(document).ready(function () {
         lineNumbers: true,
         mode: modlang,
         theme: themi,
-       extraKeys: {"Ctrl-Space": "autocomplete"}
+       extraKeys:{"Ctrl-Space": "autocomplete"}
 
     });
     // Listing the language options and appending them to the datalist with id='langs'
