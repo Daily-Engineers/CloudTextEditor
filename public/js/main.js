@@ -190,13 +190,12 @@ var themi;
 var langIndex;
 $(document).ready(function () {
     for(var j = 0; j<langslist.length;j++){
-        console.log(langslist[i]);
         // creating a script tag to insert as the library for the selected language
         var script = document.createElement('script');
         // the type of script is text/javascript
         script.type = "text/javascript";
         // the path to the language library
-        script.src = "/public/libs/codemirror/mode/"+langslist[i]+"/"+langslist[i]+".js";
+        script.src = "/public/libs/codemirror/mode/"+langslist[j]+"/"+langslist[j]+".js";
         // appending the script to the head
         document.head.appendChild(script);
     }
