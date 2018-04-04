@@ -12,8 +12,14 @@ ul.dropdown-menu{
 }
 
 .btn-primary{
-  background: #3B8586;
-  boarder:#3B8586;
+    background: #3B8586;
+    boarder:#3B8586;
+}
+
+.btn-primary:hover{
+    background: #3B9889;
+    boarder:#3B9889;
+
 }
 
 .navbar{
@@ -23,7 +29,11 @@ ul.dropdown-menu{
   width: 100%;
   top:0px;
 }
-
+.faqButton{
+  background: #343A40;
+  boarder:#343A40;
+  color:#9A9DA0;
+}
 
 #sidebar{
   height: 2000px;
