@@ -210,6 +210,7 @@ $(document).ready(function () {
         lineNumbers: true,
         mode: modlang,
         theme: themi,
+        indentUnit:4,
        extraKeys:{"Ctrl-Space": "autocomplete"}
 
     });
@@ -217,9 +218,10 @@ $(document).ready(function () {
     for(var i=0; i<languages.length; i++){
         $('#langs').append("<option id='"+i+"' class='"+languages[i].mode+"' value='"+languages[i].name+"'>");
     }
-
+    $('#plangid').val('Plain Text');
     // when selecting a language
     $('#langBtn').on('click', function () {
+        console.log('changed');
         modlang = $('#plangid').val(); // getting the value of the selected option
         // based on the value obtained above, we get the value of the id and parse it to integer as the index number
         var langIndex = parseInt($('option[value="'+modlang+'"]').attr('id'));
@@ -232,6 +234,5 @@ $(document).ready(function () {
         // assigning the corresponding extention to the typeext
         typeext = languages[langIndex].ext[0];
     });
-
 
 });
