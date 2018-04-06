@@ -77,9 +77,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <input list="langs" name="plangs" id="plangid">
-                    <datalist id="langs"></datalist>
-                    <button id="langBtn">Change language</button>
+                    <input list="langs" name="plangs" id="plangid" style="margin-top:5px;">
+                    <datalist id="langs">
+                        
+                    </datalist>
+                    <a id="langBtn" class="nav-link" style="float:right;" href="javascript:void(0);">Change language</a>
                     <!--<input type="submit" value="Change language" onsubmit="modlang = $('#plangid').val()">-->
                 </li>
                 <li class="nav-item">
@@ -394,7 +396,8 @@
 <!--<script src="/public/libs/codemirror/mode/clike/clike.js"></script>-->
 
 
-
+<!--langlist-->
+<script src="/public/js/pathlist.js"></script>
 <!--Socket.io-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script
 <!--main-->
